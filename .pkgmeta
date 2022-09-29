@@ -1,0 +1,18 @@
+package-as: Kapresoft-LibUtil
+# --------------------------
+enable-nolib-creation: no
+enable-toc-creation: yes
+# --------------------------
+license-output: LICENSE.txt
+
+externals:
+  External/LibStub:
+    url: https://repos.wowace.com/wow/libstub/trunk
+    tag: latest
+
+ignore:
+  - README.md
+  - sync-extlibs.sh
+  - doc
+  - External/LibStub/tests
+
