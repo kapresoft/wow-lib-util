@@ -1,17 +1,21 @@
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub, Core = __K_Core:LibPack()
+local LibStub = LibStub
 local WRONG_TYPE_MSG = 'Expecting table to be source of mixin but got type [%s] instead'
 local WRONG_ARG_TYPE_MSG = 'Expected arg #2 to be a list of string properties.'
 local MIXIN_OBJ_REQUIRED_MSG = "Can't mixin to a nil object in Mixin(object, ...)"
+
+local MAJOR, MINOR = "Kapresoft-LibUtil-Mixin-1.0", 1
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
 
----@class Mixin
-local _L = LibStub:NewLibrary(Core.M.Mixin)
+---@class Kapresoft_LibUtil_Mixin
+local L = LibStub:NewLibrary(MAJOR, MINOR)
+
+function Kapresoft_LibUtil_Mixin() return L end
 
 --[[-----------------------------------------------------------------------------
 Support Functions
@@ -24,7 +28,7 @@ local function listContains(source, match)
 end
 
 ---@param object any The target object
-function _L:MixinAll(object, ...)
+function L:MixinAll(object, ...)
     for i = 1, select("#", ...) do
         local mixin = select(i, ...)
         for k, v in pairs(mixin) do
@@ -42,7 +46,7 @@ end
 ---Mixin:(o, String)
 ---```
 ---@param object any
-function _L:Mixin(object, ...)
+function L:Mixin(object, ...)
     if not object then error(MIXIN_OBJ_REQUIRED_MSG) end
     return self:MixinExcept(object, { 'GetName', 'mt', 'log' }, ...)
 end
@@ -51,7 +55,7 @@ end
 ---local MyObj = MixinAndInit(MyMixin, arg1, arg2, argN)
 ---```
 ---@param object any
-function _L:MixinAndInit(object, ...)
+function L:MixinAndInit(object, ...)
     if not object then error(MIXIN_OBJ_REQUIRED_MSG) end
     local o = self:MixinExcept(object, { 'GetName', 'mt', 'log' }, ...)
     if o.Init then o:Init(...) end
@@ -60,14 +64,14 @@ end
 
 ---Mixin the ... with target object
 ---otherwise mixin selfObj if no args {...} are provided
-function _L:MixinOrElseSelf(target, selfObj, ...)
+function L:MixinOrElseSelf(target, selfObj, ...)
     local arg = {...}
     if 0 == #arg then self:Mixin(target, selfObj) else self:Mixin(target, ...) end
     return target
 end
 
 ---@param propertySkipItems table local items = { 'Property1', 'Property2' }
-function _L:MixinExcept(object, propertySkipItems, ...)
+function L:MixinExcept(object, propertySkipItems, ...)
     if 'table' ~= type(propertySkipItems) then error(WRONG_ARG_TYPE_MSG) end
     local arg = {...}
     if 0 == #arg then

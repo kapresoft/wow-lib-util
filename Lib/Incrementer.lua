@@ -1,17 +1,11 @@
---[[-----------------------------------------------------------------------------
-Local Vars
--------------------------------------------------------------------------------]]
-local O, Core, LibStub = __K_Core:LibPack_GlobalObjects()
+local LibStub = LibStub
+local MAJOR, MINOR = "Kapresoft-LibUtil-Incrementer-1.0", 1
 
 --[[-----------------------------------------------------------------------------
-New Instance
+Support Functions
 -------------------------------------------------------------------------------]]
-local L = LibStub:NewLibrary(Core.M.Incrementer)
 
---[[-----------------------------------------------------------------------------
-Methods
--------------------------------------------------------------------------------]]
----@param o Incrementer
+---@param o Kapresoft_LibUtil_Incrementer
 local function IncrementerMethods(o)
 
     ---@param customIncrement number
@@ -27,11 +21,14 @@ local function IncrementerMethods(o)
 
 end
 
----@param start number
----@param increment number
----@return Incrementer
-function ABP_CreateIncrementer(start, increment)
-    ---@class Incrementer
+--[[-----------------------------------------------------------------------------
+New Instance
+-------------------------------------------------------------------------------]]
+local L = LibStub:NewLibrary(MAJOR, MINOR)
+
+---@return Kapresoft_LibUtil_Incrementer
+function L:Create(start, increment)
+    ---@class Kapresoft_LibUtil_Incrementer
     local o = {
         startIndex = start,
         n = start,
@@ -39,4 +36,14 @@ function ABP_CreateIncrementer(start, increment)
     }
     IncrementerMethods(o)
     return o
+end
+
+--[[-----------------------------------------------------------------------------
+New Instance
+-------------------------------------------------------------------------------]]
+---@param start number
+---@param increment number
+---@return Kapresoft_LibUtil_Incrementer
+function Kapresoft_LibUtil_CreateIncrementer(start, increment)
+    return L:Create(start, increment)
 end

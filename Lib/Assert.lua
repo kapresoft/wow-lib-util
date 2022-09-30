@@ -6,40 +6,44 @@ local select, error, type, format = select, error, type, string.format
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub, Core = __K_Core:LibPack()
+local LibStub = LibStub
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
----@class Assert
-local _L = LibStub:NewLibrary(Core.M.Assert)
+local MAJOR,MINOR = "Kapresoft-LibUtil-Assert-1.0", 1
+
+---@class Kapresoft_LibUtil_Assert
+local L = LibStub:NewLibrary(MAJOR, MINOR)
+
+function Kapresoft_LibUtil_Assert() return L end
 
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
 ---@param obj table The object to check
-function _L.IsNil(obj)
+function L.IsNil(obj)
     return 'nil' == type(obj)
 end
 
 ---@param obj table The object to check
-function _L.IsNotNil(obj)
-    return not _L.IsNil(obj)
+function L.IsNotNil(obj)
+    return not L.IsNil(obj)
 end
 
 --- Example:
 --- `if A.HasKey(obj, key) then doStuff() end`
 ---@param obj table The object to check
 ---@param key string The key to the object to check
-function _L.HasKey(obj, key)
+function L.HasKey(obj, key)
     if type(obj) == 'nil' then return false end
     return 'nil' == type(obj[key])
 end
 
 --- Example:
 --- `if A.HasNoKey(obj, key) then return end`
-function _L.HasNoKey(obj, key)
-    return not _L.HasKey(obj, key)
+function L.HasNoKey(obj, key)
+    return not L.HasKey(obj, key)
 end
 
 -- Option #1
@@ -49,7 +53,7 @@ end
 -- 1: level
 -- 2: string format
 -- 3: args
-function _L.Throw(...)
+function L.Throw(...)
     local count = select('#', ...)
     if count == 0 then error('Arguments required') end
 
@@ -93,20 +97,20 @@ function _L.Throw(...)
 end
 
 ---@param obj table The object to check
-function _L.IsNotNil(obj)
-    return not _L.IsNil(obj)
+function L.IsNotNil(obj)
+    return not L.IsNil(obj)
 end
 
 --- Example:  AssertMethodArgNotNil(obj, 'name', 'OpenConfig(name)')
 ---@param obj any The object to assert
 ---@param paramName string The name of the object
 ---@param methodSignature string The method signature
-function _L.AssertThatMethodArgIsNotNil(obj, paramName, methodSignature)
-    if _L.IsNotNil(obj) then return end
+function L.AssertThatMethodArgIsNotNil(obj, paramName, methodSignature)
+    if L.IsNotNil(obj) then return end
     error(format('The method argument %s in %s should not be nil', paramName, methodSignature), 2)
 end
 
-function _L.AssertNotNil(obj, name)
-    if _L.IsNotNil(obj) then return end
-    _L.Throw(3, 'The following should not be nil: %s', name)
+function L.AssertNotNil(obj, name)
+    if L.IsNotNil(obj) then return end
+    L.Throw(3, 'The following should not be nil: %s', name)
 end

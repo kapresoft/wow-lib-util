@@ -6,14 +6,17 @@ local sformat, loadstring = string.format, loadstring
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local O, Core, LibStub = __K_Core:LibPack_GlobalObjects()
-local logPrefix = sformat(LibStub.logPrefix, '::' .. Core.M.LuaEvaluator) .. ':'
+local LibStub = LibStub
+local MAJOR, MINOR = "Kapresoft-LibUtil-LuaEvaluator-1.0", 1
+local logPrefix = ''
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
----@class LuaEvaluator
-local L = LibStub:NewLibrary(Core.M.LuaEvaluator)
+---@class Kapresoft_LibUtil_LuaEvaluator
+local L = LibStub:NewLibrary(MAJOR, MINOR)
+
+function Kapresoft_LibUtil_LuaEvaluator() return L end
 
 --[[-----------------------------------------------------------------------------
 Methods
