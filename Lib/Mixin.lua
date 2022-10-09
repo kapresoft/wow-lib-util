@@ -1,3 +1,5 @@
+---This is a customized version of Mixin based of Blizzards Mixin.lua
+---@see also Blizzard's Interface/SharedXML/Mixin.lua
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
@@ -93,4 +95,18 @@ function L:MixinExcept(object, propertySkipItems, ...)
         end
     end
     return object
+end
+
+---@see also Blizzard's Interface/SharedXML/Mixin.lua
+function K_CreateFromMixins(...)
+    return L:Mixin({}, ...)
+end
+
+---Create New instance of mixin and call Init() with parameters
+---@param mixin any The object to mixin the new instance
+---@see also Blizzard's Interface/SharedXML/Mixin.lua
+function K_CreateAndInitFromMixin(mixin, ...)
+    local object = K_CreateFromMixins(mixin);
+    object:Init(...);
+    return object;
 end
