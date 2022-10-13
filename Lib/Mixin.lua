@@ -1,14 +1,21 @@
 ---This is a customized version of Mixin based of Blizzards Mixin.lua
 ---@see also Blizzard's Interface/SharedXML/Mixin.lua
+
+--[[-----------------------------------------------------------------------------
+Lua Vars
+-------------------------------------------------------------------------------]]
+local sformat = string.format
+
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
+local addon, ns = ...
 local LibStub = LibStub
 local WRONG_TYPE_MSG = 'Expecting table to be source of mixin but got type [%s] instead'
 local WRONG_ARG_TYPE_MSG = 'Expected arg #2 to be a list of string properties.'
 local MIXIN_OBJ_REQUIRED_MSG = "Can't mixin to a nil object in Mixin(object, ...)"
-
 local MAJOR, MINOR = "Kapresoft-LibUtil-Mixin-1.0", 1
+local LOG_PREFIX = '|cfdffffff{{|r|cfd2db9fb' .. addon .. '|r|cfdfbeb2d%s|r|cfdffffff}}|r'
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -77,13 +84,13 @@ function L:MixinExcept(object, propertySkipItems, ...)
     if 'table' ~= type(propertySkipItems) then error(WRONG_ARG_TYPE_MSG) end
     local arg = {...}
     if 0 == #arg then
-        print(string.format(LibStub.logPrefix .. ':: %s', 'Mixin', 'No objects were passed to mixin.'))
+        print(sformat(LOG_PREFIX .. ':: %s', 'Mixin', 'No objects were passed to mixin.'))
         return
     end
     for i = 1, select("#", ...) do
         local mixin = select(i, ...)
         local objectType = type(mixin)
-        if 'table' ~= objectType then error(string.format(WRONG_TYPE_MSG, tostring(objectType))) end
+        if 'table' ~= objectType then error(sformat(WRONG_TYPE_MSG, tostring(objectType))) end
         for k, v in pairs(mixin) do
             -- Apply skipList to key of string types only
             if 'string' == type(k) then
