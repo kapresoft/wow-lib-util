@@ -8,7 +8,7 @@ function __Main()
   local isInteractive=$2
   local workdir=.
 
-  if [[ "${luaFilename}" = "-h" ]]; then
+  if [[ "${luaFilename}" = "-h" ]] || [[ "$1" = "" ]]; then
     echo "Usage: ./dev/run-lua <lua-filename>.lua [1:isInteractive]"
     echo "  Example #1:"
     echo "    ./dev/run-lua test-mixin"
