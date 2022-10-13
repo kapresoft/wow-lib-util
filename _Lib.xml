@@ -9,4 +9,6 @@
 	<Script file="Lib/Mixin.lua"/>
 	<Script file="Lib/LuaEvaluator.lua"/>
 
+	<Script file="Lib/Namespace.lua"/>
+
 </Ui>

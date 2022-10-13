@@ -9,7 +9,7 @@ local sformat = string.format
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local addon, ns = ...
+local addon = ...
 local LibStub = LibStub
 local WRONG_TYPE_MSG = 'Expecting table to be source of mixin but got type [%s] instead'
 local WRONG_ARG_TYPE_MSG = 'Expected arg #2 to be a list of string properties.'
