@@ -2,6 +2,7 @@
 Lua Vars
 -------------------------------------------------------------------------------]]
 local gsub, len, tinsert, pairs, type, tostring = string.gsub, string.len, table.insert , pairs, type, tostring
+local strlower = string.lower
 
 --[[-----------------------------------------------------------------------------
 Local Vars
@@ -133,4 +134,27 @@ function L.ParseBindingDetails(bindingName)
     local startIndexMatch, _, a,b,c = string.find(bindingName, "(.+%s)(%w+):(%a+)")
     if not (startIndexMatch or b) then return nil end
     return { action= L.TrimAll(a), buttonName = L.TrimAll(b), buttonPressed = L.TrimAll(c) }
+end
+
+---The following example returns true:
+---```
+---local isValidType = String.IsAnyOf('spell', 'SPELL', 'Item', 'Macro')
+---assertThat(isValidType).IsTrue()
+---```
+---
+---The following example returns false:
+---```
+---local isValidType = String.IsAnyOf('macrotext', 'SPELL', 'Item', 'Macro')
+---assertThat(isValidType).IsFalse()
+---```
+---@param valueToMatch string A case insensitive match against the variable argument #2.
+---@return boolean
+function L.IsAnyOf(valueToMatch, ...)
+    if not valueToMatch then return false end
+    local args = {...}
+    for i=1, #args do
+        local val = args[i]
+        if val and strlower(val) == strlower(valueToMatch) then return true end
+    end
+    return false
 end
