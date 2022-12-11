@@ -42,10 +42,11 @@
 --- }
 
 local LibStub = LibStub
+local C = Kapresoft_LibUtil_Constants
 
 ---@class Kapresoft_LibUtil_PrettyPrint
-local pprint = LibStub:NewLibrary('Kapresoft-LibUtil-PrettyPrint-1.0', 1)
-print('hello')
+local pprint = LibStub:NewLibrary(C:LibName('PrettyPrint'), 1)
+
 if not pprint then return end
 
 --local pprint = { VERSION = '0.1' }
