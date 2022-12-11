@@ -1,4 +1,4 @@
-local LibStub = LibStub
+local C = Kapresoft_LibUtil_Constants
 
 --[[-----------------------------------------------------------------------------
 Namespace Initialization
@@ -6,6 +6,8 @@ Namespace Initialization
 ---This is so that EmmyLua can function properly in IDEs
 ---@class Kapresoft_LibUtil_Objects
 local Kapresoft_LibUtil_Objects = {
+    ---@type Kapresoft_LibUtil_PrettyPrint
+    PrettyPrint = {},
     ---@type Kapresoft_LibUtil_Assert
     Assert = {},
     ---@type Kapresoft_LibUtil_Incrementer
@@ -20,12 +22,14 @@ local Kapresoft_LibUtil_Objects = {
     Table = {}
 }
 
+---The keys need to be the same as Kapresoft_LibUtil_Objects table so that EmmyLua will know the type.
 ---@type Kapresoft_LibUtil_Objects
 Kapresoft_LibUtil = {
-    ['Assert'] = LibStub('Kapresoft-LibUtil-Assert-1.0'),
-    ['Incrementer'] = LibStub('Kapresoft-LibUtil-Incrementer-1.0'),
-    ['LuaEvaluator'] = LibStub('Kapresoft-LibUtil-LuaEvaluator-1.0'),
-    ['Mixin'] = LibStub('Kapresoft-LibUtil-Mixin-1.0'),
-    ['String'] = LibStub('Kapresoft-LibUtil-String-1.0'),
-    ['Table'] = LibStub('Kapresoft-LibUtil-Table-1.0'),
+    ['PrettyPrint'] = C:KLibStub('PrettyPrint'),
+    ['Assert'] = C:KLibStub('Assert'),
+    ['Incrementer'] = C:KLibStub('Incrementer'),
+    ['LuaEvaluator'] = C:KLibStub('LuaEvaluator'),
+    ['Mixin'] = C:KLibStub('Mixin'),
+    ['String'] = C:KLibStub('String'),
+    ['Table'] = C:KLibStub('Table'),
 }
