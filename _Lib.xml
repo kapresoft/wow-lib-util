@@ -2,17 +2,17 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-	<Script file="Lib/Constants.lua"/>
+	<Script file="Lib\Constants.lua"/>
 
-	<Include file="Lib/pprint/pprint.xml"/>
+	<Include file="Lib\pprint\pprint.xml"/>
 
-	<Script file="Lib/Assert.lua"/>
-	<Script file="Lib/Table.lua"/>
-	<Script file="Lib/String.lua"/>
-	<Script file="Lib/Incrementer.lua"/>
-	<Script file="Lib/Mixin.lua"/>
-	<Script file="Lib/LuaEvaluator.lua"/>
+	<Script file="Lib\Assert.lua"/>
+	<Script file="Lib\Table.lua"/>
+	<Script file="Lib\String.lua"/>
+	<Script file="Lib\Incrementer.lua"/>
+	<Script file="Lib\Mixin.lua"/>
+	<Script file="Lib\LuaEvaluator.lua"/>
 
-	<Script file="Lib/Namespace.lua"/>
+	<Script file="Lib\Namespace.lua"/>
 
 </Ui>
