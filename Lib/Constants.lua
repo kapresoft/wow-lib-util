@@ -7,7 +7,7 @@ local L = {
     ---@param moduleName string
     ---@param self Kapresoft_LibUtil_Constants
     LibName = function(self, moduleName, optionalVersion)
-        local moduleVersion = optionalVersion or 1.0
+        local moduleVersion = optionalVersion or '1.0'
         return libPrefix .. '-' .. moduleName .. '-' .. tostring(moduleVersion)
     end
 }
