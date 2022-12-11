@@ -15,6 +15,8 @@ New Instance
 -------------------------------------------------------------------------------]]
 ---@class Kapresoft_LibUtil_LuaEvaluator
 local L = LibStub:NewLibrary(MAJOR, MINOR)
+-- return if already loaded and no upgrade necessary
+if not L then return end
 
 function Kapresoft_LibUtil_LuaEvaluator() return L end
 

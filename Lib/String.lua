@@ -16,6 +16,8 @@ New Instance
 -------------------------------------------------------------------------------]]
 ---@class Kapresoft_LibUtil_String
 local L = LibStub:NewLibrary(MAJOR, MINOR)
+-- return if already loaded and no upgrade necessary
+if not L then return end
 
 function Kapresoft_LibUtil_String() return L  end
 

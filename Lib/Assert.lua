@@ -15,6 +15,8 @@ local MAJOR,MINOR = "Kapresoft-LibUtil-Assert-1.0", 1
 
 ---@class Kapresoft_LibUtil_Assert
 local L = LibStub:NewLibrary(MAJOR, MINOR)
+-- return if already loaded and no upgrade necessary
+if not L then return end
 
 function Kapresoft_LibUtil_Assert() return L end
 

@@ -25,6 +25,8 @@ end
 New Instance
 -------------------------------------------------------------------------------]]
 local L = LibStub:NewLibrary(MAJOR, MINOR)
+-- return if already loaded and no upgrade necessary
+if not L then return end
 
 ---@return Kapresoft_LibUtil_Incrementer
 function L:Create(start, increment)
