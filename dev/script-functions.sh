@@ -58,8 +58,8 @@ SyncDir() {
   Print "Source" "${src}"
   Print "Dest" "${dest}"
 
-  local rsync_opts="--exclude ${excludes} --progress --inplace --out-format=\"[Modified: %M] %o %n%L\""
-  local cmd="rsync -aucv ${rsync_opts} ${src} ${dest}"
+  local rsync_opts="--delete --exclude ${excludes} --progress --inplace --out-format=\"[Modified: %M] %o %n%L\""
+  local cmd="rsync -aciv ${rsync_opts} ${src} ${dest}"
   echo "Executing: ${cmd}"
   echo "------------------------------------"
   eval "${cmd}"
