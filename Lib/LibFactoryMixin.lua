@@ -35,6 +35,8 @@ New Instance
 
 ---@class Kapresoft_LibUtil_LibFactoryMixin
 local L = LibStub:NewLibrary(MAJOR, MINOR)
+-- return if already loaded (this object can exist in other addons)
+if not L then return end
 
 ---@param anyTable Kapresoft_LibUtil_LibFactoryMixin
 local function LibStubLazyLoad(anyTable, libName)
