@@ -39,5 +39,8 @@ luac.out
 *.x86_64
 *.hex
 
+/External/*
+!External/_External.xml
 External/LibStub/
+
 .idea/

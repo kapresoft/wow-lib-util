@@ -9,6 +9,9 @@ externals:
   External/LibStub:
     url: https://repos.wowace.com/wow/libstub/trunk
     tag: latest
+  External/Ace3:
+    url: https://repos.wowace.com/wow/ace3/trunk
+    tag: latest
 
 ignore:
   - README.md

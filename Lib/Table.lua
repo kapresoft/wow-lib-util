@@ -12,12 +12,10 @@ local MAJOR, MINOR = "Kapresoft-LibUtil-Table-1.0", 1
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
----@class Kapresoft_LibUtil_Table
+--- @class Kapresoft_LibUtil_Table
 local L = LibStub:NewLibrary(MAJOR, MINOR)
 -- return if already loaded and no upgrade necessary
 if not L then return end
-
-function Kapresoft_LibUtil_Table() return L end
 
 --[[-----------------------------------------------------------------------------
 Methods
@@ -204,3 +202,10 @@ end
 
 function L.printG() L.printkvs(_G) end
 function L.printLoaded() L.printkvs(package.loaded) end
+
+
+--[[-----------------------------------------------------------------------------
+Global Methods
+-------------------------------------------------------------------------------]]
+--- @return Kapresoft_LibUtil_Table
+function Kapresoft_LibUtil_Table() return LibStub(MAJOR, MINOR) end

@@ -26,8 +26,6 @@ local L = LibStub:NewLibrary(MAJOR, MINOR)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
-function Kapresoft_LibUtil_Mixin() return L end
-
 --[[-----------------------------------------------------------------------------
 Support Functions
 -------------------------------------------------------------------------------]]
@@ -106,6 +104,9 @@ function L:MixinExcept(object, propertySkipItems, ...)
     return object
 end
 
+--[[-----------------------------------------------------------------------------
+Global Methods
+-------------------------------------------------------------------------------]]
 ---@see also Blizzard's Interface/SharedXML/Mixin.lua
 function K_CreateFromMixins(...)
     return L:Mixin({}, ...)
@@ -119,3 +120,6 @@ function K_CreateAndInitFromMixin(mixin, ...)
     object:Init(...);
     return object;
 end
+
+---@return Kapresoft_LibUtil_Mixin
+function Kapresoft_LibUtil_Mixin() return LibStub(MAJOR, MINOR) end

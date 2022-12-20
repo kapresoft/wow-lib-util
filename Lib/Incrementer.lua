@@ -47,5 +47,5 @@ New Instance
 ---@param increment number
 ---@return Kapresoft_LibUtil_Incrementer
 function Kapresoft_LibUtil_CreateIncrementer(start, increment)
-    return L:Create(start, increment)
+    return LibStub(MAJOR, MINOR):Create(start, increment)
 end

@@ -18,8 +18,6 @@ local L = LibStub:NewLibrary(MAJOR, MINOR)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
-function Kapresoft_LibUtil_Assert() return L end
-
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
@@ -66,7 +64,7 @@ function L.Throw(...)
     end
 
     local level = 2
-    local formatText = nil
+    local formatText
     local message = ''
 
      --Throw(1, 'An error occurred.')
@@ -116,3 +114,8 @@ function L.AssertNotNil(obj, name)
     if L.IsNotNil(obj) then return end
     L.Throw(3, 'The following should not be nil: %s', name)
 end
+
+--[[-----------------------------------------------------------------------------
+Global Method
+-------------------------------------------------------------------------------]]
+function Kapresoft_LibUtil_Assert() return LibStub(MAJOR, MINOR) end

@@ -19,8 +19,6 @@ local L = LibStub:NewLibrary(MAJOR, MINOR)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
-function Kapresoft_LibUtil_String() return L  end
-
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
@@ -160,3 +158,8 @@ function L.IsAnyOf(valueToMatch, ...)
     end
     return false
 end
+
+--[[-----------------------------------------------------------------------------
+Global Methods
+-------------------------------------------------------------------------------]]
+function Kapresoft_LibUtil_String() return LibStub(MAJOR, MINOR)  end

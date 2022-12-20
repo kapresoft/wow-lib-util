@@ -6,13 +6,14 @@
 
 	<Include file="Lib\pprint\pprint.xml"/>
 
+	<Script file="Lib\LibFactoryMixin.lua"/>
 	<Script file="Lib\Assert.lua"/>
 	<Script file="Lib\Table.lua"/>
 	<Script file="Lib\String.lua"/>
 	<Script file="Lib\Incrementer.lua"/>
 	<Script file="Lib\Mixin.lua"/>
 	<Script file="Lib\LuaEvaluator.lua"/>
-
+	<Include file="Lib\Ace3\_Ace3.xml"/>
 	<Script file="Lib\Namespace.lua"/>
 
 </Ui>

@@ -1,0 +1,28 @@
+# This file is used for pulling libraries down and extracting to Core/ExtLib directory
+
+package-as: Kapresoft-LibUtil
+
+# --------------------------
+license-output: LICENSE.txt
+enable-nolib-creation: no
+#enable-toc-creation: yes
+manual-changelog:
+  filename: CHANGELOG.txt
+  markup-type: markdown
+
+# Resources:
+#  - https://github.com/wowace-mirror
+#  - https://www.wowace.com/projects/ace3
+#  - SVN URLs are still the primary source recommendation
+externals:
+  #Core/Interface/Kapresoft-Wow-Api-Interface:
+  External/_NotDeployed/Interface/Kapresoft-Wow-Api-Interface:
+    url: https://github.com/kapresoft/wow-api-interface
+ignore:
+  - External/_NotDeployed/Interface/Kapresoft-Wow-Api-Interface/dev
+  - External/_NotDeployed/Interface/Kapresoft-Wow-Api-Interface/External
+  - External/_NotDeployed/Interface/Kapresoft-Wow-Api-Interface/LICENSE
+  - External/_NotDeployed/Interface/Kapresoft-Wow-Api-Interface/Kapresoft-Wow-Api-Interface.toc
+  - External/_NotDeployed/Interface/Kapresoft-Wow-Api-Interface/pull-extlib.sh
+  - External/_NotDeployed/Interface/Kapresoft-Wow-Api-Interface/script-functions.sh
+

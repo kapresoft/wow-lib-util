@@ -18,8 +18,6 @@ local L = LibStub:NewLibrary(MAJOR, MINOR)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
-function Kapresoft_LibUtil_LuaEvaluator() return L end
-
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
@@ -43,3 +41,7 @@ function L:Eval(literalVarName)
     return val
 end
 
+--[[-----------------------------------------------------------------------------
+Global Method
+-------------------------------------------------------------------------------]]
+function Kapresoft_LibUtil_LuaEvaluator() return LibStub(MAJOR, MINOR) end
