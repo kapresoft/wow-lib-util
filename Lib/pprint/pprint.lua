@@ -41,11 +41,8 @@
 ---     wrap_string = true
 --- }
 
-local LibStub = LibStub
-local C = Kapresoft_LibUtil_Constants
-
 ---@class Kapresoft_LibUtil_PrettyPrint
-local pprint = LibStub:NewLibrary(C:LibName('PrettyPrint'), 1)
+local pprint = LibStub:NewLibrary(K_LibName('PrettyPrint'), 1)
 
 if not pprint then return end
 

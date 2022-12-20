@@ -6,12 +6,12 @@ local select, error, type, format = select, error, type, string.format
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub = LibStub
+local LibStub, K_LibName = LibStub, K_LibName
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
-local MAJOR,MINOR = "Kapresoft-LibUtil-Assert-1.0", 1
+local MAJOR,MINOR = K_LibName('Assert'), 1
 
 ---@class Kapresoft_LibUtil_Assert
 local L = LibStub:NewLibrary(MAJOR, MINOR)

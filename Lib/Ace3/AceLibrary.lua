@@ -1,7 +1,8 @@
-local LibStub = LibStub
-local logPrefix = Kapresoft_LibUtil_Constants:CreateLogPrefix('AceLibrary')
+local LibStub, K_LibName = LibStub, K_LibName
+local ModuleName = 'AceLibrary'
+local MAJOR,MINOR = K_LibName(ModuleName), 1
+local logPrefix = Kapresoft_LibUtil_Constants:CreateLogPrefix(ModuleName)
 
-local MAJOR,MINOR = "Kapresoft-LibUtil-AceLibrary-1.0", 1
 ---@class Kapresoft_LibUtil_AceLibrary
 local L = LibStub:NewLibrary(MAJOR, MINOR)
 -- return if already loaded (this object can exist in other addons)

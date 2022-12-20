@@ -1,5 +1,6 @@
 local LibStub = LibStub
 local C = Kapresoft_LibUtil_Constants
+local K_LibStub = K_LibStub
 
 local MAJOR, MINOR = "Kapresoft-LibUtil-Namespace-1.0", 1
 
@@ -37,15 +38,15 @@ local Kapresoft_LibUtil_Objects = {
 ---The keys need to be the same as Kapresoft_LibUtil_Objects table so that EmmyLua will know the type.
 ---@type Kapresoft_LibUtil_Objects
 L.Objects = {
-    ['PrettyPrint'] = C:KLibStub('PrettyPrint'),
-    ['AceLibrary'] = C:KLibStub('AceLibrary'),
-    ['Assert'] = C:KLibStub('Assert'),
-    ['Incrementer'] = C:KLibStub('Incrementer'),
-    ['LuaEvaluator'] = C:KLibStub('LuaEvaluator'),
-    ['Mixin'] = C:KLibStub('Mixin'),
-    ['String'] = C:KLibStub('String'),
-    ['Table'] = C:KLibStub('Table'),
-    ['LibFactoryMixin'] = C:KLibStub('LibFactoryMixin'),
+    ['PrettyPrint'] = K_LibStub('PrettyPrint'),
+    ['AceLibrary'] = K_LibStub('AceLibrary'),
+    ['Assert'] = K_LibStub('Assert'),
+    ['Incrementer'] = K_LibStub('Incrementer'),
+    ['LuaEvaluator'] = K_LibStub('LuaEvaluator'),
+    ['Mixin'] = K_LibStub('Mixin'),
+    ['String'] = K_LibStub('String'),
+    ['Table'] = K_LibStub('Table'),
+    ['LibFactoryMixin'] = K_LibStub('LibFactoryMixin'),
 }
 
 --- @type Kapresoft_LibUtil_Namespace

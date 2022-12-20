@@ -7,8 +7,8 @@ local strlower = string.lower
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub = LibStub
-local MAJOR, MINOR = "Kapresoft-LibUtil-String-1.0", 1
+local LibStub, K_LibName = LibStub, K_LibName
+local MAJOR, MINOR = K_LibName('String'), 1
 
 
 --[[-----------------------------------------------------------------------------

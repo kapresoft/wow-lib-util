@@ -6,8 +6,8 @@ local sformat, loadstring = string.format, loadstring
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub = LibStub
-local MAJOR, MINOR = "Kapresoft-LibUtil-LuaEvaluator-1.0", 1
+local LibStub, K_LibName = LibStub, K_LibName
+local MAJOR, MINOR = K_LibName("LuaEvaluator"), 1
 local logPrefix = ''
 
 --[[-----------------------------------------------------------------------------

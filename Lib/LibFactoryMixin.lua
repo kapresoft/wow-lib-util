@@ -7,10 +7,11 @@ local sformat = string.format
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub = LibStub
-local MAJOR, MINOR = "Kapresoft-LibUtil-LibFactoryMixin-1.0", 1
+local LibStub, K_LibName = LibStub, K_LibName
+local ModuleName = 'LibFactoryMixin'
+local MAJOR, MINOR = K_LibName(ModuleName), 1
 local C = Kapresoft_LibUtil_Constants
-local logPrefix = C:CreateLogPrefix('LibFactoryMixin')
+local logPrefix = C:CreateLogPrefix(ModuleName)
 local Table = Kapresoft_LibUtil_Table()
 
 --[[-----------------------------------------------------------------------------

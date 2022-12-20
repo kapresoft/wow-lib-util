@@ -10,11 +10,12 @@ local sformat = string.format
 Local Vars
 -------------------------------------------------------------------------------]]
 local addon = ...
-local LibStub = LibStub
+local LibStub, K_LibName = LibStub, K_LibName
+local MAJOR, MINOR = K_LibName("Mixin"), 1
+
 local WRONG_TYPE_MSG = 'Expecting table to be source of mixin but got type [%s] instead'
 local WRONG_ARG_TYPE_MSG = 'Expected arg #2 to be a list of string properties.'
 local MIXIN_OBJ_REQUIRED_MSG = "Can't mixin to a nil object in Mixin(object, ...)"
-local MAJOR, MINOR = "Kapresoft-LibUtil-Mixin-1.0", 1
 local LOG_PREFIX = '|cfdffffff{{|r|cfd2db9fb' .. addon .. '|r|cfdfbeb2d%s|r|cfdffffff}}|r'
 
 --[[-----------------------------------------------------------------------------

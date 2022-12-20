@@ -6,8 +6,8 @@ local table, unpack = table, unpack
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub = LibStub
-local MAJOR, MINOR = "Kapresoft-LibUtil-Table-1.0", 1
+local LibStub, K_LibName = LibStub, K_LibName
+local MAJOR, MINOR = K_LibName('Table'), 1
 
 --[[-----------------------------------------------------------------------------
 New Instance

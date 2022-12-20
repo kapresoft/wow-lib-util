@@ -17,6 +17,19 @@ local consoleColors = {
     tertiary = 'ffffff'
 }
 
+---@param optionalVersion number
+---@param moduleName string
+local function _LibName(moduleName, optionalVersion)
+    local moduleVersion = optionalVersion or '1.0'
+    return libPrefix .. '-' .. moduleName .. '-' .. tostring(moduleVersion)
+end
+
+--- @param optionalVersion number
+--- @param moduleName string
+local function _LibStub(moduleName, optionalVersion)
+    return LibStub(_LibName(moduleName, optionalVersion))
+end
+
 ---@class Kapresoft_LibUtil_Constants
 local L = LibStub:NewLibrary(MAJOR, MINOR)
 -- return if already loaded and no upgrade necessary
@@ -24,6 +37,7 @@ if not L then return end
 
 ---@param o Kapresoft_LibUtil_Constants
 local function PropertiesAndMethods(o)
+
     function o:FormatColor(color, text) return sformat('|cfd%s%s|r', color, text) end
     function o:PrimaryColor(text) return self:FormatColor(consoleColors.primary, text)  end
     function o:SecondaryColor(text) return self:FormatColor(consoleColors.secondary, text)  end
@@ -36,14 +50,12 @@ local function PropertiesAndMethods(o)
 
     ---@param optionalVersion number
     ---@param moduleName string
-    function o:LibName(moduleName, optionalVersion)
-        local moduleVersion = optionalVersion or '1.0'
-        return libPrefix .. '-' .. moduleName .. '-' .. tostring(moduleVersion)
-    end
+    function o:LibName(moduleName, optionalVersion) return _LibName(moduleName, optionalVersion) end
+
     --- @param optionalVersion number
     --- @param moduleName string
     function o:KLibStub(moduleName, optionalVersion)
-        return LibStub(self:LibName(moduleName, optionalVersion))
+        return _LibStub(moduleName, optionalVersion)
     end
 end
 
@@ -54,3 +66,6 @@ Global Method
 -------------------------------------------------------------------------------]]
 ---@type Kapresoft_LibUtil_Constants
 Kapresoft_LibUtil_Constants = LibStub(MAJOR, MINOR)
+K_LibName =  _LibName
+K_LibStub = _LibStub
+

@@ -1,5 +1,8 @@
-local LibStub = LibStub
-local MAJOR, MINOR = "Kapresoft-LibUtil-Incrementer-1.0", 1
+--[[-----------------------------------------------------------------------------
+Local Vars
+-------------------------------------------------------------------------------]]
+local LibStub, K_LibName = LibStub, K_LibName
+local MAJOR, MINOR = K_LibName("Incrementer"), 1
 
 --[[-----------------------------------------------------------------------------
 Support Functions
