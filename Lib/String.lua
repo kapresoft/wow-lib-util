@@ -8,7 +8,7 @@ local strlower = string.lower
 Local Vars
 -------------------------------------------------------------------------------]]
 local LibStub, K_LibName = LibStub, K_LibName
-local MAJOR, MINOR = K_LibName('String'), 1
+local MAJOR, MINOR = K_LibName('String'), 2
 
 
 --[[-----------------------------------------------------------------------------
@@ -158,6 +158,26 @@ function L.IsAnyOf(valueToMatch, ...)
     end
     return false
 end
+
+---http://lua-users.org/wiki/StringRecipes
+---@param str string
+---@param start string The string start to match
+function L.StartsWith(str, start) return str:sub(1, #start) == start end
+---@param str string
+---@param start string The string start to match
+function L.StartsWithIgnoreCase(str, start) return strlower(str:sub(1, #start)) == strlower(start) end
+---@param str string
+---@param ending string The string ending to match
+function L.EndsWith(str, ending) return ending == "" or str:sub(-#ending) == ending end
+---@param str string
+---@param ending string The string ending to match
+function L.EndsWithIgnoreCase(str, ending) return ending == "" or strlower(str:sub(-#ending)) == strlower(ending) end
+---@param str string The value
+---@param match string The string value to match
+function L.Contains(str, match) return str:find(match) end
+---@param str string The value
+---@param match string The string value to match
+function L.ContainsIgnoreCase(str, match) return strlower(str):find(strlower(match)) end
 
 --[[-----------------------------------------------------------------------------
 Global Methods

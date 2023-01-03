@@ -28,7 +28,13 @@ function __Main()
   if [[ "${isInteractive}" = 'true' ]] || [[ "${isInteractive}" = '1' ]]; then
     luaArgs='-i'
   fi
-  local cmd="lua $luaArgs ./dev/${luaFilename}.lua"
+  local testFile="./dev/test-${luaFilename}.lua"
+  local cmd=
+  if [[ -f "${testFile}" ]]; then
+    cmd="lua $luaArgs ${testFile}"
+  else
+    cmd="lua $luaArgs ./dev/${luaFilename}.lua"
+  fi
   echo Executing: $cmd
   eval "$cmd"
 }
