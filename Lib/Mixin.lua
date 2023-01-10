@@ -11,7 +11,7 @@ Local Vars
 -------------------------------------------------------------------------------]]
 local addon = ...
 local LibStub, K_LibName = LibStub, K_LibName
-local MAJOR, MINOR = K_LibName("Mixin"), 1
+local MAJOR, MINOR = K_LibName("Mixin"), 2
 
 local WRONG_TYPE_MSG = 'Expecting table to be source of mixin but got type [%s] instead'
 local WRONG_ARG_TYPE_MSG = 'Expected arg #2 to be a list of string properties.'
@@ -108,14 +108,20 @@ end
 --[[-----------------------------------------------------------------------------
 Global Methods
 -------------------------------------------------------------------------------]]
----@see also Blizzard's Interface/SharedXML/Mixin.lua
-function K_CreateFromMixins(...)
-    return L:Mixin({}, ...)
-end
+--- Apply Mixins to target `<object>`
+--- #### Additional Notes:
+--- - The `...` args are the items to be mixed-in to the target `<object>`
+--- @see also Blizzard's Interface/SharedXML/Mixin.lua#Mixin(object, ...)
+--- @param object any The target object of the mixin
+function K_Mixin(object, ...) return L:Mixin(object, ...) end
 
----Create New instance of mixin and call Init() with parameters
----@param mixin any The object to mixin the new instance
----@see also Blizzard's Interface/SharedXML/Mixin.lua
+--- #### Additional Notes: ... args are the items to be mixed in to object
+--- @see also Blizzard's Interface/SharedXML/Mixin.lua
+function K_CreateFromMixins(...) return L:Mixin({}, ...) end
+
+--- Create New instance of `mixin` and call `<new-object>:Init(arg1, arg2, argN) method`
+--- @param mixin any The object to mixin the new instance
+--- @see also Blizzard's Interface/SharedXML/Mixin.lua
 function K_CreateAndInitFromMixin(mixin, ...)
     local object = K_CreateFromMixins(mixin);
     object:Init(...);
