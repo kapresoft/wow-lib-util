@@ -1,22 +1,34 @@
-Kapresoft_LibUtil_LogLevel=0
 --[[-----------------------------------------------------------------------------
 Lua Vars
 -------------------------------------------------------------------------------]]
 local sformat = string.format
 
 --[[-----------------------------------------------------------------------------
+Blizzard Vars
+-------------------------------------------------------------------------------]]
+local CreateAndInitFromMixin = CreateAndInitFromMixin
+
+--[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub, K_LibName = LibStub, K_LibName
+--- @type Kapresoft_Base_Namespace
+local _, ns = ...
+
+--- The original LibStub
+local LibStub = LibStub
 local ModuleName = 'LibFactoryMixin'
-local MAJOR, MINOR = K_LibName(ModuleName), 1
-local C = Kapresoft_LibUtil_Constants
-local logPrefix = C:CreateLogPrefix(ModuleName)
-local Table = Kapresoft_LibUtil_Table()
+local logPrefix = ns.Kapresoft_LibUtil.H:CreateLogPrefix(ModuleName)
+local MAJOR, MINOR = sformat('Kapresoft-LibUtil-%s-1.0', ModuleName), 2
 
 --[[-----------------------------------------------------------------------------
 Support Functions
 -------------------------------------------------------------------------------]]
+local function TableSize(t)
+    if type(t) ~= 'table' then error(string.format("Expected arg to be of type table, but got: %s", type(t))) end
+    local count = 0
+    for _ in pairs(t) do count = count + 1 end
+    return count
+end
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -34,7 +46,7 @@ New Instance
 --- local aceAddon = aceLib.AceAddon
 --- ```
 
----@class Kapresoft_LibUtil_LibFactoryMixin
+---@type Kapresoft_LibUtil_LibFactoryMixin
 local L = LibStub:NewLibrary(MAJOR, MINOR)
 -- return if already loaded (this object can exist in other addons)
 if not L then return end
@@ -44,15 +56,13 @@ local function LibStubLazyLoad(anyTable, libName)
     assert(libName, logPrefix .. 'Library name is required.')
     --- @class _AnyInstance : Kapresoft_LibUtil_LibFactoryMixin
     local mixinInstance = anyTable.mixinInstance
-    local cache = mixinInstance.cache
-    if not cache[libName] then
-        cache[libName] = LibStub(mixinInstance.libNames[libName])
-        if Kapresoft_LibUtil_LogLevel >= 10 then
-            print(logPrefix, sformat("Loaded[%s]: %s",
-                    tostring(libName), tostring(cache[libName])))
-        end
+    local libNameMajor = mixinInstance.libNames[libName]
+    local libInstance = LibStub(libNameMajor)
+    if Kapresoft_LibUtil_LogLevel >= 10 then
+        print(logPrefix, sformat("Loaded[%s]: %s",
+                tostring(libNameMajor), tostring(libInstance)))
     end
-    return cache[libName]
+    return libInstance
 end
 
 --- Called Automatically by Mixin upon creation
@@ -61,9 +71,8 @@ end
 function L:Init(libNames, nameGeneratorFunction)
     assert('table' == type(libNames), logPrefix .. 'libNames arg is required')
     self.libNames = {}
-    self.cache = {}
 
-    if Table.size(libNames) > 0 then
+    if TableSize(libNames)  > 0 then
         if 'function' == type(nameGeneratorFunction) then
             for k, v in pairs(libNames) do
                 local libNameGen = nameGeneratorFunction(v)
@@ -100,17 +109,14 @@ local function Methods(o)
     --- local libFactory = LibFactoryMixin:New(Names:table, function(moduleName) return moduleName .. '-3.0') end)
     --- ```
     --- @vararg any
+    --- @see Interface/SharedXML/Mixin.lua#CreateAndInitFromMixin
+    --- @return Kapresoft_LibUtil_LibFactoryMixin
     function o:New(...)
         ---Calls Init(...)
-        return K_CreateAndInitFromMixin(L, ...)
+        return CreateAndInitFromMixin(L, ...)
     end
+    --- @return Kapresoft_LibUtil_AceLibraryObjects
     function o:GetObjects() return self.objects end
 end
 
 Methods(L)
-
---[[-----------------------------------------------------------------------------
-Global Method
--------------------------------------------------------------------------------]]
----@return Kapresoft_LibUtil_LibFactoryMixin
-function Kapresoft_LibUtil_LibFactoryMixin() return LibStub(MAJOR, MINOR) end

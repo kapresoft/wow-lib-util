@@ -1,14 +1,16 @@
-local LibStub, K_LibName = LibStub, K_LibName
-local ModuleName = 'AceLibrary'
-local MAJOR,MINOR = K_LibName(ModuleName), 1
-local logPrefix = Kapresoft_LibUtil_Constants:CreateLogPrefix(ModuleName)
+--- @type Kapresoft_Base_Namespace
+local _, ns = ...
+local O, LibStub, M, pformat, LibUtil = ns.Kapresoft_LibUtil:LibPack()
+
+local ModuleName = M.AceLibrary
+local logPrefix = LibUtil.H:CreateLogPrefix(ModuleName)
 
 ---@class Kapresoft_LibUtil_AceLibrary
-local L = LibStub:NewLibrary(MAJOR, MINOR)
+local L = LibStub:NewLibrary(ModuleName, 2)
 -- return if already loaded (this object can exist in other addons)
 if not L then return end
 
-local Names = {
+L.Names = {
     AceAddon = "AceAddon-3.0",
     AceConsole = 'AceConsole-3.0',
     AceConfig = 'AceConfig-3.0',
@@ -20,38 +22,9 @@ local Names = {
     AceGUI = 'AceGUI-3.0',
     AceLibSharedMedia = 'LibSharedMedia-3.0'
 }
-L.Names = Names
-
----@class Kapresoft_LibUtil_AceLibraryObjects
-local Objects = {
-    ---@type AceAddon
-    AceAddon = nil,
-    ---@type AceConsole
-    AceConsole = nil,
-    ---@type AceConfig
-    AceConfig = nil,
-    ---@type AceConfigDialog
-    AceConfigDialog = nil,
-    ---@type AceDB
-    AceDB = nil,
-    ---@type AceDBOptions
-    AceDBOptions = nil,
-    ---@type AceEvent
-    AceEvent = nil,
-    ---@type AceHook
-    AceHook = nil,
-    ---@type AceGUI
-    AceGUI = nil,
-    ---@type AceLibSharedMedia
-    AceLibSharedMedia = nil,
-}
 
 ---@type Kapresoft_LibUtil_LibFactoryMixin
-local libFactory = Kapresoft_LibUtil_LibFactoryMixin():New(Names)
+local LibFactoryMixin = LibStub('LibFactoryMixin')
+local libFactory = LibFactoryMixin:New(L.Names)
 
----@type Kapresoft_LibUtil_AceLibraryObjects
-local O = libFactory:GetObjects()
-L.O = O
-
----@return Kapresoft_LibUtil_AceLibrary
-function Kapresoft_LibUtil_AceLibrary() return LibStub(MAJOR, MINOR) end
+L.O = libFactory:GetObjects()
