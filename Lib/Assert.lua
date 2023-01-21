@@ -6,35 +6,35 @@ local select, error, type, format = select, error, type, string.format
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub, K_LibName = LibStub, K_LibName
+--- @type Kapresoft_Base_Namespace
+local _, ns = ...
+local O, LibStub, M, pformat = ns.Kapresoft_LibUtil:LibPack()
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
-local MAJOR,MINOR = K_LibName('Assert'), 1
-
----@class Kapresoft_LibUtil_Assert
-local L = LibStub:NewLibrary(MAJOR, MINOR)
+--- @class Kapresoft_LibUtil_Assert
+local L = LibStub:NewLibrary(M.Assert, 2)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
----@param obj table The object to check
+--- @param obj table The object to check
 function L.IsNil(obj)
     return 'nil' == type(obj)
 end
 
----@param obj table The object to check
+--- @param obj table The object to check
 function L.IsNotNil(obj)
     return not L.IsNil(obj)
 end
 
 --- Example:
 --- `if A.HasKey(obj, key) then doStuff() end`
----@param obj table The object to check
----@param key string The key to the object to check
+--- @param obj table The object to check
+--- @param key string The key to the object to check
 function L.HasKey(obj, key)
     if type(obj) == 'nil' then return false end
     return 'nil' == type(obj[key])
@@ -96,15 +96,15 @@ function L.Throw(...)
     error(format(formatText, unpack(formatArgs)), level)
 end
 
----@param obj table The object to check
+--- @param obj table The object to check
 function L.IsNotNil(obj)
     return not L.IsNil(obj)
 end
 
 --- Example:  AssertMethodArgNotNil(obj, 'name', 'OpenConfig(name)')
----@param obj any The object to assert
----@param paramName string The name of the object
----@param methodSignature string The method signature
+--- @param obj any The object to assert
+--- @param paramName string The name of the object
+--- @param methodSignature string The method signature
 function L.AssertThatMethodArgIsNotNil(obj, paramName, methodSignature)
     if L.IsNotNil(obj) then return end
     error(format('The method argument %s in %s should not be nil', paramName, methodSignature), 2)
@@ -114,8 +114,3 @@ function L.AssertNotNil(obj, name)
     if L.IsNotNil(obj) then return end
     L.Throw(3, 'The following should not be nil: %s', name)
 end
-
---[[-----------------------------------------------------------------------------
-Global Method
--------------------------------------------------------------------------------]]
-function Kapresoft_LibUtil_Assert() return LibStub(MAJOR, MINOR) end

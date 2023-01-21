@@ -7,15 +7,15 @@ local strlower = string.lower
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub, K_LibName = LibStub, K_LibName
-local MAJOR, MINOR = K_LibName('String'), 2
-
+--- @type Kapresoft_Base_Namespace
+local _, ns = ...
+local O, LibStub, M = ns.Kapresoft_LibUtil:LibPack()
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
 ---@class Kapresoft_LibUtil_String
-local L = LibStub:NewLibrary(MAJOR, MINOR)
+local L = LibStub:NewLibrary(M.String, 3)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
@@ -178,8 +178,3 @@ function L.Contains(str, match) return str:find(match) end
 ---@param str string The value
 ---@param match string The string value to match
 function L.ContainsIgnoreCase(str, match) return strlower(str):find(strlower(match)) end
-
---[[-----------------------------------------------------------------------------
-Global Methods
--------------------------------------------------------------------------------]]
-function Kapresoft_LibUtil_String() return LibStub(MAJOR, MINOR)  end

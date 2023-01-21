@@ -6,14 +6,15 @@ local table, unpack = table, unpack
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub, K_LibName = LibStub, K_LibName
-local MAJOR, MINOR = K_LibName('Table'), 1
+--- @type Kapresoft_Base_Namespace
+local _, ns = ...
+local O, LibStub, M = ns.Kapresoft_LibUtil:LibPack()
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_Table
-local L = LibStub:NewLibrary(MAJOR, MINOR)
+local L = LibStub:NewLibrary(M.Table, 2)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
@@ -202,10 +203,3 @@ end
 
 function L.printG() L.printkvs(_G) end
 function L.printLoaded() L.printkvs(package.loaded) end
-
-
---[[-----------------------------------------------------------------------------
-Global Methods
--------------------------------------------------------------------------------]]
---- @return Kapresoft_LibUtil_Table
-function Kapresoft_LibUtil_Table() return LibStub(MAJOR, MINOR) end

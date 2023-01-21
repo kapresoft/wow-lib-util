@@ -3,5 +3,6 @@
 ..\FrameXML\UI.xsd">
 
     <Script file="pprint.lua"/>
+    <Script file="PrettyPrintWrapper.lua"/>
 
 </Ui>

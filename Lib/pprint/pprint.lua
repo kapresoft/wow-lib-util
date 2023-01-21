@@ -42,7 +42,7 @@
 --- }
 
 ---@class Kapresoft_LibUtil_PrettyPrint
-local pprint = LibStub:NewLibrary(K_LibName('PrettyPrint'), 1)
+local pprint = LibStub:NewLibrary('Kapresoft-LibUtil-PrettyPrint-1.0', 1)
 
 if not pprint then return end
 

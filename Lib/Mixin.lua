@@ -9,9 +9,9 @@ local sformat = string.format
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local addon = ...
-local LibStub, K_LibName = LibStub, K_LibName
-local MAJOR, MINOR = K_LibName("Mixin"), 2
+--- @type Kapresoft_Base_Namespace
+local addon, ns = ...
+local O, LibStub, M, pformat, LibUtil = ns.Kapresoft_LibUtil:LibPack()
 
 local WRONG_TYPE_MSG = 'Expecting table to be source of mixin but got type [%s] instead'
 local WRONG_ARG_TYPE_MSG = 'Expected arg #2 to be a list of string properties.'
@@ -23,7 +23,7 @@ New Instance
 -------------------------------------------------------------------------------]]
 
 ---@class Kapresoft_LibUtil_Mixin
-local L = LibStub:NewLibrary(MAJOR, MINOR)
+local L = LibStub:NewLibrary(M.Mixin, 3)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
@@ -105,28 +105,15 @@ function L:MixinExcept(object, propertySkipItems, ...)
     return object
 end
 
---[[-----------------------------------------------------------------------------
-Global Methods
--------------------------------------------------------------------------------]]
---- Apply Mixins to target `<object>`
---- #### Additional Notes:
---- - The `...` args are the items to be mixed-in to the target `<object>`
---- @see also Blizzard's Interface/SharedXML/Mixin.lua#Mixin(object, ...)
---- @param object any The target object of the mixin
-function K_Mixin(object, ...) return L:Mixin(object, ...) end
+--- @see Similar Interface/SharedXML/Mixin.lua#Mixin(object, ...)
+function LibUtil:Mixin(object, ...) return L:Mixin(object, ...) end
 
---- #### Additional Notes: ... args are the items to be mixed in to object
---- @see also Blizzard's Interface/SharedXML/Mixin.lua
-function K_CreateFromMixins(...) return L:Mixin({}, ...) end
+--- @see Similar Interface/SharedXML/Mixin.lua#CreateFromMixins(...)
+function LibUtil:CreateFromMixins(...) return self:Mixin({}, ...) end
 
---- Create New instance of `mixin` and call `<new-object>:Init(arg1, arg2, argN) method`
---- @param mixin any The object to mixin the new instance
---- @see also Blizzard's Interface/SharedXML/Mixin.lua
-function K_CreateAndInitFromMixin(mixin, ...)
-    local object = K_CreateFromMixins(mixin);
+--- @see Similar Interface/SharedXML/Mixin.lua#CreateAndInitFromMixins(...)
+function LibUtil:CreateAndInitFromMixin(mixin, ...)
+    local object = self:CreateFromMixins(mixin);
     object:Init(...);
     return object;
 end
-
----@return Kapresoft_LibUtil_Mixin
-function Kapresoft_LibUtil_Mixin() return LibStub(MAJOR, MINOR) end

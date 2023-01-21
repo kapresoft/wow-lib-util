@@ -6,15 +6,16 @@ local sformat, loadstring = string.format, loadstring
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
-local LibStub, K_LibName = LibStub, K_LibName
-local MAJOR, MINOR = K_LibName("LuaEvaluator"), 1
+--- @type Kapresoft_Base_Namespace
+local _, ns = ...
+local O, LibStub, M, pformat = ns.Kapresoft_LibUtil:LibPack()
 local logPrefix = ''
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
 ---@class Kapresoft_LibUtil_LuaEvaluator
-local L = LibStub:NewLibrary(MAJOR, MINOR)
+local L = LibStub:NewLibrary(M.LuaEvaluator, 2)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
@@ -40,8 +41,3 @@ function L:Eval(literalVarName)
     end
     return val
 end
-
---[[-----------------------------------------------------------------------------
-Global Method
--------------------------------------------------------------------------------]]
-function Kapresoft_LibUtil_LuaEvaluator() return LibStub(MAJOR, MINOR) end
