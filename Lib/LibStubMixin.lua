@@ -53,13 +53,15 @@ local function PropsAndMethods(o)
     --- #### Usage
     --- `local LocalLibStub = ns.LibStubMixin:New('MyAddonName', 1.0)`
     --- @see BlizzardInterfaceCode: Interface/SharedXML/Mixin.lua
-    --- @return Kapresoft_LibUtil_LibStubMixin
-    function o:New(...) return CreateAndInitFromMixin(L, ...) end
+    --- @param name string This is usually the AddOn name
+    --- @param version number|string A decimal number, i.e. 1.0, 1.1, 2.0, 3.0
+    --- @param postConstructFn PostConstructHandler | "function(libName, newLibInstance) print('Name:', libName) end"
+    function o:New(name, version, postConstructFn) return CreateAndInitFromMixin(L, name, version, postConstructFn) end
 
     --- @param name string This is usually the AddOn name
     --- @param version number|string A decimal number, i.e. 1.0, 1.1, 2.0, 3.0
-    --- @param registerFnOrTable fun(libName:string, libInstance:any) : void
-    function o:Init(name, version, registerFnOrTable)
+    --- @param postConstructFn PostConstructHandler | "function(libName, newLibInstance) print("Name:", libName) end"
+    function o:Init(name, version, postConstructFn)
         local actualVersion = ResolveVersionString(version)
 
         assert(name, "LibStub library name is required, i.e. <AddOnName>")
@@ -67,15 +69,13 @@ local function PropsAndMethods(o)
         self.name = name
         self.versionFormat = self.name .. '-%s-' .. actualVersion
         self.version = actualVersion
+        self.postConstructFn = postConstructFn
 
         self.mt = {
             __call = function (_, ...) return self:GetLibrary(...) end,
             __tostring = function() return self.name .. '::LibStubMixin'  end
         }
         setmetatable(self, self.mt)
-
-        if 'function' == type(registerFnOrTable) then registerFnOrTable(self.name, self)
-        elseif 'table' == type(registerFnOrTable) then registerFnOrTable[name] = self end
     end
 
     --- #### Local Lib
@@ -131,6 +131,8 @@ local function PropsAndMethods(o)
 
         if type(obj.mt) ~= 'table' then obj.mt = {} end
         setmetatable(obj, obj.mt)
+
+        if 'function' == type(self.postConstructFn) then self.postConstructFn(libName, obj) end
 
         return obj
     end

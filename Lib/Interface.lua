@@ -1,6 +1,7 @@
 --[[-----------------------------------------------------------------------------
 This file is not needed to function. It is solely for EmmyLua / IDE functionality
 -------------------------------------------------------------------------------]]
+--- @alias PostConstructHandler fun(libName:string, newLibInstance:any) : void
 
 --- @class Kapresoft_LibUtil_Objects
 local Kapresoft_LibUtil_Objects = {
