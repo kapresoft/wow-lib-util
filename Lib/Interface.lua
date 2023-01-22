@@ -53,7 +53,7 @@ local Objects = {
     AceLibSharedMedia = nil,
 }
 
---- @class Kapresoft_LibUtil_LibStub : LibStubMixin
+--- @class Kapresoft_LibUtil_LibStub : Kapresoft_LibUtil_LibStubMixin
 local Kapresoft_LibUtil_LibStub = {
 
 }

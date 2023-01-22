@@ -77,9 +77,9 @@ local LibUtil = {
     --- @param self Kapresoft_LibUtil
     --- @param moduleName string
     Lib = function(self, moduleName) return sformat('%s-%s-1.0', self.LibPrefix, moduleName) end,
-
+    --- Objects needs to be nil for lazy loading
     --- @type Kapresoft_LibUtil_Objects
-    Objects = {},
+    Objects = nil,
     --- @type Kapresoft_LibUtil_ConsoleColor
     H = CreateAndInitFromMixin(ConsoleColorMixin, consoleColors),
 
@@ -89,6 +89,53 @@ local LibUtil = {
     ShouldLog = function(self, logLevel) return self.LogLevel <= (logLevel or 0)  end,
 }
 
+local LibStubMixin = LibUtil:Lib('LibStubMixin')
+local Library = LibUtil:Lib('Library')
+local Mixin = LibUtil:Lib('Mixin')
+local Incrementer = LibUtil:Lib('Incrementer')
+
+--[[-----------------------------------------------------------------------------
+Support Functions
+-------------------------------------------------------------------------------]]
+local function InitLazyLoaders()
+    local lazyLoaders = {
+        ['Objects'] = function() return LibStub(Library).Objects end,
+        ['LibStub'] = function() return LibStub(LibStubMixin):New(LibUtil.LibPrefix, 1.0) end
+    }
+    ---@param o Kapresoft_LibUtil The LibUtil instance
+    local function LibStubLazyLoad(o, libName)
+        if lazyLoaders[libName] then
+            o[libName] = lazyLoaders[libName]()
+            return o[libName]
+        end
+        return nil
+    end
+
+    LibUtil.mt = { __index = LibStubLazyLoad }
+    setmetatable(LibUtil, LibUtil.mt)
+end
+
+--[[-----------------------------------------------------------------------------
+Methods
+-------------------------------------------------------------------------------]]
+--- @see Similar Interface/SharedXML/Mixin.lua#Mixin(object, ...)
+function LibUtil:Mixin(object, ...) return LibStub(Mixin):Mixin(object, ...) end
+
+--- @see Similar Interface/SharedXML/Mixin.lua#CreateFromMixins(...)
+function LibUtil:CreateFromMixins(...) return LibStub(Mixin):Mixin({}, ...) end
+
+--- @see Similar Interface/SharedXML/Mixin.lua#CreateAndInitFromMixins(...)
+function LibUtil:CreateAndInitFromMixin(mixin, ...)
+    local object = self:CreateFromMixins(mixin);
+    object:Init(...);
+    return object;
+end
+
+--- @param start number
+--- @param increment number
+--- @return Kapresoft_LibUtil_Incrementer
+function LibUtil:CreateIncrementer(start, increment) return LibStub(Incrementer):New(start, increment) end
+
 --- ```
 --- @type Kapresoft_Base_Namespace
 --- local _, ns = ...
@@ -97,4 +144,12 @@ local LibUtil = {
 --- @return Kapresoft_LibUtil_Objects, Kapresoft_LibUtil_LibStub, Kapresoft_LibUtil_Modules, fun(fmt:string, ...)|fun(val:string), Kapresoft_LibUtil
 function LibUtil:LibPack() return self.Objects, self.LibStub, self.M, self.pformat, self end
 
+--[[-----------------------------------------------------------------------------
+Lazy Load
+-------------------------------------------------------------------------------]]
+InitLazyLoaders()
+
+--[[-----------------------------------------------------------------------------
+Add to Namespace
+-------------------------------------------------------------------------------]]
 ns.Kapresoft_LibUtil = LibUtil

@@ -28,12 +28,13 @@ end
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
+--- @class Kapresoft_LibUtil_Incrementer_Lib
 local L = LibStub:NewLibrary(M.Incrementer, 2)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
 --- @return Kapresoft_LibUtil_Incrementer
-function L:Create(start, increment)
+function L:New(start, increment)
     --- @class Kapresoft_LibUtil_Incrementer
     local o = {
         startIndex = start,
@@ -43,11 +44,3 @@ function L:Create(start, increment)
     IncrementerMethods(o)
     return o
 end
-
---[[-----------------------------------------------------------------------------
-LibUtil:CreateIncrementer(start, increment)
--------------------------------------------------------------------------------]]
---- @param start number
---- @param increment number
---- @return Kapresoft_LibUtil_Incrementer
-function LibUtil:CreateIncrementer(start, increment) return L:Create(start, increment) end

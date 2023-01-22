@@ -104,16 +104,3 @@ function L:MixinExcept(object, propertySkipItems, ...)
     end
     return object
 end
-
---- @see Similar Interface/SharedXML/Mixin.lua#Mixin(object, ...)
-function LibUtil:Mixin(object, ...) return L:Mixin(object, ...) end
-
---- @see Similar Interface/SharedXML/Mixin.lua#CreateFromMixins(...)
-function LibUtil:CreateFromMixins(...) return self:Mixin({}, ...) end
-
---- @see Similar Interface/SharedXML/Mixin.lua#CreateAndInitFromMixins(...)
-function LibUtil:CreateAndInitFromMixin(mixin, ...)
-    local object = self:CreateFromMixins(mixin);
-    object:Init(...);
-    return object;
-end

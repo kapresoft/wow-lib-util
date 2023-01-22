@@ -70,6 +70,7 @@ local function PropsAndMethods(o)
         self.versionFormat = self.name .. '-%s-' .. actualVersion
         self.version = actualVersion
         self.postConstructFn = postConstructFn
+        self.LibStubAce = LibStub
 
         self.mt = {
             __call = function (_, ...) return self:GetLibrary(...) end,

@@ -2,7 +2,7 @@
 Local Vars
 -------------------------------------------------------------------------------]]
 --- @type Kapresoft_Base_Namespace
-local _, ns = ...
+local addon, ns = ...
 local LibStub = LibStub
 local LibUtil = ns.Kapresoft_LibUtil
 
@@ -50,15 +50,11 @@ L.Names = {
     LibFactoryMixin = Lib(M.LibFactoryMixin),
 }
 
----@type Kapresoft_LibUtil_LibFactoryMixin
-local LibFactoryMixin = LibStub(Lib(M.LibFactoryMixin))
-local libFactory = LibFactoryMixin:New(L.Names)
-
 --[[-----------------------------------------------------------------------------
 Namespace Objects
 -------------------------------------------------------------------------------]]
+---@type Kapresoft_LibUtil_LibFactoryMixin
+local LibFactoryMixin = LibStub(Lib(M.LibFactoryMixin))
+local libFactory = LibFactoryMixin:New(L.Names)
 --- @type Kapresoft_LibUtil_Objects
-LibUtil.Objects = libFactory:GetObjects()
-
---- @type Kapresoft_LibUtil_LibStub
-LibUtil.LibStub = LibUtil.Objects.LibStubMixin:New(LibUtil.LibPrefix, 1.0)
+L.Objects = libFactory:GetObjects()
