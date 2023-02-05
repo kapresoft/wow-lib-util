@@ -25,8 +25,10 @@ local Kapresoft_LibUtil_Objects = {
     Table = {},
     --- @type Kapresoft_LibUtil_LibStubMixin
     LibStubMixin = {},
-    ------ @type Kapresoft_LibUtil_LibFactoryMixin
-    LibFactoryMixin = {}
+    --- @type Kapresoft_LibUtil_LibFactoryMixin
+    LibFactoryMixin = {},
+    --- @type Kapresoft_LibUtil_Safecall
+    Safecall = {},
 }
 
 --- @class Kapresoft_LibUtil_AceLibraryObjects

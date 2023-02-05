@@ -16,6 +16,7 @@ local M = {
     Mixin = 'Mixin',
     String = 'String',
     Table = 'Table',
+    Safecall = 'Safecall',
     PrettyPrint = 'PrettyPrint',
     AceLibrary = 'AceLibrary',
     LuaEvaluator = 'LuaEvaluator',
@@ -29,7 +30,7 @@ local function Lib(moduleName) return LibUtil:Lib(moduleName) end
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 2)
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 3)
 -- return if already loaded and no upgrade necessary
 if not L then return end
 
@@ -43,6 +44,7 @@ L.Names = {
     Mixin = Lib(M.Mixin),
     String = Lib(M.String),
     Table = Lib(M.Table),
+    Safecall = Lib(M.Safecall),
     PrettyPrint = Lib(M.PrettyPrint),
     AceLibrary = Lib(M.AceLibrary),
     LuaEvaluator = Lib(M.LuaEvaluator),

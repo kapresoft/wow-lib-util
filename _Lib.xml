@@ -15,6 +15,7 @@
 	<Script file="Lib\Incrementer.lua"/>
 	<Script file="Lib\Mixin.lua"/>
 	<Script file="Lib\LuaEvaluator.lua"/>
+	<Script file="Lib\Safecall.lua"/>
 
 	<Include file="Lib\Ace3\_Ace3.xml"/>
 
