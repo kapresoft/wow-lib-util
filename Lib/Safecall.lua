@@ -17,7 +17,6 @@ New Instance
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_Safecall
 local L = LibStub:NewLibrary(M.Safecall, 1); if not L then return end
-print("Safecall called...")
 
 --[[-----------------------------------------------------------------------------
 Methods
