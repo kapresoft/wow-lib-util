@@ -9,11 +9,14 @@
 
 	<Script file="Lib\Library.lua"/>
 
+	<Include file="Lib\Mixin\_Mixin.xml"/>
+
 	<Script file="Lib\Assert.lua"/>
 	<Script file="Lib\Table.lua"/>
-	<Script file="Lib\String.lua"/>
+
+	<Include file="Lib\String\_String.xml"/>
+
 	<Script file="Lib\Incrementer.lua"/>
-	<Script file="Lib\Mixin.lua"/>
 	<Script file="Lib\LuaEvaluator.lua"/>
 	<Script file="Lib\Safecall.lua"/>
 

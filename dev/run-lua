@@ -10,6 +10,9 @@ function __Main()
 
   if [[ "${luaFilename}" = "-h" ]] || [[ "$1" = "" ]]; then
     echo "Usage: ./dev/run-lua <lua-filename>.lua [1:isInteractive]"
+    echo "       ./dev/run-lua test-mixin [1:isInteractive]"
+    echo "       # OR "
+    echo "       ./dev/run-lua mixin [1:isInteractive]"
     echo "  Example #1:"
     echo "    ./dev/run-lua test-mixin"
     echo "  Example #2: Interactive Mode"
@@ -17,7 +20,7 @@ function __Main()
     exit 0
   fi
 
-  local externalLib='External/?.lua'
+  local externalLib='External/?.lua;dev/lib/?.lua'
   local projectLib="${workdir}/Lib/?.lua"
   local localLibs="${externalLib};${projectLib}"
 
@@ -28,6 +31,10 @@ function __Main()
   if [[ "${isInteractive}" = 'true' ]] || [[ "${isInteractive}" = '1' ]]; then
     luaArgs='-i'
   fi
+
+  # Use `luaver install 5.1`
+  export PATH=~/.luaver/lua/5.1/bin:$PATH
+
   local testFile="./dev/test-${luaFilename}.lua"
   local cmd=
   if [[ -f "${testFile}" ]]; then

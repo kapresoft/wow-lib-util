@@ -2,36 +2,65 @@
 --[[-----------------------------------------------------------------------------
 Lua Vars
 -------------------------------------------------------------------------------]]
--- LibStub requires strmatch/string.match to be global
-strmatch = string.match
+--VERBOSE = true
+local require = require
 
-local require, format = require, string.format
+require('test.Setup')
+require('Mixin.MixinBase')
+
+---@type Kapresoft_LibUtil_BaseMixin
+local Mixin = LibStub('Kapresoft-LibUtil-BaseMixin-1.0')
+_suite(tostring(Mixin))
 
 --[[-----------------------------------------------------------------------------
-Setup: Same order as _Lib.xml
+Tests
 -------------------------------------------------------------------------------]]
-require('LibStub.LibStub')
-require('Constants')
-require('pprint.pprint')
-require('Assert')
-require('Table')
-require('String')
-require('Incrementer')
-require('Mixin')
-require('LuaEvaluator')
-require('Namespace')
-
----@class Mix
-local mix = {
-    Init = function(self, x,y)
-        self.x = x
-        self.y = y
-    end,
-    Hello = function(self) print('hello world. x:', self.x, 'y:', self.y)  end
+local Mixin1 = {
+    Init = function(self, name) self.name = name end,
+    Purpose = 'To mix in',
+    hello = function(self)  return "Hello World: " .. tostring(self.name)  end
 }
+assertNil(getmetatable(Mixin1))
 
+--print('Mixin1:', pformat(Mixin1))
 
----@class V : Mix
-local v = K_CreateAndInitFromMixin(mix, 1, 2)
-assert(v.Hello, "Expected v:Hello() method to exists, but didn't")
-v:Hello()
+-- ###############################################
+_test('Mixin')
+
+local c = {}
+local cprime = Mixin:Mixin(c, Mixin1)
+--print('c:', pformat(c))
+
+assertNotNil(c, 'C exists')
+assertNil(getmetatable(c), 'Metatable should be abset')
+assertNotEquals(c, Mixin1, 'C is different from Mixin1')
+assertEquals(c, cprime, 'C table hash')
+assertType(c.Init, 'function', 'c.Init')
+assertType(c.Purpose, 'string', 'c.Purpose')
+
+-- ###############################################
+_test('CreateAndInitFromMixin')
+
+local a = Mixin:CreateAndInitFromMixin(Mixin1, 'John')
+--print('a:', pformat(a))
+
+--- Verify hash is not the same
+local mixinHash = tostring(Mixin1)
+assert(mixinHash, "Mixin1 Hash is missing")
+local aHash = tostring(a)
+assertNotEquals(aHash, mixinHash, 'Hash Values')
+
+--- Verify args was passed
+assertEquals('Hello World: John', a:hello(), 'Hello()')
+
+-- ###############################################
+_test('CreateFromMixins')
+
+local b = Mixin:CreateFromMixins(Mixin1)
+assertNil(b.name)
+assertEquals('Hello World: nil', b:hello())
+
+--[[-----------------------------------------------------------------------------
+Teardown
+-------------------------------------------------------------------------------]]
+require('test.Teardown')

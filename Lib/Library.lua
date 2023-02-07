@@ -6,6 +6,11 @@ local addon, ns = ...
 local LibStub = LibStub
 local LibUtil = ns.Kapresoft_LibUtil
 
+--- This global var will be used by libraries for simplicity
+--- @see _Init.lua#InitLazyLoaders()
+--- @type Kapresoft_LibUtil_LibStub
+Kapresoft_LibStub = LibUtil.LibStub
+
 --- @class Kapresoft_LibUtil_Modules
 local M = {
     Constants = 'Constants',
@@ -30,11 +35,7 @@ local function Lib(moduleName) return LibUtil:Lib(moduleName) end
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 3)
--- return if already loaded and no upgrade necessary
-if not L then return end
-
-L.libPrefix = LibUtil.libPrefix
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 3); if not L then return end
 
 L.Names = {
     Constants = Lib(M.Constants),

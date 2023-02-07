@@ -23,7 +23,7 @@ local addOn, ns = ...
 Support Functions: Console Colors
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_ColorDefinition
-local consoleColors = ns.consoleColors or {
+local consoleColors = {
     primary   = 'e3caaf',
     secondary = 'fbeb2d',
     tertiary = 'ffffff'
@@ -74,19 +74,28 @@ Kapresoft_LibUtil Initialization
 --- @type Kapresoft_LibUtil
 local LibUtil = {
     LibPrefix = LibPrefix,
-    --- @param self Kapresoft_LibUtil
-    --- @param moduleName string
-    Lib = function(self, moduleName) return sformat('%s-%s-1.0', self.LibPrefix, moduleName) end,
-    --- Objects needs to be nil for lazy loading
-    --- @type Kapresoft_LibUtil_Objects
-    Objects = nil,
+    --- @type Kapresoft_LibUtil_Modules
+    M = {},
     --- @type Kapresoft_LibUtil_ConsoleColor
     H = CreateAndInitFromMixin(ConsoleColorMixin, consoleColors),
-
     LogLevel = Kapresoft_LibUtil_LogLevel or 0,
     --- @param self Kapresoft_LibUtil
     --- @param logLevel number A zero or positive number
     ShouldLog = function(self, logLevel) return self.LogLevel <= (logLevel or 0)  end,
+
+    --- @param self Kapresoft_LibUtil
+    --- @param moduleName string
+    Lib = function(self, moduleName) return sformat('%s-%s-1.0', self.LibPrefix, moduleName) end,
+
+    --- @type Kapresoft_LibUtil_LibStubMixin
+    LibStubMixin = {},
+
+    --- Objects needs to be nil for lazy loading
+    --- @type Kapresoft_LibUtil_Objects
+    Objects = nil,
+
+    --- @type fun(fmt:string, ...)|fun(val:string)
+    pformat = {},
 }
 
 local LibStubMixin = LibUtil:Lib('LibStubMixin')
@@ -99,8 +108,10 @@ Support Functions
 -------------------------------------------------------------------------------]]
 local function InitLazyLoaders()
     local lazyLoaders = {
-        ['Objects'] = function() return LibStub(Library).Objects end,
-        ['LibStub'] = function() return LibStub(LibStubMixin):New(LibUtil.LibPrefix, 1.0) end
+        --- @type Kapresoft_LibUtil_Objects
+        Objects = function() return LibStub(Library).Objects end,
+        --- @type Kapresoft_LibUtil_LibStub
+        LibStub = function() return LibStub(LibStubMixin):New(LibUtil.LibPrefix, 1.0) end
     }
     ---@param o Kapresoft_LibUtil The LibUtil instance
     local function LibStubLazyLoad(o, libName)
