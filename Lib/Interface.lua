@@ -88,6 +88,11 @@ local Kapresoft_LibUtil = {
     --- @type fun(self:Kapresoft_LibUtil) : Kapresoft_LibUtil_LibStub, fun(fmt:string, ...)|fun(val:string)
     LibPack = {},
 
+    --- Creates a library wrapper specifically for the World of Warcraft
+    --- Usage: local L = CreateLibWrapper('Table', 5, 'Kapresoft-Table-1.0')
+    --- @type fun(self:Kapresoft_LibUtil, moduleName:ModuleName, moduleRevision:number, targetLibraryMajorVersion:TargetLibraryMajorVersion) : any
+    CreateLibWrapper = {},
+
     --- Create an incrementer
     --- @type fun(self:Kapresoft_LibUtil, start:number, increment:number) : Kapresoft_LibUtil_Incrementer
     CreateIncrementer = {},
@@ -98,7 +103,6 @@ local Kapresoft_LibUtil = {
     CreateFromMixins = {},
     --- @type fun(self:Kapresoft_LibUtil, mixin:any, ...) : any
     CreateAndInitFromMixin = {}
-
 
 }
 

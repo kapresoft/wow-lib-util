@@ -2,7 +2,7 @@
 Blizzard Vars
 -------------------------------------------------------------------------------]]
 local CreateAndInitFromMixin = CreateAndInitFromMixin
-
+K_VERBOSE = true
 --[[-----------------------------------------------------------------------------
 Global Vars
 -------------------------------------------------------------------------------]]
@@ -15,6 +15,7 @@ Local Vars
 local sformat = string.format
 local LibPrefix = 'Kapresoft-LibUtil'
 local nameShort = 'KL'
+local logPrefix = 'Kapresoft-LibUtil::Init:'
 
 --- @type Kapresoft_Base_Namespace
 local addOn, ns = ...
@@ -129,13 +130,33 @@ end
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
+---@alias ModuleName string |"'String'"|"'Table'"|"'Mixin'"|"'Assert'"|"'Safecall'"|"'Incrementer'"
+---@alias TargetLibraryMajorVersion string |"'Kapresoft-Table-1.0'"|"'Kapresoft-String-1.0'"|"'Kapresoft-Mixin-1.0'"|"'Kapresoft-Assert-1.0'"|
+---@param moduleName ModuleName Example: 'Table' or 'String'
+---@param moduleRevision number
+---@param targetLibraryMajorVersion TargetLibraryMajorVersion The target library major version
+function LibUtil:CreateLibWrapper(moduleName, moduleRevision, targetLibraryMajorVersion)
+    local W = self.LibStub:NewLibrary(moduleName, moduleRevision); if not W then return end
+    local L = self.LibStub:LibStub(targetLibraryMajorVersion); if not L then return end
+    getmetatable(W).__index = L
+    getmetatable(W).__tostring = function()
+        local majorVersion = self:Lib(moduleName)
+        return majorVersion .. '.' .. LibStub.minors[majorVersion]
+    end
+    if K_VERBOSE then
+        local prefix = self.H:CreateLogPrefix('Init')
+        print(prefix, moduleName .. ':', self.pformat({lib=tostring(L), wrapper=tostring(W)}))
+    end
+    return W
+end
+
 --- @see Similar Interface/SharedXML/Mixin.lua#Mixin(object, ...)
 function LibUtil:Mixin(object, ...) return LibStub(Mixin):Mixin(object, ...) end
 
 --- @see Similar Interface/SharedXML/Mixin.lua#CreateFromMixins(...)
 function LibUtil:CreateFromMixins(...) return LibStub(Mixin):Mixin({}, ...) end
 
---- @see Similar Interface/SharedXML/Mixin.lua#CreateAndInitFromMixins(...)
+--- @see Similar Interface/SharedXML/Mixin.lua#CreateAndInitFromMixin(...)
 function LibUtil:CreateAndInitFromMixin(mixin, ...)
     local object = self:CreateFromMixins(mixin);
     object:Init(...);
@@ -159,6 +180,11 @@ function LibUtil:LibPack() return self.Objects, self.LibStub, self.M, self.pform
 Lazy Load
 -------------------------------------------------------------------------------]]
 InitLazyLoaders()
+
+--- @return Kapresoft_LibUtil
+function K_LibUtil(...) return select(2, ...).Kapresoft_LibUtil end
+--- @return Kapresoft_LibUtil_LibStub
+function K_LibStub(...) return select(2, ...).Kapresoft_LibUtil.LibStub end
 
 --[[-----------------------------------------------------------------------------
 Add to Namespace

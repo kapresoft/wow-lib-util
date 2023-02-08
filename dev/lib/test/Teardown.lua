@@ -4,5 +4,6 @@ sformat = nil
 LibStub = nil
 
 
-if true == VERBOSE then print('Teardown called...') end
+if true == K_VERBOSE then print('Teardown called...') end
 
+reportFailures()

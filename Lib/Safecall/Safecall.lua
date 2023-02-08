@@ -1,22 +1,26 @@
 --[[-----------------------------------------------------------------------------
 Blizzard Vars
 -------------------------------------------------------------------------------]]
+--- @see BlizzardInterfaceCode::Interface/SharedXML/Mixin.lua#CreateAndInitFromMixin(...)
 local CreateAndInitFromMixin = CreateAndInitFromMixin
 
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
---- @type Kapresoft_Base_Namespace
-local _, ns = ...
-local K = ns.Kapresoft_LibUtil
-local LibStub, M = K.LibStub, K.M
-local errorPrefix = K.H:FormatColor('ff0000', '::ERROR::')
+local errorPrefix = '::ERROR::'
+
+--- @type LibStub
+local LibStub = LibStub
+local MAJOR_VERSION = 'Kapresoft-Safecall-1.0'
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
---- @class Kapresoft_LibUtil_Safecall
-local L = LibStub:NewLibrary(M.Safecall, 1); if not L then return end
+--- @class Kapresoft_Safecall
+local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
+L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
+setmetatable(L, L.mt)
+if K_VERBOSE then print('Safecall:', tostring(L)) end
 
 --[[-----------------------------------------------------------------------------
 Methods

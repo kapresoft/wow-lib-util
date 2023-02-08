@@ -6,17 +6,18 @@ local table, unpack = table, unpack
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
---- @type Kapresoft_Base_Namespace
-local _, ns = ...
-local O, LibStub, M = ns.Kapresoft_LibUtil:LibPack()
+--- @type LibStub
+local LibStub = LibStub
+local MAJOR_VERSION = 'Kapresoft-Table-1.0'
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
---- @class Kapresoft_LibUtil_Table
-local L = LibStub:NewLibrary(M.Table, 2)
--- return if already loaded and no upgrade necessary
-if not L then return end
+--- @class Kapresoft_Table
+local L = LibStub:NewLibrary(MAJOR_VERSION, 2); if not L then return end
+L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
+setmetatable(L, L.mt)
+if K_VERBOSE then print('Table:', tostring(L)) end
 
 --[[-----------------------------------------------------------------------------
 Methods
@@ -24,13 +25,22 @@ Methods
 ---Trim Trailing and Leading Trim
 local function Trim(s) return (s:gsub("^%s*(.-)%s*$", "%1")) end
 
-function L.parseSpaceSeparatedVar(text)
+--- @param text string The space separated string. Example: 'one two three'
+function L.ParseSpaceSeparatedVar(text)
     local rt = {}
     for a in text:gmatch("%S+") do table.insert(rt, a) end
     return rt
 end
+--- @deprecated Use #ParseSpaceSeparatedVar
+--- @param text string The space separated string. Example: 'one two three'
+function L.parseSpaceSeparatedVar(text) return L.ParseSpaceSeparatedVar(text) end
 
-function L.parseCSV(text)
+--- @deprecated Use #ParseCSV
+--- @param text string The comma separated string. Example: 'one, two, three'
+function L.parseCSV(text) return L.ParseCSV(text) end
+
+--- @param text string The comma separated string. Example: 'one, two, three'
+function L.ParseCSV(text)
     local rt = {}
     for a,v in text:gmatch("([^,]+)") do
         local a2 = Trim(a)
@@ -39,21 +49,43 @@ function L.parseCSV(text)
     return rt
 end
 
-function L.size(t)
+--- @param t table
+function L.Size(t)
     if type(t) ~= 'table' then error(string.format("Expected arg to be of type table, but got: %s", type(t))) end
     local count = 0
     for _ in pairs(t) do count = count + 1 end
     return count
 end
-function L.isEmpty(t)
+--- @deprecated Use #Size
+--- @param t table
+function L.size(t) return L.Size(t)  end
+
+--- @param t table
+function L.IsEmpty(t)
     if t == nil then return true end
-    return L.size(t) <= 0
+    return L.Size(t) <= 0
 end
-function L.members()
-    print('table members: ')
-    for key, _ in pairs(L) do
-        print(" " .. key);
+
+--- @deprecated Use #IsEmpty
+--- @param t table
+function L.isEmpty(t) return L.IsEmpty(t)  end
+
+--- @param t table
+function L.Keys(t)
+    local keys = {}
+    for k in pairs(t) do
+        table.insert(keys, k)
     end
+    return keys
+end
+
+--- @param t table
+function L.Values(t)
+    local values = {}
+    for _, v in pairs(t) do
+        table.insert(values, v)
+    end
+    return values
 end
 
 function L.shallow_copy(t)

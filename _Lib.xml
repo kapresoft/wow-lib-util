@@ -10,15 +10,14 @@
 	<Script file="Lib\Library.lua"/>
 
 	<Include file="Lib\Mixin\_Mixin.xml"/>
-
-	<Script file="Lib\Assert.lua"/>
-	<Script file="Lib\Table.lua"/>
-
+	<Include file="Lib\Assert\_Assert.xml"/>
+	<Include file="Lib\Table\_Table.xml"/>
 	<Include file="Lib\String\_String.xml"/>
 
 	<Script file="Lib\Incrementer.lua"/>
 	<Script file="Lib\LuaEvaluator.lua"/>
-	<Script file="Lib\Safecall.lua"/>
+
+	<Include file="Lib\Safecall\_Safecall.xml"/>
 
 	<Include file="Lib\Ace3\_Ace3.xml"/>
 

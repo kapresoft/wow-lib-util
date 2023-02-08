@@ -2,14 +2,14 @@
 --[[-----------------------------------------------------------------------------
 Lua Vars
 -------------------------------------------------------------------------------]]
---VERBOSE = true
+--K_VERBOSE = true
 local require = require
 
 require('test.Setup')
-require('Mixin.MixinBase')
+require('Mixin.Mixin')
 
----@type Kapresoft_LibUtil_BaseMixin
-local Mixin = LibStub('Kapresoft-LibUtil-BaseMixin-1.0')
+---@type Kapresoft_Mixin
+local Mixin = LibStub('Kapresoft-Mixin-1.0')
 _suite(tostring(Mixin))
 
 --[[-----------------------------------------------------------------------------

@@ -2,14 +2,14 @@
 --[[-----------------------------------------------------------------------------
 Lua Vars
 -------------------------------------------------------------------------------]]
---VERBOSE = true
+--K_VERBOSE = true
 local require = require
 
 require('test.Setup')
-require('String.StringBase')
+require('String.String')
 
----@type Kapresoft_LibUtil_BaseString
-local String = LibStub('Kapresoft-LibUtil-BaseString-1.0')
+---@type Kapresoft_String
+local String = LibStub('Kapresoft-String-1.0')
 _suite(tostring(String))
 
 --[[-----------------------------------------------------------------------------
