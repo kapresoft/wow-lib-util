@@ -39,3 +39,8 @@ hasError = false
 xpcall(function() Assert.AssertNotNil({})  end,
         function(errMsg) hasError = true end)
 assertFalse(hasError, 'AssertNotNil::AssertionShouldPass')
+
+--[[-----------------------------------------------------------------------------
+Teardown
+-------------------------------------------------------------------------------]]
+require('test.Teardown')

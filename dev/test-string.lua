@@ -42,3 +42,8 @@ _test('ContainsIgnoreCase')
 assertTrue(String.ContainsIgnoreCase("hello there world", "THERE"), 'Contains("THERE")')
 assertTrue(String.ContainsIgnoreCase("hello there world", "LLO th"), 'Contains("LLO th")')
 assertFalse(String.ContainsIgnoreCase("any word", "yyy xx"), 'Contains("yyy XX)')
+
+--[[-----------------------------------------------------------------------------
+Teardown
+-------------------------------------------------------------------------------]]
+require('test.Teardown')
