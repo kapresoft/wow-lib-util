@@ -3,7 +3,7 @@ local _, ns = ...
 local O, LibStub, M, pformat, LibUtil = ns.Kapresoft_LibUtil:LibPack()
 
 local ModuleName = M.AceLibrary
-local logPrefix = LibUtil.H:CreateLogPrefix(ModuleName)
+local logPrefix = LibUtil.CH:CreateLogPrefix(ModuleName)
 
 ---@class Kapresoft_LibUtil_AceLibrary
 local L = LibStub:NewLibrary(ModuleName, 2)

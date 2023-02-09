@@ -13,7 +13,7 @@ local Kapresoft_LibUtil_Objects = {
     AceLibrary = {},
     --- @type Kapresoft_LibUtil_Assert
     Assert = {},
-    --- @type Kapresoft_LibUtil_Incrementer
+    --- @type Kapresoft_LibUtil_IncrementerBuilder
     Incrementer = {},
     --- @type Kapresoft_LibUtil_LuaEvaluator
     LuaEvaluator = {},
@@ -67,8 +67,8 @@ local Kapresoft_LibUtil = {
     LibPrefix = '',
     --- @type Kapresoft_LibUtil_Modules
     M = {},
-    --- @type Kapresoft_LibUtil_ConsoleColor
-    H = {},
+    --- @type Kapresoft_LibUtil_ConsoleHelper
+    CH = {},
     --- @type number
     LogLevel = 0,
     --- @type fun(self:Kapresoft_LibUtil, logLevel:number) : boolean
@@ -88,8 +88,13 @@ local Kapresoft_LibUtil = {
     --- @type fun(self:Kapresoft_LibUtil) : Kapresoft_LibUtil_LibStub, fun(fmt:string, ...)|fun(val:string)
     LibPack = {},
 
+    --- Creates a library wrapper specifically for the World of Warcraft
+    --- Usage: local L = CreateLibWrapper('Table', 5, 'Kapresoft-Table-1.0')
+    --- @type fun(self:Kapresoft_LibUtil, moduleName:ModuleName, moduleRevision:number, targetLibraryMajorVersion:TargetLibraryMajorVersion) : any
+    CreateLibWrapper = {},
+
     --- Create an incrementer
-    --- @type fun(self:Kapresoft_LibUtil, start:number, increment:number) : Kapresoft_LibUtil_Incrementer
+    --- @type fun(self:Kapresoft_LibUtil, start:number, increment:number) : Kapresoft_Incrementer
     CreateIncrementer = {},
 
     --- @type fun(self:Kapresoft_LibUtil, object:any, ...) : any
@@ -99,7 +104,6 @@ local Kapresoft_LibUtil = {
     --- @type fun(self:Kapresoft_LibUtil, mixin:any, ...) : any
     CreateAndInitFromMixin = {}
 
-
 }
 
 --- @class Kapresoft_Base_Namespace
@@ -108,7 +112,7 @@ local Kapresoft_Namespace = {
     Kapresoft_LibUtil = {},
 }
 
---- @class Kapresoft_LibUtil_LibFactoryMixin
+--- @class Kapresoft_LibUtil_LibFactoryMixin : Kapresoft_LibFactoryMixin
 local Kapresoft_LibUtil_LibFactoryMixin = {
     --- @type fun(self:Kapresoft_LibUtil_LibFactoryMixin) : table
     GetObjects = {}
@@ -117,5 +121,5 @@ local Kapresoft_LibUtil_LibFactoryMixin = {
 --- @class Kapresoft_LibUtil_BaseLibrary
 local Kapresoft_LibUtil_BaseLibrary = {}
 
---- @class Kapresoft_LibUtil_ConsoleColor : Kapresoft_LibUtil_ConsoleColorMixin
+--- @class Kapresoft_LibUtil_ConsoleHelper : Kapresoft_LibUtil_ConsoleHelperMixin
 local ConsoleColor = {}

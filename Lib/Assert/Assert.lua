@@ -6,17 +6,17 @@ local select, error, type, format = select, error, type, string.format
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
---- @type Kapresoft_Base_Namespace
-local _, ns = ...
-local O, LibStub, M, pformat = ns.Kapresoft_LibUtil:LibPack()
-
+--- @type LibStub
+local LibStub = LibStub
+local MAJOR_VERSION = 'Kapresoft-Assert-1.0'
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
---- @class Kapresoft_LibUtil_Assert
-local L = LibStub:NewLibrary(M.Assert, 2)
--- return if already loaded and no upgrade necessary
-if not L then return end
+
+--- @class Kapresoft_Assert
+local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
+L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
+setmetatable(L, L.mt)
 
 --[[-----------------------------------------------------------------------------
 Methods
@@ -37,7 +37,7 @@ end
 --- @param key string The key to the object to check
 function L.HasKey(obj, key)
     if type(obj) == 'nil' then return false end
-    return 'nil' == type(obj[key])
+    return 'nil' ~= type(obj[key])
 end
 
 --- Example:
@@ -45,6 +45,7 @@ end
 function L.HasNoKey(obj, key)
     return not L.HasKey(obj, key)
 end
+
 
 -- Option #1
 -- 1: string format
@@ -94,11 +95,6 @@ function L.Throw(...)
         formatArgs = { select(2, ...) }
     end
     error(format(formatText, unpack(formatArgs)), level)
-end
-
---- @param obj table The object to check
-function L.IsNotNil(obj)
-    return not L.IsNil(obj)
 end
 
 --- Example:  AssertMethodArgNotNil(obj, 'name', 'OpenConfig(name)')

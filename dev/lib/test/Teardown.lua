@@ -4,5 +4,6 @@ sformat = nil
 LibStub = nil
 
 
-if true == VERBOSE then print('Teardown called...') end
+if (Kapresoft_LibUtil_LogLevel or 0) > 10 then print('Teardown called...') end
 
+--ReportSummary()

@@ -2,10 +2,6 @@
 Lua Vars
 -------------------------------------------------------------------------------]]
 local sformat = string.format
---[[-----------------------------------------------------------------------------
-Blizzard Vars
--------------------------------------------------------------------------------]]
-local CreateAndInitFromMixin = CreateAndInitFromMixin
 
 --[[-----------------------------------------------------------------------------
 Local Vars
@@ -13,25 +9,22 @@ Local Vars
 --- @type LibStub
 local LibStub = LibStub
 
---- @type Kapresoft_Base_Namespace
-local _, ns = ...
-
---[[-----------------------------------------------------------------------------
-Class Interface
--------------------------------------------------------------------------------]]
---- @class Kapresoft_LibUtil_LibStubMixin
-local _LibStubMixin_Interface = {}
-
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
 local ModuleName = 'LibStubMixin'
-local logPrefix = ns.Kapresoft_LibUtil.H:CreateLogPrefix(ModuleName)
-local MAJOR, MINOR = sformat('Kapresoft-LibUtil-%s-1.0', ModuleName), 1
+local MAJOR_VERSION = sformat('Kapresoft-LibStubMixin-1.0', ModuleName)
+local logPrefix = sformat('{{Kapresoft::%s}}:', ModuleName)
+if select(2, ...) then
+    --- @type Kapresoft_LibUtil
+    local LibUtil = select(2, ...).Kapresoft_LibUtil
+    logPrefix = LibUtil.CH:CreateLogPrefix(ModuleName)
+end
 
---- @type Kapresoft_LibUtil_LibStubMixin
-local L = LibStub:NewLibrary(MAJOR, MINOR)
-if not L then return end
+--- @class Kapresoft_LibStubMixin
+local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
+L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
+setmetatable(L, L.mt)
 
 --[[-----------------------------------------------------------------------------
 Support Functions
@@ -47,8 +40,10 @@ local function ResolveVersionString(version)
     return '1.0'
 end
 
---- @param o Kapresoft_LibUtil_LibStubMixin
+--- @param o Kapresoft_LibStubMixin
 local function PropsAndMethods(o)
+
+    --- @class Kapresoft_LibStubMixin_Instance : Kapresoft_LibStubMixin
 
     --- #### Usage
     --- `local LocalLibStub = ns.LibStubMixin:New('MyAddonName', 1.0)`
@@ -56,7 +51,8 @@ local function PropsAndMethods(o)
     --- @param name string This is usually the AddOn name
     --- @param version number|string A decimal number, i.e. 1.0, 1.1, 2.0, 3.0
     --- @param postConstructFn PostConstructHandler | "function(libName, newLibInstance) print('Name:', libName) end"
-    function o:New(name, version, postConstructFn) return CreateAndInitFromMixin(L, name, version, postConstructFn) end
+    --- @return Kapresoft_LibStubMixin_Instance
+    function o:New(name, version, postConstructFn) return K_Constants:CreateAndInitFromMixin(L, name, version, postConstructFn) end
 
     --- @param name string This is usually the AddOn name
     --- @param version number|string A decimal number, i.e. 1.0, 1.1, 2.0, 3.0
@@ -120,7 +116,8 @@ local function PropsAndMethods(o)
         assert(libName, "LibStubMixin::NewLibrary: The base libraryName is required")
         local major, minor = self:GetVersionStrings(libName, revisionNumber)
 
-        if Kapresoft_LibUtil_LogLevel >= 10 then print(logPrefix, 'New library created:', major, 'minor:', minor) end
+
+        if (Kapresoft_LibUtil_LogLevel_LibStub or 0) >= 10 then print(sformat('%s New library created: %s.%s', logPrefix, major, minor)) end
 
         --- @type Kapresoft_LibUtil_BaseLibrary
         local obj = LibStub:NewLibrary(major, minor)

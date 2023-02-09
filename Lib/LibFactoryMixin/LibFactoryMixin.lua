@@ -4,31 +4,19 @@ Lua Vars
 local sformat = string.format
 
 --[[-----------------------------------------------------------------------------
-Blizzard Vars
--------------------------------------------------------------------------------]]
-local CreateAndInitFromMixin = CreateAndInitFromMixin
-
---[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
---- @type Kapresoft_Base_Namespace
-local _, ns = ...
-
---- The original LibStub
+--- @type LibStub
 local LibStub = LibStub
-local ModuleName = 'LibFactoryMixin'
-local logPrefix = ns.Kapresoft_LibUtil.H:CreateLogPrefix(ModuleName)
-local MAJOR, MINOR = sformat('Kapresoft-LibUtil-%s-1.0', ModuleName), 2
+local MAJOR_VERSION = 'Kapresoft-LibFactoryMixin-1.0'
+local logPrefix = '{{Kapresoft-LibFactoryMixin}}:'
 
---[[-----------------------------------------------------------------------------
-Support Functions
--------------------------------------------------------------------------------]]
-local function TableSize(t)
-    if type(t) ~= 'table' then error(string.format("Expected arg to be of type table, but got: %s", type(t))) end
-    local count = 0
-    for _ in pairs(t) do count = count + 1 end
-    return count
+if select(2, ...) then
+    --- @type Kapresoft_LibUtil
+    local LibUtil = select(2, ...).Kapresoft_LibUtil
+    logPrefix = LibUtil.CH:CreateLogPrefix('LibFactoryMixin')
 end
+
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -40,17 +28,19 @@ New Instance
 ---     ---@type AceAddon
 ---     AceAddon = nil
 --- }
---- local libFactory = MixinAndInit(LibFactoryMixin, libNames)
+--- local libFactory = LibFactoryMixin:New(libNames)
 --- ---@type <ObjectType>
 --- local aceLib = libFactory:GetObjects()
 --- local aceAddon = aceLib.AceAddon
 --- ```
+---@class Kapresoft_LibFactoryMixin
+local L = LibStub:NewLibrary(MAJOR_VERSION, 2); if not L then return end
+L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
+setmetatable(L, L.mt)
 
----@type Kapresoft_LibUtil_LibFactoryMixin
-local L = LibStub:NewLibrary(MAJOR, MINOR)
--- return if already loaded (this object can exist in other addons)
-if not L then return end
-
+--[[-----------------------------------------------------------------------------
+Support Functions
+-------------------------------------------------------------------------------]]
 ---@param anyTable Kapresoft_LibUtil_LibFactoryMixin
 local function LibStubLazyLoad(anyTable, libName)
     assert(libName, logPrefix .. 'Library name is required.')
@@ -58,13 +48,15 @@ local function LibStubLazyLoad(anyTable, libName)
     local mixinInstance = anyTable.mixinInstance
     local libNameMajor = mixinInstance.libNames[libName]
     local libInstance = LibStub(libNameMajor)
-    if Kapresoft_LibUtil_LogLevel >= 10 then
-        print(logPrefix, sformat("Loaded[%s]: %s",
-                tostring(libNameMajor), tostring(libInstance)))
+    if (Kapresoft_LibUtil_LogLevel_LibFactory or 0) >= 10 then
+        print(sformat("%s Loaded[%s] %s", logPrefix, tostring(libNameMajor), tostring(libInstance)))
     end
     return libInstance
 end
 
+--[[-----------------------------------------------------------------------------
+Methods
+-------------------------------------------------------------------------------]]
 --- Called Automatically by Mixin upon creation
 --- @param libNames table
 --- @param nameGeneratorFunction function(libName:string)
@@ -72,11 +64,11 @@ function L:Init(libNames, nameGeneratorFunction)
     assert('table' == type(libNames), logPrefix .. 'libNames arg is required')
     self.libNames = {}
 
-    if TableSize(libNames)  > 0 then
+    if K_Constants:TableSize(libNames)  > 0 then
         if 'function' == type(nameGeneratorFunction) then
             for k, v in pairs(libNames) do
                 local libNameGen = nameGeneratorFunction(v)
-                if Kapresoft_LibUtil_LogLevel >= 10 then
+                if (Kapresoft_LibUtil_LogLevel_LibFactory or 0) >= 10 then
                     print(logPrefix, 'libNameGenerator returned:', tostring(libNameGen))
                 end
                 self.libNames[k] = libNameGen
@@ -96,7 +88,7 @@ end
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
----@param o Kapresoft_LibUtil_LibFactoryMixin
+---@param o Kapresoft_LibFactoryMixin
 local function Methods(o)
     --- ### Usage 1
     --- ```
@@ -113,7 +105,7 @@ local function Methods(o)
     --- @return Kapresoft_LibUtil_LibFactoryMixin
     function o:New(...)
         ---Calls Init(...)
-        return CreateAndInitFromMixin(L, ...)
+        return K_Constants:CreateAndInitFromMixin(L, ...)
     end
     --- @return Kapresoft_LibUtil_AceLibraryObjects
     function o:GetObjects() return self.objects end

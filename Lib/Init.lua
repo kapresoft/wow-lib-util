@@ -1,72 +1,11 @@
 --[[-----------------------------------------------------------------------------
-Blizzard Vars
--------------------------------------------------------------------------------]]
-local CreateAndInitFromMixin = CreateAndInitFromMixin
-
---[[-----------------------------------------------------------------------------
-Global Vars
--------------------------------------------------------------------------------]]
--- Set Log Level Default
-Kapresoft_LibUtil_LogLevel = 0
-
---[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
 local sformat = string.format
 local LibPrefix = 'Kapresoft-LibUtil'
-local nameShort = 'KL'
 
 --- @type Kapresoft_Base_Namespace
 local addOn, ns = ...
-
---[[-----------------------------------------------------------------------------
-Support Functions: Console Colors
--------------------------------------------------------------------------------]]
---- @class Kapresoft_LibUtil_ColorDefinition
-local consoleColors = {
-    primary   = 'e3caaf',
-    secondary = 'fbeb2d',
-    tertiary = 'ffffff'
-}
-
---- @class Kapresoft_LibUtil_ConsoleColorMixin
-local ConsoleColorMixin = {
-    sformat = string.format,
-
-    --- @param self Kapresoft_LibUtil_ConsoleColorMixin
-    --- @param colorDef Kapresoft_LibUtil_ColorDefinition
-    Init = function(self, colorDef)
-        self.colorDef = colorDef
-    end,
-
-    --- @param self Kapresoft_LibUtil_ConsoleColorMixin
-    --- @param text string The hex color without the '#', i.e "0xfff000" would be "fff000"
-    --- @param text string The text to format
-    FormatColor = function(self, color, text) return sformat('|cfd%s%s|r', color, text) end,
-
-    --- @param self Kapresoft_LibUtil_ConsoleColorMixin
-    --- @param text string The text to format
-    P = function(self, text) return self:FormatColor(self.colorDef.primary, text)  end,
-
-    --- @param self Kapresoft_LibUtil_ConsoleColorMixin
-    --- @param text string The text to format
-    S = function(self, text) return self:FormatColor(self.colorDef.secondary, text)  end,
-
-    --- @param self Kapresoft_LibUtil_ConsoleColorMixin
-    --- @param text string The text to format
-    T = function(self, text) return self:FormatColor(self.colorDef.tertiary, text)  end,
-
-    --- Generate the colorized Log Prefix
-    --- @param module string The module name
-    --- @param self Kapresoft_LibUtil_ConsoleColorMixin
-    ---@param subPrefix string Defaults to the addOn name
-    CreateLogPrefix = function(self, module, subPrefix)
-        local addOnPrefix = subPrefix or ns.nameShort or addOn
-        return self.sformat(
-                self:T('{{') .. '%s::%s::%s' .. self:T('}}:'),
-                self:P(addOnPrefix), self:P(nameShort), self:S(module))
-    end,
-}
 
 --[[-----------------------------------------------------------------------------
 Kapresoft_LibUtil Initialization
@@ -76,8 +15,10 @@ local LibUtil = {
     LibPrefix = LibPrefix,
     --- @type Kapresoft_LibUtil_Modules
     M = {},
-    --- @type Kapresoft_LibUtil_ConsoleColor
-    H = CreateAndInitFromMixin(ConsoleColorMixin, consoleColors),
+
+    --- @type Kapresoft_LibUtil_ConsoleHelper
+    CH = K_ConsoleHelper,
+
     LogLevel = Kapresoft_LibUtil_LogLevel or 0,
     --- @param self Kapresoft_LibUtil
     --- @param logLevel number A zero or positive number
@@ -101,7 +42,7 @@ local LibUtil = {
 local LibStubMixin = LibUtil:Lib('LibStubMixin')
 local Library = LibUtil:Lib('Library')
 local Mixin = LibUtil:Lib('Mixin')
-local Incrementer = LibUtil:Lib('Incrementer')
+local IncrementerBuilder = LibUtil:Lib('IncrementerBuilder')
 
 --[[-----------------------------------------------------------------------------
 Support Functions
@@ -129,13 +70,33 @@ end
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
+---@alias ModuleName string |"'String'"|"'Table'"|"'Mixin'"|"'Assert'"|"'Safecall'"|"'Incrementer'"
+---@alias TargetLibraryMajorVersion string |"'Kapresoft-Table-1.0'"|"'Kapresoft-String-1.0'"|"'Kapresoft-Mixin-1.0'"|"'Kapresoft-Assert-1.0'"|
+---@param moduleName ModuleName Example: 'Table' or 'String'
+---@param moduleRevision number
+---@param targetLibraryMajorVersion TargetLibraryMajorVersion The target library major version
+function LibUtil:CreateLibWrapper(moduleName, moduleRevision, targetLibraryMajorVersion)
+    local W = self.LibStub:NewLibrary(moduleName, moduleRevision); if not W then return end
+    local L = self.LibStub:LibStub(targetLibraryMajorVersion); if not L then return end
+    getmetatable(W).__index = L
+    getmetatable(W).__tostring = function()
+        local majorVersion = self:Lib(moduleName)
+        return majorVersion .. '.' .. LibStub.minors[majorVersion]
+    end
+    if (Kapresoft_LibUtil_LogLevel_LibWrapper or 0) > 10 then
+        local prefix = self.CH:CreateLogPrefix('Init')
+        print(prefix, moduleName .. ':', self.pformat({lib=tostring(L), wrapper=tostring(W)}))
+    end
+    return W
+end
+
 --- @see Similar Interface/SharedXML/Mixin.lua#Mixin(object, ...)
 function LibUtil:Mixin(object, ...) return LibStub(Mixin):Mixin(object, ...) end
 
 --- @see Similar Interface/SharedXML/Mixin.lua#CreateFromMixins(...)
 function LibUtil:CreateFromMixins(...) return LibStub(Mixin):Mixin({}, ...) end
 
---- @see Similar Interface/SharedXML/Mixin.lua#CreateAndInitFromMixins(...)
+--- @see Similar Interface/SharedXML/Mixin.lua#CreateAndInitFromMixin(...)
 function LibUtil:CreateAndInitFromMixin(mixin, ...)
     local object = self:CreateFromMixins(mixin);
     object:Init(...);
@@ -144,8 +105,8 @@ end
 
 --- @param start number
 --- @param increment number
---- @return Kapresoft_LibUtil_Incrementer
-function LibUtil:CreateIncrementer(start, increment) return LibStub(Incrementer):New(start, increment) end
+--- @return Kapresoft_LibUtil_IncrementerBuilder
+function LibUtil:CreateIncrementer(start, increment) return LibStub(IncrementerBuilder):New(start, increment) end
 
 --- ```
 --- @type Kapresoft_Base_Namespace
@@ -159,6 +120,11 @@ function LibUtil:LibPack() return self.Objects, self.LibStub, self.M, self.pform
 Lazy Load
 -------------------------------------------------------------------------------]]
 InitLazyLoaders()
+
+--- @return Kapresoft_LibUtil
+function K_LibUtil(...) return select(2, ...).Kapresoft_LibUtil end
+--- @return Kapresoft_LibUtil_LibStub
+function K_LibStub(...) return select(2, ...).Kapresoft_LibUtil.LibStub end
 
 --[[-----------------------------------------------------------------------------
 Add to Namespace

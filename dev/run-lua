@@ -33,14 +33,16 @@ function __Main()
   fi
 
   # Use `luaver install 5.1`
-  export PATH=~/.luaver/lua/5.1/bin:$PATH
+  # export PATH=~/.luaver/lua/5.1/bin:$PATH
+  # or `brew install lua51` which makes lua-5.1 executable
 
+  local lua=lua-5.1
   local testFile="./dev/test-${luaFilename}.lua"
   local cmd=
   if [[ -f "${testFile}" ]]; then
-    cmd="lua $luaArgs ${testFile}"
+    cmd="$lua $luaArgs ${testFile}"
   else
-    cmd="lua $luaArgs ./dev/${luaFilename}.lua"
+    cmd="$lua $luaArgs ./dev/${luaFilename}.lua"
   fi
   echo Executing: $cmd
   eval "$cmd"

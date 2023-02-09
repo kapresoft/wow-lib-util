@@ -1,17 +1,15 @@
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
---- @type Kapresoft_Base_Namespace
-local _, ns = ...
-local O, LibStub, M, pformat, LibUtil = ns.Kapresoft_LibUtil:LibPack()
+--- @type LibStub
+local LibStub = LibStub
+local MAJOR_VERSION = 'Kapresoft-IncrementerBuilder-1.0'
 
 --[[-----------------------------------------------------------------------------
 Support Functions
 -------------------------------------------------------------------------------]]
-
---- @param o Kapresoft_LibUtil_Incrementer
+--- @param o Kapresoft_Incrementer
 local function IncrementerMethods(o)
-
     --- @param customIncrement number
     --- @return number
     function o:next(customIncrement)
@@ -22,20 +20,21 @@ local function IncrementerMethods(o)
     function o:get() return self.n end
     --- @return number
     function o:reset() self.n = self.startIndex; return self:get() end
-
 end
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
---- @class Kapresoft_LibUtil_Incrementer_Lib
-local L = LibStub:NewLibrary(M.Incrementer, 2)
--- return if already loaded and no upgrade necessary
-if not L then return end
+--- @class Kapresoft_IncrementerBuilder
+local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
+L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
+setmetatable(L, L.mt)
 
---- @return Kapresoft_LibUtil_Incrementer
+
+--- @return Kapresoft_Incrementer
 function L:New(start, increment)
-    --- @class Kapresoft_LibUtil_Incrementer
+
+    --- @class Kapresoft_Incrementer
     local o = {
         startIndex = start,
         n = start,
