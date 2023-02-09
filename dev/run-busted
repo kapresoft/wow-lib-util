@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+# run in interactive mode by passing a boolean or int 1 or 0 arg
+# ./run-lua true or ./run-lua 1
+
+# luarocks --lua-dir=/opt/homebrew/opt/lua@5.1 install busted
+
+function __Main()
+{
+  local workdir=..
+  local externalLib="${workdir}/External/?.lua;${workdir}/dev/lib/?.lua"
+  local projectLib="${workdir}/Lib/?.lua"
+  local localLibs="${externalLib};${projectLib}"
+
+  export LUA_PATH="${LUA_PATH};${localLibs}"
+  echo LUA_PATH=${LUA_PATH}
+
+  # Use `luaver install 5.1`
+  export PATH=~/.luaver/lua/5.1/bin:~/.luarocks/bin:$PATH
+  #echo PATH=$PATH
+  #echo -n LUA is $(`lua -v`)
+  local cmd="busted spec -v"
+  echo "Executing: $cmd (on $PWD)"
+  eval "cd dev && $cmd"
+}
+
+__Main $*
+

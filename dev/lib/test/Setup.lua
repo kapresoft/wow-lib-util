@@ -1,7 +1,10 @@
 -- LibStub requires strmatch/string.match to be global
 strmatch = string.match
 sformat = string.format
-K_VERBOSE = false
+Kapresoft_LibUtil_LogLevel_LibWrapper = 10
+Kapresoft_LibUtil_LogLevel_LibFactory = 10
+Kapresoft_LibUtil_LogLevel_LibStub = 10
+
 
 --- @type number
 TEST_FAILURES = 0
@@ -35,8 +38,7 @@ function printf(fmt, ...)
     end)
 end
 
-function reportFailures()
-    print('')
+function ReportSummary()
     if TEST_FAILURES > 0 then
         printf("Total Test Failures: %s", TEST_FAILURES)
     else
@@ -44,5 +46,5 @@ function reportFailures()
     end
 end
 
-if true == K_VERBOSE then print('Setup called...') end
+if (Kapresoft_LibUtil_LogLevel or 0) > 20 then print('Setup called...') end
 print('Lua version:', _VERSION)

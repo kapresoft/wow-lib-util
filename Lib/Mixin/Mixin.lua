@@ -15,7 +15,6 @@ local MAJOR_VERSION = 'Kapresoft-Mixin-1.0'
 local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
-if K_VERBOSE then print('Mixin:', tostring(L)) end
 
 --- ```
 --- local newInstance = Mixin({}, Mixin1, Mixin2, MixinN)

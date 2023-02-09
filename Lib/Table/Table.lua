@@ -17,7 +17,6 @@ New Instance
 local L = LibStub:NewLibrary(MAJOR_VERSION, 2); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
-if K_VERBOSE then print('Table:', tostring(L)) end
 
 --[[-----------------------------------------------------------------------------
 Methods

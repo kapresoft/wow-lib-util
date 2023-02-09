@@ -2,10 +2,13 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-	<Script file="Lib\_Init.lua"/>
-	<Script file="Lib\LibStubMixin.lua"/>
-	<Script file="Lib\LibFactoryMixin.lua"/>
+	<Script file="Lib\Constants.lua"/>
+	<Script file="Lib\Init.lua"/>
+
+	<Include file="Lib\LibStubMixin\_LibStubMixin.xml"/>
+
 	<Include file="Lib\pprint\pprint.xml"/>
+	<Include file="Lib\LibFactoryMixin\_LibFactoryMixin.xml"/>
 
 	<Script file="Lib\Library.lua"/>
 
@@ -13,12 +16,9 @@
 	<Include file="Lib\Assert\_Assert.xml"/>
 	<Include file="Lib\Table\_Table.xml"/>
 	<Include file="Lib\String\_String.xml"/>
-
-	<Script file="Lib\Incrementer.lua"/>
-	<Script file="Lib\LuaEvaluator.lua"/>
-
+	<Include file="Lib\IncrementerBuilder\_IncrementerBuilder.xml"/>
+	<Include file="Lib\LuaEvaluator\_LuaEvaluator.xml"/>
 	<Include file="Lib\Safecall\_Safecall.xml"/>
-
 	<Include file="Lib\Ace3\_Ace3.xml"/>
 
 </Ui>

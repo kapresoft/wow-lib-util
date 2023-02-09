@@ -18,7 +18,6 @@ local MAJOR_VERSION = 'Kapresoft-String-1.0'
 local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
-if K_VERBOSE then print('String:', tostring(L)) end
 
 --[[-----------------------------------------------------------------------------
 Methods
