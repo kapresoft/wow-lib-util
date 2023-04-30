@@ -23,6 +23,8 @@ local Kapresoft_LibUtil_Objects = {
     String = {},
     --- @type Kapresoft_LibUtil_Table
     Table = {},
+    --- @type Kapresoft_LibUtil_LoggerMixin
+    LoggerMixin = {},
     --- @type Kapresoft_LibUtil_LibStubMixin
     LibStubMixin = {},
     --- @type Kapresoft_LibUtil_LibFactoryMixin
@@ -120,6 +122,26 @@ local Kapresoft_LibUtil_LibFactoryMixin = {
 
 --- @class Kapresoft_LibUtil_BaseLibrary
 local Kapresoft_LibUtil_BaseLibrary = {}
+
+--- @class Kapresoft_LibUtil_ColorDefinition
+local Kapresoft_LibUtil_ColorDefinition = {
+    --- @type string
+    primary   = 'e3caaf',
+    --- @type string
+    secondary = 'fbeb2d',
+    --- @type string
+    tertiary = 'ffffff'
+}
+
+--- @class Kapresoft_LibUtil_ColorDefinition2
+local Kapresoft_LibUtil_ColorDefinition2 = {
+    --- @type Color
+    primary   = CreateColorFromHexString('ffaabbcc'),
+    --- @type Color
+    secondary = CreateColorFromHexString('ffbbbbcc'),
+    --- @type Color
+    tertiary = CreateColorFromHexString('ffccbbcc'),
+}
 
 --- @class Kapresoft_LibUtil_ConsoleHelper : Kapresoft_LibUtil_ConsoleHelperMixin
 local ConsoleColor = {}

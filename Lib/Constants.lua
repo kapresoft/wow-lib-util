@@ -24,18 +24,27 @@ local logPrefix = 'Kapresoft-LibUtil::Init:'
 --[[-----------------------------------------------------------------------------
 Support Functions: Console Colors
 -------------------------------------------------------------------------------]]
---- @class Kapresoft_LibUtil_ColorDefinition
+--- @type Kapresoft_LibUtil_ColorDefinition
 local consoleColors = {
     primary   = 'e3caaf',
     secondary = 'fbeb2d',
     tertiary = 'ffffff'
 }
-
+local failSafeColorHex6 = 'FFFFFF'
+local failSafeColor = CreateColorFromHexString('ff' .. failSafeColorHex6)
 --[[-----------------------------------------------------------------------------
 New Library
 -------------------------------------------------------------------------------]]
----@class Kapresoft_LibUtil_Constants
-local L = LibStub:NewLibrary('Kapresoft-LibUtil-Constants-1.0', 1); if not L then return end
+--- @class Kapresoft_LibUtil_Constants
+local L = LibStub:NewLibrary('Kapresoft-LibUtil-Constants-1.0', 2); if not L then return end
+
+---@param color string
+---@param text string
+local function StringHexFormatter(color, text) return sformat('|cfd%s%s|r', color or failSafeColorHex6, text) end
+
+---@param color Color
+---@param text string
+local function BlizzardColorFormatter(color, text) return (color or failSafeColor):WrapTextInColorCode(text) end
 
 --[[-----------------------------------------------------------------------------
 Support Types & Functions
@@ -45,15 +54,20 @@ local ConsoleHelperMixin = {
     sformat = string.format,
 
     --- @param self Kapresoft_LibUtil_ConsoleHelperMixin
-    --- @param colorDef Kapresoft_LibUtil_ColorDefinition
+    --- @param colorDef Kapresoft_LibUtil_ColorDefinition | Kapresoft_LibUtil_ColorDefinition2
     Init = function(self, colorDef)
         self.colorDef = colorDef
+        if type(self.colorDef.primary) == 'string' then
+            self.colorDef.formatter = StringHexFormatter
+        else
+            self.colorDef.formatter = BlizzardColorFormatter
+        end
     end,
 
     --- @param self Kapresoft_LibUtil_ConsoleHelperMixin
-    --- @param text string The hex color without the '#', i.e "0xfff000" would be "fff000"
+    --- @param color string|Color The hex color without the '#', i.e "0xfff000" would be "fff000"
     --- @param text string The text to format
-    FormatColor = function(self, color, text) return sformat('|cfd%s%s|r', color, text) end,
+    FormatColor = function(self, color, text) return self.colorDef.formatter(color, text) end,
 
     --- @param self Kapresoft_LibUtil_ConsoleHelperMixin
     --- @param text string The text to format
@@ -70,7 +84,7 @@ local ConsoleHelperMixin = {
     --- Generate the colorized Log Prefix
     --- @param module string The module name
     --- @param self Kapresoft_LibUtil_ConsoleHelperMixin
-    ---@param subPrefix string Defaults to the addOn name
+    --- @param subPrefix string Defaults to the addOn name
     CreateLogPrefix = function(self, module, subPrefix)
         local addOnPrefix
         if subPrefix then
@@ -89,8 +103,13 @@ local ConsoleHelperMixin = {
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
----@param o Kapresoft_LibUtil_Constants
+--- @param o Kapresoft_LibUtil_Constants
 local function PropertiesAndMethods(o)
+
+    --- @param colorDef Kapresoft_LibUtil_ColorDefinition | Kapresoft_LibUtil_ColorDefinition2
+    --- @return Kapresoft_LibUtil_ConsoleHelper
+    function o:NewConsoleHelper(colorDef) return self:CreateAndInitFromMixin(ConsoleHelperMixin, colorDef) end
+
     --- ```
     --- local SomeMixin1 = {}
     --- local object = {}
@@ -110,9 +129,7 @@ local function PropertiesAndMethods(o)
     end
 
     --- @vararg any The mixins as arguments
-    function o:CreateFromMixins(...)
-        return self:Mixin({}, ...)
-    end
+    function o:CreateFromMixins(...) return self:Mixin({}, ...) end
 
     --- @param mixin any The mixin
     --- @vararg any The arguments to pass to the new instance Init() method

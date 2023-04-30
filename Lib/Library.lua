@@ -21,6 +21,7 @@ local M = {
     Mixin = 'Mixin',
     String = 'String',
     Table = 'Table',
+    LoggerMixin = 'LoggerMixin',
     Safecall = 'Safecall',
     PrettyPrint = 'PrettyPrint',
     AceLibrary = 'AceLibrary',
@@ -35,7 +36,7 @@ local function Lib(moduleName) return LibUtil:Lib(moduleName) end
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 3); if not L then return end
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 4); if not L then return end
 
 L.Names = {
     Constants = Lib(M.Constants),
@@ -45,6 +46,7 @@ L.Names = {
     Mixin = Lib(M.Mixin),
     String = Lib(M.String),
     Table = Lib(M.Table),
+    LoggerMixin = Lib(M.LoggerMixin),
     Safecall = Lib(M.Safecall),
     PrettyPrint = Lib(M.PrettyPrint),
     AceLibrary = Lib(M.AceLibrary),
