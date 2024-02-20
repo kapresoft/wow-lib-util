@@ -11,6 +11,21 @@ require('String.String')
 local String = LibStub('Kapresoft-String-1.0')
 _suite(tostring(String))
 
+function f1()
+    return "f1", "f2"
+end
+
+local a, b = f1() do
+    print('a.i:', tostring(a), 'b.i:', b)
+
+    print('hello')
+    b = 'there'
+    a = 'hi'
+
+end
+print('a:', tostring(a), 'b:', b, 'c:', tostring(c))
+
+if true then return end
 --[[-----------------------------------------------------------------------------
 Tests
 -------------------------------------------------------------------------------]]
