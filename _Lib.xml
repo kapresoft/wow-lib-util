@@ -17,6 +17,7 @@
 	<Include file="Lib\Table\_Table.xml"/>
 	<Include file="Lib\String\_String.xml"/>
 	<Include file="Lib\IncrementerBuilder\_IncrementerBuilder.xml"/>
+	<Include file="Lib\SequenceMixin\_SequenceMixin.xml" />
 	<Include file="Lib\LuaEvaluator\_LuaEvaluator.xml"/>
 	<Include file="Lib\Safecall\_Safecall.xml"/>
 	<Include file="Lib\Ace3\_Ace3.xml"/>

@@ -23,6 +23,7 @@ local M = {
     Table = 'Table',
     LoggerMixin = 'LoggerMixin',
     Safecall = 'Safecall',
+    SequenceMixin = 'SequenceMixin',
     PrettyPrint = 'PrettyPrint',
     AceLibrary = 'AceLibrary',
     LuaEvaluator = 'LuaEvaluator',
@@ -35,8 +36,9 @@ local function Lib(moduleName) return LibUtil:Lib(moduleName) end
 --[[-----------------------------------------------------------------------------
 New Library
 -------------------------------------------------------------------------------]]
+--- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 4); if not L then return end
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 5); if not L then return end
 
 L.Names = {
     Constants = Lib(M.Constants),
@@ -48,6 +50,7 @@ L.Names = {
     Table = Lib(M.Table),
     LoggerMixin = Lib(M.LoggerMixin),
     Safecall = Lib(M.Safecall),
+    SequenceMixin = Lib(M.SequenceMixin),
     PrettyPrint = Lib(M.PrettyPrint),
     AceLibrary = Lib(M.AceLibrary),
     LuaEvaluator = Lib(M.LuaEvaluator),

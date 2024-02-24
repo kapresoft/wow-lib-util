@@ -41,13 +41,28 @@ setmetatable(L, L.mt)
 --[[-----------------------------------------------------------------------------
 Support Functions
 -------------------------------------------------------------------------------]]
+local function fmtRed(val) return sformat("|cFFFF0000 %s |r", val or '') end
+local function assertLibName(prefix, libName, varToAssert)
+    assert(varToAssert, prefix .. fmtRed(' ERROR ') .. sformat('The library name [%s] is invalid.Is it registered in Kapresoft Library.lua?', libName))
+end
+local function handleIfLibFailed(success, prefix, libName, libNameMajor)
+    if success then return end
+    print(sformat('%s %s LibFactoryMixin:: Failed to load library MajorVersion=%s ModuleName=%s', prefix, fmtRed('ERROR'), tostring(libNameMajor), tostring(libName)))
+end
+
 ---@param anyTable Kapresoft_LibUtil_LibFactoryMixin
 local function LibStubLazyLoad(anyTable, libName)
     assert(libName, logPrefix .. 'Library name is required.')
     --- @class _AnyInstance : Kapresoft_LibUtil_LibFactoryMixin
     local mixinInstance = anyTable.mixinInstance
     local libNameMajor = mixinInstance.libNames[libName]
-    local libInstance = LibStub(libNameMajor)
+    assertLibName(logPrefix, libName, libNameMajor)
+
+    local success, libInstanceOrErrorMsg = pcall(LibStub, libNameMajor)
+    handleIfLibFailed(success, logPrefix, libName, libNameMajor)
+    if not success then return nil end
+
+    local libInstance = libInstanceOrErrorMsg
     if (Kapresoft_LibUtil_LogLevel_LibFactory or 0) >= 10 then
         print(sformat("%s Loaded[%s] %s", logPrefix, tostring(libNameMajor), tostring(libInstance)))
     end

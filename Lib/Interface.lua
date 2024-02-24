@@ -19,6 +19,8 @@ local Kapresoft_LibUtil_Objects = {
     LuaEvaluator = {},
     --- @type Kapresoft_LibUtil_Mixin
     Mixin = {},
+    --- @type Kapresoft_LibUtil_SequenceMixin
+    SequenceMixin = {},
     --- @type Kapresoft_LibUtil_String
     String = {},
     --- @type Kapresoft_LibUtil_Table
