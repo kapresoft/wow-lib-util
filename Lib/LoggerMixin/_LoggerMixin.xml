@@ -3,5 +3,7 @@
 
 	<Script file="LoggerMixin.lua"/>
 	<Script file="LoggerMixin-Wrapper.lua"/>
+	<Script file="CategoryMixin.lua"/>
+	<Script file="CategoryMixin-Wrapper.lua"/>
 
 </Ui>

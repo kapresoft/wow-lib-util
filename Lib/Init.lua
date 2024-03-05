@@ -10,7 +10,9 @@ local addOn, ns = ...
 --[[-----------------------------------------------------------------------------
 Kapresoft_LibUtil Initialization
 -------------------------------------------------------------------------------]]
---- @type Kapresoft_LibUtil
+--- @class Kapresoft_LibUtil
+--- @field LibStub Kapresoft_LibUtil_LibStub Lazy loaded
+--- @field Objects Kapresoft_LibUtil_Objects Lazy loaded
 local LibUtil = {
     LibPrefix = LibPrefix,
     --- @type Kapresoft_LibUtil_Modules
@@ -30,10 +32,6 @@ local LibUtil = {
 
     --- @type Kapresoft_LibUtil_LibStubMixin
     LibStubMixin = {},
-
-    --- Objects needs to be nil for lazy loading
-    --- @type Kapresoft_LibUtil_Objects
-    Objects = nil,
 
     --- @type fun(fmt:string, ...)|fun(val:string)
     pformat = {},

@@ -1,8 +1,12 @@
 --[[-----------------------------------------------------------------------------
 Local Vars
 -------------------------------------------------------------------------------]]
+--- @type Name
+local addon
 --- @type Kapresoft_Base_Namespace
-local addon, ns = ...
+local ns
+addon, ns = ...
+
 local LibStub = LibStub
 local LibUtil = ns.Kapresoft_LibUtil
 
@@ -11,25 +15,69 @@ local LibUtil = ns.Kapresoft_LibUtil
 --- @type Kapresoft_LibUtil_LibStub
 Kapresoft_LibStub = LibUtil.LibStub
 
+--- Note: Also add library to Kapresoft_LibUtil_Modules
+--- @class Kapresoft_LibUtil_Objects
+local Kapresoft_LibUtil_Objects = {
+    --- @type Kapresoft_LibUtil_Constants
+    Constants = {},
+    --- @type Kapresoft_LibUtil_PrettyPrint
+    PrettyPrint = {},
+    --- @type Kapresoft_LibUtil_AceLibrary
+    AceLibrary = {},
+    --- @type Kapresoft_LibUtil_Assert
+    Assert = {},
+    --- @type Kapresoft_LibUtil_IncrementerBuilder
+    Incrementer = {},
+    --- @type Kapresoft_LibUtil_LuaEvaluator
+    LuaEvaluator = {},
+    --- @type Kapresoft_LibUtil_Mixin
+    Mixin = {},
+    --- @type Kapresoft_LibUtil_SequenceMixin
+    SequenceMixin = {},
+    --- @type Kapresoft_LibUtil_String
+    String = {},
+    --- @type Kapresoft_LibUtil_Table
+    Table = {},
+    --- @type Kapresoft_LibUtil_CategoryMixin
+    CategoryMixin = {},
+    --- @type Kapresoft_LibUtil_LoggerMixin
+    LoggerMixin = {},
+    --- @type Kapresoft_LibUtil_LibStubMixin
+    LibStubMixin = {},
+    --- @type Kapresoft_LibUtil_LibFactoryMixin
+    LibFactoryMixin = {},
+    --- @type Kapresoft_LibUtil_Safecall
+    Safecall = {},
+
+    --- @type Kapresoft_LibUtil_NamespaceAceLibraryMixin
+    NamespaceAceLibraryMixin = {},
+    --- @type Kapresoft_LibUtil_NamespaceKapresoftLibMixin
+    NamespaceKapresoftLibMixin = {},
+}
+
+--- Note: Also add library to Kapresoft_LibUtil_Objects
 --- @class Kapresoft_LibUtil_Modules
 local M = {
-    Constants = 'Constants',
+    Constants = '',
+    AceLibrary = '',
+    Assert = '',
+    Incrementer = '',
+    Mixin = '',
+    String = '',
+    Table = '',
+    LoggerMixin = '',
+    CategoryMixin = '',
+    Safecall = '',
+    SequenceMixin = '',
+    PrettyPrint = '',
+    AceLibrary = '',
+    LuaEvaluator = '',
+    LibFactoryMixin = '',
+    LibStubMixin = '',
+    NamespaceAceLibraryMixin = '',
+    NamespaceKapresoftLibMixin = '',
+}; for module, _ in pairs(M) do M[module] = module end
 
-    AceLibrary = 'AceLibrary',
-    Assert = 'Assert',
-    Incrementer = 'Incrementer',
-    Mixin = 'Mixin',
-    String = 'String',
-    Table = 'Table',
-    LoggerMixin = 'LoggerMixin',
-    Safecall = 'Safecall',
-    SequenceMixin = 'SequenceMixin',
-    PrettyPrint = 'PrettyPrint',
-    AceLibrary = 'AceLibrary',
-    LuaEvaluator = 'LuaEvaluator',
-    LibFactoryMixin = 'LibFactoryMixin',
-    LibStubMixin = 'LibStubMixin',
-}
 LibUtil.M = M
 local function Lib(moduleName) return LibUtil:Lib(moduleName) end
 
@@ -38,25 +86,10 @@ New Library
 -------------------------------------------------------------------------------]]
 --- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 5); if not L then return end
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 6); if not L then return end
 
-L.Names = {
-    Constants = Lib(M.Constants),
-    AceLibrary = Lib(M.AceLibrary),
-    Assert = Lib(M.Assert),
-    Incrementer = Lib(M.Incrementer),
-    Mixin = Lib(M.Mixin),
-    String = Lib(M.String),
-    Table = Lib(M.Table),
-    LoggerMixin = Lib(M.LoggerMixin),
-    Safecall = Lib(M.Safecall),
-    SequenceMixin = Lib(M.SequenceMixin),
-    PrettyPrint = Lib(M.PrettyPrint),
-    AceLibrary = Lib(M.AceLibrary),
-    LuaEvaluator = Lib(M.LuaEvaluator),
-    LibStubMixin = Lib(M.LibStubMixin),
-    LibFactoryMixin = Lib(M.LibFactoryMixin),
-}
+L.Names = {}
+for _, module in pairs(M) do L.Names[module] = Lib(module) end
 
 --[[-----------------------------------------------------------------------------
 Namespace Objects

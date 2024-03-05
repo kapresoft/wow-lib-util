@@ -23,4 +23,7 @@
 	<Include file="Lib\Ace3\_Ace3.xml"/>
 	<Include file="Lib\LoggerMixin\_LoggerMixin.xml"/>
 
+	<Script file="Lib\NamespaceKapresoftLibMixin.lua"/>
+	<Script file="Lib\NamespaceAceLibraryMixin.lua"/>
+
 </Ui>

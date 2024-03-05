@@ -1,6 +1,7 @@
 -- LibStub requires strmatch/string.match to be global
 strmatch = nil
 sformat = nil
+--- @type LibStub
 LibStub = nil
 
 
