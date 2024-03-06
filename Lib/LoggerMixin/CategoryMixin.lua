@@ -41,14 +41,35 @@ local consoleColors = {
 }
 
 --[[-----------------------------------------------------------------------------
-Example Categories
+Example Usage
 -------------------------------------------------------------------------------]]
+--[[
+
 local ExampleCategories = {
     --- @type Kapresoft_LogCategory
-    ADDON = "AD",
+    DEFAULT = "DEFAULT",
     --- @type Kapresoft_LogCategory
     API = "AP",
 }
+
+--- @type Kapresoft_LibUtil_ColorDefinition
+local consoleColors = {
+    primary   = 'FF780A',
+    secondary = 'fbeb2d',
+    tertiary = 'ffffff'
+}
+
+local CategoryLogger = kns.Kapresoft_LibUtil.Objects.CategoryMixin
+CategoryLogger:Configure(addonName, LogCategories, {
+    consoleColors = consoleColors,
+    levelSupplierFn = function() return DEVS_LOG_LEVEL  end,
+    enabledCategoriesSupplierFn = function() return DEVS_DEBUG_ENABLED_CATEGORIES end,
+})
+
+logger p1 =ExampleCategories.DEFAULT:NewLogger('ModuleName')
+logger p2 = ExampleCategories.API:NewLogger('ModuleName')
+
+]]
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -94,22 +115,25 @@ end
 
 local ch = KC:NewConsoleHelper(consoleColors)
 
-local function GetLogPrefix(addonName, name)
-    local px = ch:T('{{')
-            .. ch:P(addonName) .. ch:T('::') .. ch:S(name)
-            .. ch:T('}}:')
-    return px
+--- @param c Kapresoft_LibUtil_ConsoleHelper
+--- @param addonName Name Addon Name
+--- @param name Name Module Name
+local function GetLogPrefix(c, addonName, name)
+    return c:T('{{') .. c:P(addonName) .. c:T('::') .. c:S(name) .. c:T('}}:')
 end
-local function GetLogPrefixWithCategory(addonName, name, cat)
+--- @param c Kapresoft_LibUtil_ConsoleHelper
+--- @param addonName Name Addon Name
+--- @param name Name Module Name
+local function GetLogPrefixWithCategory(c, addonName, name, cat)
     name = name or ''
-    local px = ch:T('{{') .. ch:P(addonName)
+    local px = c:T('{{') .. c:P(addonName)
     if stru(name) ~= stru(addonName) then
-        px = px .. ch:T('::') .. ch:S(name)
+        px = px .. c:T('::') .. c:S(name)
     end
     if 'DEFAULT' ~= stru(cat) and HasStringLength(cat) then
-        px = px .. ch:T('::') .. ch:P(cat)
+        px = px .. c:T('::') .. c:P(cat)
     end
-    px = px .. '%s' .. ch:T('}}:')
+    px = px .. '%s' .. c:T('}}:')
     return px
 end
 
@@ -170,6 +194,7 @@ local function safeFormat(formatStr, ...)
 end
 
 --- @class Kapresoft_CategoryMixin_Options
+--- @field consoleColors Kapresoft_LibUtil_ColorDefinition
 --- @field levelSupplierFn Kapresoft_LevelSupplierFn | "function() return 0 end"
 --- @field enabledCategoriesSupplierFn Kapresoft_EnabledCategoriesSupplierFn | "function() return {} end"
 
@@ -183,7 +208,7 @@ local function CategoryMixinMethods(o)
     --- @param categories table<string, Kapresoft_LogCategory>
     --- @param opts Kapresoft_CategoryMixin_Options
     function o:Configure(addonName, categories, opts)
-        local prefix = GetLogPrefix(addonName, libName) .. " "
+        local prefix = GetLogPrefix(ch, addonName, libName) .. " "
         assert(addonName, sformat("CategoryMixinV3:: addon name is required."))
         assert(categories, sformat(prefix .. "CategoryMixinV3:: Categories are required."))
         assert(opts, sformat("CategoryMixinV3:: opts is required."))
@@ -246,7 +271,7 @@ local function PropsAndMethods(o)
         assert(addonName, thisName .. ":: addon name is required.")
         assert(opts, thisName .. ":: opts(options) is required.")
 
-        local prefix = GetLogPrefix(addonName, name) .. " %s:: "
+        local prefix = GetLogPrefix(ch, addonName, name) .. " %s:: "
         assert(name, sformat(prefix .. "Log name is missing.", thisName))
         assert(category, sformat(prefix .. "LogCategoryV3 is required.", thisName))
         assert(type(name) == 'string', sformat(prefix .. "Expected log name to be a string but got: %s", thisName, tostring(name)))
@@ -272,9 +297,12 @@ local function PropsAndMethods(o)
             self.category = validCategory
             self.categorySuffix = self.categoryShort or self.category
         end
+
         local pfn, logfn = logStrategy2(self)
         self.logfn = logfn
-        self.logPrefix = pfn(addonName, name, self.categorySuffix)
+
+        local consoleHelper = (opts.consoleColors and KC:NewConsoleHelper(opts.consoleColors)) or ch
+        self.logPrefix = pfn(consoleHelper, addonName, name, self.categorySuffix)
     end
 
     --- @param name string The log name
@@ -364,14 +392,14 @@ local function PropsAndMethods(o)
 
     function o:IsCategoryEnabled()
         if self.category == nil or strl(self.category) == 0
-                or stru(self.category) == 'DEFAULT' then return true end
+                or IsDefaultCategory(self.category) then return true end
         local cats = self.enabledCategoriesSupplierFn()
         local val = cats[self.category] or false
         local enabled = val == true or val == 1
         return enabled
     end
 
-    local mt = { __tostring = function() return "LoggerMixinV3" end }; setmetatable(L, mt)
+    local mt = { __tostring = function() return MAJOR end }; setmetatable(L, mt)
 
 end; PropsAndMethods(LL)
 
