@@ -11,7 +11,7 @@ local pformat = ns.Kapresoft_LibUtil.pformat
 Type: LibPackMixin
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_NamespaceKapresoftLibMixin
-local L = LibStub:NewLibrary(ModuleName, 1)
+local L = LibStub:NewLibrary(ModuleName, 2)
 
 -- return if already loaded (this object can exist in other addons)
 if not L then return end
@@ -20,14 +20,16 @@ if not L then return end
 local function MethodsAndProps(o)
 
     --- @return Kapresoft_LibUtil
-    function o:K() return ns.Kapresoft_LibUtil end
+    function o:K() return LU end
     --- @return Kapresoft_LibUtil_Objects
-    function o:KO() return ns.Kapresoft_LibUtil.Objects  end
+    function o:KO() return O  end
 
     --- @return Kapresoft_LibUtil_SequenceMixin
     --- @param startingSequence number|nil
-    function o:CreateSequence(startingSequence)
-        return self:KO().SequenceMixin:New(startingSequence)
-    end
+    function o:CreateSequence(startingSequence) return O.SequenceMixin:New(startingSequence) end
+
+    --- @param colorDef Kapresoft_LibUtil_ColorDefinition | Kapresoft_LibUtil_ColorDefinition2
+    --- @return Kapresoft_LibUtil_ConsoleHelper
+    function o:NewConsoleHelper(colorDef) return O.Constants:NewConsoleHelper(colorDef) end
 
 end; MethodsAndProps(L)
