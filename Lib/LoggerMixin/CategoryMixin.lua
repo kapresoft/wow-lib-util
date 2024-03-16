@@ -74,7 +74,7 @@ logger p2 = ExampleCategories.API:NewLogger('ModuleName')
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-CategoryMixin-1.0', 1
+local MAJOR, MINOR = 'Kapresoft-CategoryMixin-1.0', 2
 local libName = MAJOR
 
 --- @alias Kapresoft_LogCategory Kapresoft_CategoryMixin
@@ -204,10 +204,22 @@ Methods: CategoryMixinV3
 --- @param o Kapresoft_CategoryMixin
 local function CategoryMixinMethods(o)
 
+    --- @private
+    function o:Init()
+        self.newInstance = true
+    end
+
+    --- @public
+    --- @return Kapresoft_CategoryMixin
+    function o:New()
+        return K:CreateAndInitFromMixin(o)
+    end
+
     --- @param addonName string
     --- @param categories table<string, Kapresoft_LogCategory>
     --- @param opts Kapresoft_CategoryMixin_Options
     function o:Configure(addonName, categories, opts)
+        assert(self.newInstance, "Must call CategoryMixin:New() to get a new instance")
         local prefix = GetLogPrefix(ch, addonName, libName) .. " "
         assert(addonName, sformat("CategoryMixinV3:: addon name is required."))
         assert(categories, sformat(prefix .. "CategoryMixinV3:: Categories are required."))
