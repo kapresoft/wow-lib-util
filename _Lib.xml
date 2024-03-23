@@ -16,6 +16,7 @@
 	<Include file="Lib\Assert\_Assert.xml"/>
 	<Include file="Lib\Table\_Table.xml"/>
 	<Include file="Lib\String\_String.xml"/>
+	<Include file="Lib\TimeUtil\_TimeUtil.xml"/>
 	<Include file="Lib\IncrementerBuilder\_IncrementerBuilder.xml"/>
 	<Include file="Lib\SequenceMixin\_SequenceMixin.xml" />
 	<Include file="Lib\LuaEvaluator\_LuaEvaluator.xml"/>

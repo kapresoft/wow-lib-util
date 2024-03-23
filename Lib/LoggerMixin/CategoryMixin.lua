@@ -160,9 +160,9 @@ local function logStrategy2(o)
 end
 
 --- Safely formats a string using variable arguments.
--- @param formatStr string The format string.
--- @param ... any The values to format.
--- @return string The safely formatted string.
+--- @param formatStr string The format string.
+--- @vararg any The values to format.
+--- @return string The safely formatted string.
 local function safeFormat(formatStr, ...)
     -- Capture the varargs into a table.
     local args = {...}
@@ -174,10 +174,15 @@ local function safeFormat(formatStr, ...)
     -- Prepare a table to hold the actual arguments passed to string.format.
     local actualArgs = {}
 
+    local pformat = pformat or K.pformat
+
     for i = 1, numFormatSpecifiers do
         if i <= numArgsProvided then
             -- Use the provided argument.
-            actualArgs[i] = args[i]
+            local a = args[i] or 'nil'
+            if type(a) == 'boolean' then a = tostring(a)
+            elseif type(a) == 'table' or type(a) == 'function' then a = pformat(a) end
+            actualArgs[i] = a
         else
             -- Use a placeholder for missing arguments.
             actualArgs[i] = "<missing>"

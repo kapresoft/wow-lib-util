@@ -38,6 +38,8 @@ local Kapresoft_LibUtil_Objects = {
     String = {},
     --- @type Kapresoft_LibUtil_Table
     Table = {},
+    --- @type Kapresoft_LibUtil_TimeUtil
+    TimeUtil = {},
     --- @type Kapresoft_LibUtil_CategoryMixin
     CategoryMixin = {},
     --- @type Kapresoft_LibUtil_LoggerMixin
@@ -65,6 +67,7 @@ local M = {
     Mixin = '',
     String = '',
     Table = '',
+    TimeUtil = '',
     LoggerMixin = '',
     CategoryMixin = '',
     Safecall = '',
@@ -86,7 +89,7 @@ New Library
 -------------------------------------------------------------------------------]]
 --- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 6); if not L then return end
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 7); if not L then return end
 
 L.Names = {}
 for _, module in pairs(M) do L.Names[module] = Lib(module) end
