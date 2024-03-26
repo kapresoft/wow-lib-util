@@ -179,9 +179,10 @@ local function safeFormat(formatStr, ...)
     for i = 1, numFormatSpecifiers do
         if i <= numArgsProvided then
             -- Use the provided argument.
-            local a = args[i] or 'nil'
+            local a = args[i]
             if type(a) == 'boolean' then a = tostring(a)
-            elseif type(a) == 'table' or type(a) == 'function' then a = pformat(a) end
+            elseif type(a) == 'table' or type(a) == 'function' then a = pformat(a)
+            elseif a == nil then a = 'nil' end
             actualArgs[i] = a
         else
             -- Use a placeholder for missing arguments.
