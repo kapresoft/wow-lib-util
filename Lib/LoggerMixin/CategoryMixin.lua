@@ -74,7 +74,7 @@ logger p2 = ExampleCategories.API:NewLogger('ModuleName')
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-CategoryMixin-1.0', 2
+local MAJOR, MINOR = 'Kapresoft-CategoryMixin-1.0', 3
 local libName = MAJOR
 
 --- @alias Kapresoft_LogCategory Kapresoft_CategoryMixin
@@ -253,6 +253,13 @@ local function CategoryMixinMethods(o)
             c[k] = lc
         end
         self.categories = c
+
+        --- @type table<number, Name>
+        self.sortedCategories = {}
+        ---@param key Name
+        for key in pairs(self.categories) do table.insert(self.sortedCategories, key) end
+        table.sort(self.sortedCategories)
+
     end
 
     function o:GetCategories() return self.categories end
@@ -266,9 +273,12 @@ local function CategoryMixinMethods(o)
     ---@param consumerFn fun(cat:Kapresoft_LogCategory) | "function(cat)  end"
     function o:ForEachCategory(consumerFn)
         assert(consumerFn, libName .. ":: consumerFn function is missing.")
-        ---@param cat Kapresoft_LogCategory
-        for _, cat in pairs(self.categories) do
-            if not IsDefaultCategory(cat.name) then consumerFn(cat) end
+
+        ---@param name Name
+        for _, name in pairs(self.sortedCategories) do
+            --- @type Kapresoft_LogCategory
+            local cat = self.categories[name]
+            if cat and not IsDefaultCategory(cat.name) then consumerFn(cat) end
         end
     end
 
