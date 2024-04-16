@@ -22,7 +22,6 @@ local ns = select(2, ...)
 
 local K, KO = ns.Kapresoft_LibUtil, ns.Kapresoft_LibUtil.Objects
 local KC = KO.Constants
---local KC, String, Table = KO.Constants, KO.String, KO.Table
 
 local ERROR_LEVEL = 5
 local WARN_LEVEL = 10
@@ -74,12 +73,12 @@ logger p2 = ExampleCategories.API:NewLogger('ModuleName')
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-CategoryMixin-1.0', 3
+local MAJOR, MINOR = 'Kapresoft-CategoryMixin-1.0', 4
 local libName = MAJOR
 
 --- @alias Kapresoft_LogCategory Kapresoft_CategoryMixin
 
------- @class Kapresoft_CategoryMixin
+--- @class Kapresoft_CategoryMixin
 --- @field addonName string The addon name
 --- @field name string Category name
 --- @field short string Category Short name
@@ -154,6 +153,9 @@ local function logStrategy2(o)
     local fn = function(prefix, text, catSuffix, s)
         local sf = ''
         if HasStringLength(s) then sf = '::' .. ch:P(s) end
+        if o.printerFn then
+            return o.printerFn(sformat(prefix, sf) .. ' ' .. tostring(text))
+        end
         print(sformat(prefix, sf), text)
     end
     return GetLogPrefixWithCategory, fn
@@ -203,6 +205,8 @@ end
 --- @field consoleColors Kapresoft_LibUtil_ColorDefinition
 --- @field levelSupplierFn Kapresoft_LevelSupplierFn | "function() return 0 end"
 --- @field enabledCategoriesSupplierFn Kapresoft_EnabledCategoriesSupplierFn | "function() return {} end"
+--- @field printerFn fun(...:any) : void
+--- @field enabled Enabled
 
 --[[-----------------------------------------------------------------------------
 Methods: CategoryMixinV3
@@ -309,6 +313,8 @@ local function PropsAndMethods(o)
         self.name = name
         self.category = nil
         self.levelSupplierFn = opts.levelSupplierFn
+        self.printerFn = opts.printerFn
+        self.enabled = opts.enabled == true
         self.enabledCategoriesSupplierFn = opts.enabledCategoriesSupplierFn
 
         local catName = category.name
@@ -338,22 +344,34 @@ local function PropsAndMethods(o)
     --- @param opts Kapresoft_CategoryMixin_Options
     --- @return Kapresoft_CategoryLoggerMixin
     function o:New(name, cat, opts)
-        return K:CreateAndInitFromMixin(LL, name, cat, opts) end
+        return K:CreateAndInitFromMixin(LL, name, cat, opts)
+    end
 
     --- @param level Kapresoft_LogLevel
     --- @param strOrCallbackFn string|Kapresoft_LogCallbackFn | "'Hello thar'" | "function() return 'hello' end"| "function() return 'hello: %s', 'thar' end"
     --- @param logSuffix string | "'INFO" | "'WARN" | "'DEBUG'"
     function o:log(level, strOrCallbackFn, logSuffix)
-        if not self:ShouldLog(level) then return end;
+        if not self:ShouldLog(level) then return end
         local val
         if type(strOrCallbackFn) == 'function' then val = safeFormat(strOrCallbackFn())
         else val = tostring(strOrCallbackFn) end
         self.logfn(self.logPrefix, val, self.categorySuffix, logSuffix)
     end
 
+    --- Always Log: This is used for AddOn console commands
+    --- @param strOrCallbackFn string|Kapresoft_LogCallbackFn | "'Hello thar'" | "function() return 'hello' end"| "function() return 'hello: %s', 'thar' end"
+    function o:a(strOrCallbackFn)
+        local val
+        if type(strOrCallbackFn) == 'function' then val = safeFormat(strOrCallbackFn())
+        else val = tostring(strOrCallbackFn) end
+        self.logfn(self.logPrefix, val, self.categorySuffix, 'V')
+    end
+
     --- Verbose, Always Log
     --- @param strOrCallbackFn string|Kapresoft_LogCallbackFn | "'Hello thar'" | "function() return 'hello' end"| "function() return 'hello: %s', 'thar' end"
     function o:v(strOrCallbackFn)
+        if self.enabled ~= true then return false end
+
         local val
         if type(strOrCallbackFn) == 'function' then val = safeFormat(strOrCallbackFn())
         else val = tostring(strOrCallbackFn) end
@@ -363,6 +381,8 @@ local function PropsAndMethods(o)
     --- Verbose, Always Log
     --- @param strOrCallbackFn string|Kapresoft_LogCallbackFn | "'Hello thar'" | "function() return 'hello' end"| "function() return 'hello: %s', 'thar' end"
     function o:vv(strOrCallbackFn)
+        if self.enabled ~= true then return false end
+
         local val
         if type(strOrCallbackFn) == 'function' then val = safeFormat(strOrCallbackFn())
         else val = tostring(strOrCallbackFn) end
@@ -414,6 +434,7 @@ local function PropsAndMethods(o)
     function o:ShouldLog(level)
         assert(type(level) == 'number', 'Level should be a number between 1 and 100')
         if ERROR_LEVEL == level or WARN_LEVEL == level then return true end
+        if self.enabled ~= true then return false end
         if self.levelSupplierFn() < level then return false end
         return self:IsCategoryEnabled()
     end
