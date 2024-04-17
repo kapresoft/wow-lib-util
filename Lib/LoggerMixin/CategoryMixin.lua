@@ -73,7 +73,7 @@ logger p2 = ExampleCategories.API:NewLogger('ModuleName')
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-CategoryMixin-1.0', 4
+local MAJOR, MINOR = 'Kapresoft-CategoryMixin-1.0', 5
 local libName = MAJOR
 
 --- @alias Kapresoft_LogCategory Kapresoft_CategoryMixin
@@ -364,7 +364,7 @@ local function PropsAndMethods(o)
         local val
         if type(strOrCallbackFn) == 'function' then val = safeFormat(strOrCallbackFn())
         else val = tostring(strOrCallbackFn) end
-        self.logfn(self.logPrefix, val, self.categorySuffix, 'V')
+        self.logfn(self.logPrefix, val, self.categorySuffix)
     end
 
     --- Verbose, Always Log
