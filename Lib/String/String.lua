@@ -15,7 +15,7 @@ New Instance
 -------------------------------------------------------------------------------]]
 local MAJOR_VERSION = 'Kapresoft-String-1.0'
 --- @class Kapresoft_String
-local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
+local L = LibStub:NewLibrary(MAJOR_VERSION, 2); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
 
@@ -191,3 +191,18 @@ end
 --- @param str string The value
 --- @param match string The string value to match
 function L.ContainsIgnoreCase(str, match) return L.Contains(str_lower(str), str_lower(match)) end
+
+--- Truncates a string to a specified length and appends ellipses if the string is longer.
+--- @param str string The string to potentially truncate.
+--- @param maxLength number The maximum allowed length of the string before truncation.
+--- @return string The potentially truncated string.
+---@param suffix string The string to add after truncate, defaults to ...
+function L.Truncate(str, maxLength, suffix)
+    assert(type(str) == "string", "str must be a string", 2)
+    assert(type(maxLength) == 'number' and maxLength > 0, "maxLength must be a number greater than zero")
+    suffix = suffix or '...'
+    if string.len(str) > maxLength then
+        return string.sub(str, 1, maxLength) .. suffix
+    end
+    return str
+end
