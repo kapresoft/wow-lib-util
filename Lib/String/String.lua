@@ -194,15 +194,29 @@ function L.ContainsIgnoreCase(str, match) return L.Contains(str_lower(str), str_
 
 --- Truncates a string to a specified length and appends ellipses if the string is longer.
 --- @param str string The string to potentially truncate.
---- @param maxLength number The maximum allowed length of the string before truncation.
+--- @param len number The maximum allowed length of the string before truncation.
+--- @param suffix string The string to add after truncate; defaults to ...
 --- @return string The potentially truncated string.
----@param suffix string The string to add after truncate, defaults to ...
-function L.Truncate(str, maxLength, suffix)
-    assert(type(str) == "string", "str must be a string", 2)
-    assert(type(maxLength) == 'number' and maxLength > 0, "maxLength must be a number greater than zero")
+function L.Truncate(str, len, suffix)
+    assert(type(str) == "string", "String.Truncate(str, len): str must be a string", 2)
+    assert(type(len) == 'number' and len > 0, "Truncate(str, len): len must be a number greater than zero")
     suffix = suffix or '...'
-    if string.len(str) > maxLength then
-        return string.sub(str, 1, maxLength) .. suffix
+    if string.len(str) > len then
+        return L.Trim(string.sub(str, 1, len)) .. suffix
     end
     return str
+end
+
+--- Truncates a string to a specified length and appends ellipses if the string is longer.
+--- @param str string The string to potentially truncate.
+--- @param len number The maximum allowed length of the string before truncation.
+--- @param prefix string The string to add before the truncated str; defaults to ...
+--- @return string The potentially truncated string.
+function L.TruncateReversed(str, len, prefix)
+    assert(type(len) == 'number' and len > 0, 'String.TruncateReversed(str, len): len must be a number greater than zero.')
+    prefix = prefix or '...'; if str == nil then return prefix end
+    str = L.Trim(str)
+    local prefixLen = string.len(prefix)
+    if (len <= prefixLen) or (string.len(str) < len) then return prefix end
+    return prefix .. L.Trim(string.sub(str, -len + prefixLen))
 end

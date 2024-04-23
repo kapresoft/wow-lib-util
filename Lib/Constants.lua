@@ -99,7 +99,15 @@ local ConsoleHelperMixin = {
                 self:P(addOnPrefix), self:P(nameShort), self:S(module))
     end,
 }
-
+---@param label string Optional label
+local function GetExpectedIsTypeMessageFormat(label)
+    local padding = ' '
+    local msgFormat = "\n" .. padding ..
+            '   Expecting actual object type: %s\n' .. padding ..
+            '                        but was: %s'
+    if label then msgFormat = '{{ ' .. label .. ' }}' .. msgFormat end
+    return msgFormat
+end
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
@@ -144,6 +152,15 @@ local function PropertiesAndMethods(o)
         local count = 0
         for _ in pairs(t) do count = count + 1 end
         return count
+    end
+
+    --- @param actualObj any The actual value
+    --- @param expectedType string | "'string'" | "'number'"  | "'function'"  | "'table'" | "The expected type, i.e., 'string', 'table'"
+    --- @param label string The optional string prefix label
+    function o:AssertType(actualObj, expectedType, label)
+        local msgFormat = GetExpectedIsTypeMessageFormat(label)
+        local msg = sformat(msgFormat, expectedType, type(actualObj))
+        assert(expectedType == type(actualObj), msg)
     end
 end
 

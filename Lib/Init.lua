@@ -48,11 +48,13 @@ Support Functions
 local function InitLazyLoaders()
     local lazyLoaders = {
         --- @type Kapresoft_LibUtil_Objects
-        Objects = function() return LibStub(Library).Objects end,
+        Objects = function()
+            local lib = LibStub(Library, true); return (lib and lib.Objects) or {}
+        end,
         --- @type Kapresoft_LibUtil_LibStub
         LibStub = function() return LibStub(LibStubMixin):New(LibUtil.LibPrefix, 1.0) end
     }
-    ---@param o Kapresoft_LibUtil The LibUtil instance
+    --- @param o Kapresoft_LibUtil The LibUtil instance
     local function LibStubLazyLoad(o, libName)
         if lazyLoaders[libName] then
             o[libName] = lazyLoaders[libName]()
@@ -65,14 +67,26 @@ local function InitLazyLoaders()
     setmetatable(LibUtil, LibUtil.mt)
 end
 
+--- Create a color formatter
+--- @param color Color
+--- @return fun(arg:any) : string The string wrapped in color code
+local function cf(color)
+    return function(arg) return color:WrapTextInColorCode(tostring(arg)) end
+end
+
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
----@alias ModuleName string |"'String'"|"'Table'"|"'Mixin'"|"'Assert'"|"'Safecall'"|"'Incrementer'"
----@alias TargetLibraryMajorVersion string |"'Kapresoft-Table-1.0'"|"'Kapresoft-String-1.0'"|"'Kapresoft-Mixin-1.0'"|"'Kapresoft-Assert-1.0'"|
----@param moduleName ModuleName Example: 'Table' or 'String'
----@param moduleRevision number
----@param targetLibraryMajorVersion TargetLibraryMajorVersion The target library major version
+
+--- Create a new color formatter function
+--- @param color Color
+function LibUtil:cf(color) return cf(color) end
+
+--- @alias ModuleName string |"'String'"|"'Table'"|"'Mixin'"|"'Assert'"|"'Safecall'"|"'Incrementer'"
+--- @alias TargetLibraryMajorVersion string |"'Kapresoft-Table-1.0'"|"'Kapresoft-String-1.0'"|"'Kapresoft-Mixin-1.0'"|"'Kapresoft-Assert-1.0'"|
+--- @param moduleName ModuleName Example: 'Table' or 'String'
+--- @param moduleRevision number
+--- @param targetLibraryMajorVersion TargetLibraryMajorVersion The target library major version
 function LibUtil:CreateLibWrapper(moduleName, moduleRevision, targetLibraryMajorVersion)
     local W = self.LibStub:NewLibrary(moduleName, moduleRevision); if not W then return end
     local L = self.LibStub:LibStub(targetLibraryMajorVersion); if not L then return end

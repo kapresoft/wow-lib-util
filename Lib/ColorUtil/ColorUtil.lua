@@ -34,8 +34,25 @@ local function ColorUtilMixin_Methods(o)
         return function(arg) return self.color:WrapTextInColorCode(tostring(arg)) end
     end
 
+    -- Backwards compatibility with classic
+    if not o.GetRGBA then
+        function o:GetRGBA() return self.color.r, self.color.g, self.color.b, self.color.a; end
+    end
+
 end; ColorUtilMixin_Methods(ColorUtilMixin)
 
+-- Backwards compatibility with classic
+local COLOR_FORMAT_RGBA = COLOR_FORMAT_RGBA or "RRGGBBAA";
+-- Backwards compatibility with classic
+local function xCreateColorFromRGBAHexString(hexColor)
+    if #hexColor == #COLOR_FORMAT_RGBA then
+        local r, g, b, a = ExtractColorValueFromHex(hexColor, 1), ExtractColorValueFromHex(hexColor, 3), ExtractColorValueFromHex(hexColor, 5), ExtractColorValueFromHex(hexColor, 7);
+        return CreateColor(r, g, b, a);
+    else
+        error("ColorUtil: CreateColorFromHexString input must be hexadecimal digits in this format: RRGGBBAA.", 2);
+    end
+end
+local CreateColorFromRGBAHexString = CreateColorFromRGBAHexString or xCreateColorFromRGBAHexString
 
 --[[-----------------------------------------------------------------------------
 Methods
@@ -48,6 +65,7 @@ local function PropsAndMethods(o)
     function o:NewColorFromHex(RRGGBBAA)
         --- @type Color
         local c = CreateColorFromRGBAHexString(RRGGBBAA)
+        assert(c, sformat('Invalid color: %s. example: %s', RRGGBBAA, COLOR_FORMAT_RGBA))
         return CreateAndInitFromMixin(ColorUtilMixin, c)
     end
 

@@ -23,39 +23,56 @@ local a, b = f1() do
     a = 'hi'
 
 end
-print('a:', tostring(a), 'b:', b, 'c:', tostring(c))
 
-if true then return end
 --[[-----------------------------------------------------------------------------
 Tests
 -------------------------------------------------------------------------------]]
 _test('StartsWith')
 --assert(String.StartsWith("hello there", "hello"), "StartsWith() should pass")
-assertTrue(String.StartsWith("hello there", "hello"),
+local StartsWith = String.StartsWith
+assertTrue(StartsWith("hello there", "hello"),
         '"hello there":StartsWith(hello)')
-assertFalse(String.StartsWith("hello there", "HELLOx"),
+assertFalse(StartsWith("hello there", "HELLOx"),
         '"hello there":StartsWith(HELLO)')
 
 _test('StartsWithIgnoreCase')
-assertTrue(String.StartsWithIgnoreCase("Hello there", "HELLO"),
+local StartsWithIgnoreCase = String.StartsWithIgnoreCase
+assertTrue(StartsWithIgnoreCase("Hello there", "HELLO"),
         '"Hello There":StartsWithIgnoreCase(HELLO)')
-assertFalse(String.StartsWithIgnoreCase("XHello there", "HELLO"),
+assertFalse(StartsWithIgnoreCase("XHello there", "HELLO"),
         '"XHello There":StartsWithIgnoreCase(HELLO)')
 
 _test('EndsWith')
-assertTrue(String.EndsWith("hello there", "there"), 'EndsWith("there")')
-assertFalse(String.EndsWith("hello there", "THERE"), 'EndsWith("THERE")')
+local EndsWith = String.EndsWith
+assertTrue(EndsWith("hello there", "there"), 'EndsWith("there")')
+assertFalse(EndsWith("hello there", "THERE"), 'EndsWith("THERE")')
 
 _test('Contains')
-assertTrue(String.Contains("hello there world", "there"), 'Contains("there")')
-assertTrue(String.Contains("hello there world", "hello "), 'Contains("hello")')
-assertTrue(String.Contains("hello there world", "o th"), 'Contains("o th")')
-assertFalse(String.Contains("hello there world", "THERE"), 'Contains("THERE")')
+local Contains = String.Contains
+assertTrue(Contains("hello there world", "there"), 'Contains("there")')
+assertTrue(Contains("hello there world", "hello "), 'Contains("hello")')
+assertTrue(Contains("hello there world", "o th"), 'Contains("o th")')
+assertFalse(Contains("hello there world", "THERE"), 'Contains("THERE")')
 
 _test('ContainsIgnoreCase')
-assertTrue(String.ContainsIgnoreCase("hello there world", "THERE"), 'Contains("THERE")')
-assertTrue(String.ContainsIgnoreCase("hello there world", "LLO th"), 'Contains("LLO th")')
-assertFalse(String.ContainsIgnoreCase("any word", "yyy xx"), 'Contains("yyy XX)')
+local ContainsIgnoreCase = String.ContainsIgnoreCase
+assertTrue(ContainsIgnoreCase("hello there world", "THERE"), 'Contains("THERE")')
+assertTrue(ContainsIgnoreCase("hello there world", "LLO th"), 'Contains("LLO th")')
+assertFalse(ContainsIgnoreCase("any word", "yyy xx"), 'Contains("yyy XX)')
+
+_test('Truncate')
+local Truncate = String.Truncate
+assertEquals(Truncate('hello there world', 1), 'h...', "Truncate(str, 1)")
+assertEquals(Truncate('hello there world', 6), 'hello...', "Truncate(str, 6)")
+assertEquals(Truncate('hello there world', 50), 'hello there world', "Truncate(str, 50)")
+assertEquals(Truncate('hello there world', 7, '**'), 'hello t**', "Truncate(str, 7)")
+
+_test('TruncateReversed')
+local TruncateReversed = String.TruncateReversed
+assertEquals(TruncateReversed(nil, 5), '...', 'TruncateReversed(nil, 5)')
+assertEquals(TruncateReversed('hello there world', 9), "...world", 'TruncateReversed(str, 9)')
+assertEquals(TruncateReversed('hello there world', 4), "...d", 'TruncateReversed(str, 4)')
+assertEquals(TruncateReversed('hello there world', 4, '$$'), "$$ld", "TruncateReversed(str, 4, '$$')")
 
 --[[-----------------------------------------------------------------------------
 Teardown

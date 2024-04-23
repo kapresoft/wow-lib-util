@@ -18,6 +18,7 @@
 	<Include file="Lib\String\_String.xml"/>
 	<Include file="Lib\TimeUtil\_TimeUtil.xml"/>
 	<Include file="Lib\ColorUtil\_ColorUtil.xml"/>
+	<Include file="Lib\AddonUtil\_AddonUtil.xml"/>
 	<Include file="Lib\IncrementerBuilder\_IncrementerBuilder.xml"/>
 	<Include file="Lib\SequenceMixin\_SequenceMixin.xml" />
 	<Include file="Lib\LuaEvaluator\_LuaEvaluator.xml"/>

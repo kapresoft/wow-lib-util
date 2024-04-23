@@ -39,9 +39,6 @@ local Kapresoft_LibUtil_LibStub = {
 --- @class Kapresoft_Base_Namespace
 --- @field Kapresoft_LibUtil Kapresoft_LibUtil
 
---- @class Kapresoft_LibUtil_LibFactoryMixin : Kapresoft_LibFactoryMixin
---- @field GetObjects fun(self:Kapresoft_LibUtil_LibFactoryMixin) : table
-
 --- @class Kapresoft_LibUtil_BaseLibrary
 local Kapresoft_LibUtil_BaseLibrary = {}
 

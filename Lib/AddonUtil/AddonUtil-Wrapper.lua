@@ -6,6 +6,8 @@ local LibUtil = select(2, ...).Kapresoft_LibUtil
 
 --[[-----------------------------------------------------------------------------
 New Instance
+LibStub Example:
+local o = LibStub('Kapresoft-LibUtil-AddonUtil-1.0')
 -------------------------------------------------------------------------------]]
---- @class Kapresoft_LibUtil_LibFactoryMixin : Kapresoft_LibFactoryMixin
-local W = LibUtil:CreateLibWrapper('LibFactoryMixin', 4, 'Kapresoft-LibFactoryMixin-1.0')
+--- @class Kapresoft_LibUtil_AddonUtil : Kapresoft_AddonUtil
+local W = LibUtil:CreateLibWrapper('AddonUtil', 1, 'Kapresoft-AddonUtil-1.0')

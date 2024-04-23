@@ -24,6 +24,8 @@ local Kapresoft_LibUtil_Objects = {
     PrettyPrint = {},
     --- @type Kapresoft_LibUtil_AceLibrary
     AceLibrary = {},
+    --- @type Kapresoft_LibUtil_AddonUtil
+    AddonUtil = {},
     --- @type Kapresoft_LibUtil_Assert
     Assert = {},
     --- @type Kapresoft_LibUtil_ColorUtil
@@ -66,6 +68,7 @@ local M = {
     AceLibrary = '',
     Assert = '',
     ColorUtil = '',
+    AddonUtil = '',
     Incrementer = '',
     Mixin = '',
     String = '',
@@ -92,7 +95,7 @@ New Library
 -------------------------------------------------------------------------------]]
 --- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 8); if not L then return end
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 9); if not L then return end
 
 L.Names = {}
 for _, module in pairs(M) do L.Names[module] = Lib(module) end

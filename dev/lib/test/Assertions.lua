@@ -1,5 +1,9 @@
 local sformat = string.format
 
+--- @param obj any
+--- @return string
+local function t(obj) return sformat('%s (type: %s)', tostring(obj), type(obj)) end
+
 local function stackTraceFn(errorMsg, msg)
     TEST_FAILURES = TEST_FAILURES + 1
     local info = debug.getinfo(7, 'nlS')
@@ -59,7 +63,7 @@ end
 --- @param label string The optional string prefix label
 function assertTrue(actual, label)
     local msgFormat = GetExpectedMessageFormat(label)
-    local msg = sformat(msgFormat, 'true', tostring(actual))
+    local msg = sformat(msgFormat, 'true', t(actual))
     xpcall(function() assert(actual, msg) end, ErrorHandler(msg))
 end
 
@@ -67,7 +71,7 @@ end
 --- @param label string The optional string prefix label
 function assertFalse(actual, label)
     local msgFormat = GetExpectedMessageFormat(label)
-    local msg = sformat(msgFormat, 'false', tostring(actual))
+    local msg = sformat(msgFormat, 'false', t(actual))
     xpcall(function() assert(actual == false, msg) end, ErrorHandler(msg))
 end
 
@@ -75,8 +79,8 @@ end
 --- @param expected any The expected value
 --- @param label string The optional string prefix label
 function assertEquals(actual, expected, label)
-    local msgFormat = GetExpectedMessageFormat(label)
-    local msg = sformat(msgFormat, tostring(expected), tostring(actual))
+    local msgFormat    = GetExpectedMessageFormat(label)
+    local msg = sformat(msgFormat, t(expected), t(actual))
     xpcall(function() assert(actual == expected, msg) end, ErrorHandler(msg))
 end
 
@@ -85,7 +89,7 @@ end
 --- @param label string The optional string prefix label
 function assertNotEquals(actual, expected, label)
     local msgFormat = GetExpectedNotEqualMessageFormat(label)
-    local msg = sformat(msgFormat, tostring(expected), tostring(actual))
+    local msg = sformat(msgFormat, t(expected), t(actual))
     xpcall(function() assert(actual ~= expected, msg)  end, ErrorHandler(msg))
 end
 
@@ -93,7 +97,7 @@ end
 --- @param label string The optional string prefix label
 function assertNil(actual, label)
     local msgFormat = GetExpectedMessageFormat(label)
-    local msg = sformat(msgFormat, 'nil', tostring(actual))
+    local msg = sformat(msgFormat, 'nil', t(actual))
     xpcall(function() assert(actual == nil, msg) end, ErrorHandler(msg))
 end
 
