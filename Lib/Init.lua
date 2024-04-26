@@ -145,11 +145,6 @@ Lazy Load
 -------------------------------------------------------------------------------]]
 InitLazyLoaders()
 
---- @return Kapresoft_LibUtil
-function K_LibUtil(...) return select(2, ...).Kapresoft_LibUtil end
---- @return Kapresoft_LibUtil_LibStub
-function K_LibStub(...) return select(2, ...).Kapresoft_LibUtil.LibStub end
-
 --[[-----------------------------------------------------------------------------
 Add to Namespace
 -------------------------------------------------------------------------------]]
