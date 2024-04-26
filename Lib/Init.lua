@@ -82,6 +82,18 @@ Methods
 --- @param color Color
 function LibUtil:cf(color) return cf(color) end
 
+--- @param callbackFn fun()
+function LibUtil.After100ms(callbackFn) C_Timer.After(0.1, callbackFn) end
+
+--- @param callbackFn fun()
+function LibUtil.After300ms(callbackFn) C_Timer.After(0.3, callbackFn) end
+
+--- @param callbackFn fun()
+function LibUtil.After500ms(callbackFn) C_Timer.After(0.5, callbackFn) end
+
+--- @param callbackFn fun()
+function LibUtil.After1s(callbackFn) C_Timer.After(1, callbackFn) end
+
 --- @alias ModuleName string |"'String'"|"'Table'"|"'Mixin'"|"'Assert'"|"'Safecall'"|"'Incrementer'"
 --- @alias TargetLibraryMajorVersion string |"'Kapresoft-Table-1.0'"|"'Kapresoft-String-1.0'"|"'Kapresoft-Mixin-1.0'"|"'Kapresoft-Assert-1.0'"|
 --- @param moduleName ModuleName Example: 'Table' or 'String'
