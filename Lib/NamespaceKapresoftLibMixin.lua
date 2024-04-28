@@ -5,12 +5,12 @@ local O, M = LU.Objects, LU.M
 local LibStub = LU.LibStub
 
 local ModuleName = M.NamespaceKapresoftLibMixin
-local pformat = ns.Kapresoft_LibUtil.pformat
 
 --[[-----------------------------------------------------------------------------
 Type: LibPackMixin
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_NamespaceKapresoftLibMixin
+--- @deprecated Use Kapresoft_LibUtil_CoreNamespaceMixin
 local L = LibStub:NewLibrary(ModuleName, 2)
 
 -- return if already loaded (this object can exist in other addons)

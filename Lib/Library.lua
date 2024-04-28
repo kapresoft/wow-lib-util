@@ -55,9 +55,12 @@ local Kapresoft_LibUtil_Objects = {
     --- @type Kapresoft_LibUtil_Safecall
     Safecall = {},
 
+    --- @type Kapresoft_LibUtil_CoreNamespaceMixin
+    CoreNamespaceMixin = {},
     --- @type Kapresoft_LibUtil_NamespaceAceLibraryMixin
     NamespaceAceLibraryMixin = {},
     --- @type Kapresoft_LibUtil_NamespaceKapresoftLibMixin
+    --- @deprecated Deprecated. Use CoreNamespaceMixin
     NamespaceKapresoftLibMixin = {},
 }
 
@@ -83,6 +86,7 @@ local M = {
     LuaEvaluator = '',
     LibFactoryMixin = '',
     LibStubMixin = '',
+    CoreNamespaceMixin = '',
     NamespaceAceLibraryMixin = '',
     NamespaceKapresoftLibMixin = '',
 }; for module, _ in pairs(M) do M[module] = module end
@@ -95,7 +99,7 @@ New Library
 -------------------------------------------------------------------------------]]
 --- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 9); if not L then return end
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 10); if not L then return end
 
 L.Names = {}
 for _, module in pairs(M) do L.Names[module] = Lib(module) end

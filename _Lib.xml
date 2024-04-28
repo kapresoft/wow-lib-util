@@ -28,5 +28,6 @@
 
 	<Script file="Lib\NamespaceKapresoftLibMixin.lua"/>
 	<Script file="Lib\NamespaceAceLibraryMixin.lua"/>
+	<Script file="Lib\CoreNamespaceMixin.lua"/>
 
 </Ui>

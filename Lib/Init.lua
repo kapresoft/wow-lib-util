@@ -137,6 +137,7 @@ function LibUtil:CreateIncrementer(start, increment) return LibStub(IncrementerB
 --- local _, ns = ...
 --- local O, LibStub, M, pformat, LibUtil = ns.Kapresoft_LibUtil:LibPack()
 --- ```
+--- @deprecated Deprecated. Don't use LibPack()
 --- @return Kapresoft_LibUtil_Objects, Kapresoft_LibUtil_LibStub, Kapresoft_LibUtil_Modules, fun(fmt:string, ...)|fun(val:string), Kapresoft_LibUtil
 function LibUtil:LibPack() return self.Objects, self.LibStub, self.M, self.pformat, self end
 
