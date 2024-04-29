@@ -17,12 +17,14 @@ local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
 
---- @class ColorUtilMixin : Color
+--- @class ColorUtilMixin
 local ColorUtilMixin = {}
 --- @param o ColorUtilMixin
 local function ColorUtilMixin_Methods(o)
 
-    ---@param color Color
+    --- Usage: local colorUtil = CreateAndInitFromMixin(ColorUtilMixin, BLUE_FONT_COLOR)
+    --- @private
+    --- @param color Color
     function o:Init(color)
         assert(color, 'Init(): Color is required.')
         self.color = color
@@ -57,11 +59,13 @@ local CreateColorFromRGBAHexString = CreateColorFromRGBAHexString or xCreateColo
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
+--- @class ColorUtil : ColorUtilMixin
+
 --- @param o Kapresoft_ColorUtil
 local function PropsAndMethods(o)
 
     --- @param RRGGBBAA HexColor | "'fc565656'"
-    --- @return ColorUtilMixin
+    --- @return ColorUtil
     function o:NewColorFromHex(RRGGBBAA)
         --- @type Color
         local c = CreateColorFromRGBAHexString(RRGGBBAA)
@@ -70,9 +74,8 @@ local function PropsAndMethods(o)
     end
 
     --- @param color Color | "BLUE_FONT_COLOR"
-    --- @return ColorUtilMixin
+    --- @return ColorUtil
     function o:NewColor(color)
-        --- @type Color
         return CreateAndInitFromMixin(ColorUtilMixin, color)
     end
 
