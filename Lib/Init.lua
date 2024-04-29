@@ -80,6 +80,7 @@ Methods
 
 --- Create a new color formatter function
 --- @param color Color
+--- @return fun(val:any) : string The color formatter function
 function LibUtil:cf(color) return cf(color) end
 
 --- @param callbackFn fun()
