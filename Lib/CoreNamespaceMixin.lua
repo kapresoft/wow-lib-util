@@ -26,7 +26,7 @@ Local Variables
 local K = ns.Kapresoft_LibUtil
 local KO, M = K.Objects, K.M
 local LibStub = K.LibStub
-local ModuleName = M.CoreNamespaceMixin
+local ModuleName = M.CoreNamespaceMixin()
 
 --[[-----------------------------------------------------------------------------
 New Library
@@ -48,7 +48,7 @@ local function PropsAndMethods(o)
     --- @return Kapresoft_LibUtil
     function o:K() return K end
 
-    --- @return Kapresoft_LibUtil_Objects
+    --- @return Kapresoft_LibUtil_Modules
     function o:KO() return KO end
 
     --- @return Kapresoft_LibUtil_SequenceMixin

@@ -3,7 +3,7 @@ local ns = select(2, ...)
 local LU = ns.Kapresoft_LibUtil
 local O, M = LU.Objects, LU.M
 local LibStub, Ace = LU.LibStub, O.AceLibrary.O
-local ModuleName = M.NamespaceAceLibraryMixin
+local ModuleName = M.NamespaceAceLibraryMixin()
 
 --[[-----------------------------------------------------------------------------
 Type: LibPackMixin

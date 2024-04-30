@@ -12,7 +12,7 @@ Kapresoft_LibUtil Initialization
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil
 --- @field LibStub Kapresoft_LibUtil_LibStub Lazy loaded
---- @field Objects Kapresoft_LibUtil_Objects Lazy loaded
+--- @field Objects Kapresoft_LibUtil_Modules Lazy loaded
 local LibUtil = {
     LibPrefix = LibPrefix,
     --- @type Kapresoft_LibUtil_Modules
@@ -47,7 +47,7 @@ Support Functions
 -------------------------------------------------------------------------------]]
 local function InitLazyLoaders()
     local lazyLoaders = {
-        --- @type Kapresoft_LibUtil_Objects
+        --- @type Kapresoft_LibUtil_Modules
         Objects = function()
             local lib = LibStub(Library, true); return (lib and lib.Objects) or {}
         end,
@@ -139,7 +139,7 @@ function LibUtil:CreateIncrementer(start, increment) return LibStub(IncrementerB
 --- local O, LibStub, M, pformat, LibUtil = ns.Kapresoft_LibUtil:LibPack()
 --- ```
 --- @deprecated Deprecated. Don't use LibPack()
---- @return Kapresoft_LibUtil_Objects, Kapresoft_LibUtil_LibStub, Kapresoft_LibUtil_Modules, fun(fmt:string, ...)|fun(val:string), Kapresoft_LibUtil
+--- @return Kapresoft_LibUtil_Modules, Kapresoft_LibUtil_LibStub, Kapresoft_LibUtil_Modules, fun(fmt:string, ...)|fun(val:string), Kapresoft_LibUtil
 function LibUtil:LibPack() return self.Objects, self.LibStub, self.M, self.pformat, self end
 
 --[[-----------------------------------------------------------------------------

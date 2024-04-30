@@ -1,9 +1,10 @@
 --- @type Kapresoft_Base_Namespace
-local _, ns = ...
-local O, LibStub, M, pformat, LibUtil = ns.Kapresoft_LibUtil:LibPack()
+local ns = select(2, ...)
 
-local ModuleName = M.AceLibrary
-local logPrefix = LibUtil.CH:CreateLogPrefix(ModuleName)
+local K = ns.Kapresoft_LibUtil
+local LibStub, M = K.LibStub, K.M
+
+local ModuleName = M.AceLibrary()
 
 ---@class Kapresoft_LibUtil_AceLibrary
 local L = LibStub:NewLibrary(ModuleName, 3)

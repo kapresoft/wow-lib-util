@@ -4,7 +4,7 @@ local LU = ns.Kapresoft_LibUtil
 local O, M = LU.Objects, LU.M
 local LibStub = LU.LibStub
 
-local ModuleName = M.NamespaceKapresoftLibMixin
+local ModuleName = M.NamespaceKapresoftLibMixin()
 
 --[[-----------------------------------------------------------------------------
 Type: LibPackMixin
@@ -21,7 +21,7 @@ local function MethodsAndProps(o)
 
     --- @return Kapresoft_LibUtil
     function o:K() return LU end
-    --- @return Kapresoft_LibUtil_Objects
+    --- @return Kapresoft_LibUtil_Modules
     function o:KO() return O  end
 
     --- @return Kapresoft_LibUtil_SequenceMixin

@@ -15,81 +15,67 @@ local LibUtil = ns.Kapresoft_LibUtil
 --- @type Kapresoft_LibUtil_LibStub
 Kapresoft_LibStub = LibUtil.LibStub
 
---- Note: Also add library to Kapresoft_LibUtil_Modules
---- @class Kapresoft_LibUtil_Objects
-local Kapresoft_LibUtil_Objects = {
+--- @class Kapresoft_LibUtil_Module
+--- @field _name string The module name
+
+--- @class Kapresoft_LibUtil_Modules
+local M = {
     --- @type Kapresoft_LibUtil_Constants
     Constants = {},
-    --- @type Kapresoft_LibUtil_PrettyPrint
-    PrettyPrint = {},
     --- @type Kapresoft_LibUtil_AceLibrary
     AceLibrary = {},
-    --- @type Kapresoft_LibUtil_AddonUtil
-    AddonUtil = {},
     --- @type Kapresoft_LibUtil_Assert
     Assert = {},
     --- @type Kapresoft_LibUtil_ColorUtil
     ColorUtil = {},
+    --- @type Kapresoft_LibUtil_AddonUtil
+    AddonUtil = {},
     --- @type Kapresoft_LibUtil_IncrementerBuilder
     Incrementer = {},
-    --- @type Kapresoft_LibUtil_LuaEvaluator
-    LuaEvaluator = {},
     --- @type Kapresoft_LibUtil_Mixin
     Mixin = {},
-    --- @type Kapresoft_LibUtil_SequenceMixin
-    SequenceMixin = {},
     --- @type Kapresoft_LibUtil_String
     String = {},
     --- @type Kapresoft_LibUtil_Table
     Table = {},
     --- @type Kapresoft_LibUtil_TimeUtil
     TimeUtil = {},
-    --- @type Kapresoft_LibUtil_CategoryMixin
-    CategoryMixin = {},
     --- @type Kapresoft_LibUtil_LoggerMixin
     LoggerMixin = {},
-    --- @type Kapresoft_LibUtil_LibStubMixin
-    LibStubMixin = {},
-    --- @type Kapresoft_LibUtil_LibFactoryMixin
-    LibFactoryMixin = {},
+    --- @type Kapresoft_LibUtil_CategoryMixin
+    CategoryMixin = {},
     --- @type Kapresoft_LibUtil_Safecall
     Safecall = {},
-
+    --- @type Kapresoft_LibUtil_SequenceMixin
+    SequenceMixin = {},
+    --- @type Kapresoft_LibUtil_PrettyPrint
+    PrettyPrint = {},
+    --- @type Kapresoft_LibUtil_AceLibrary
+    AceLibrary = {},
+    --- @type Kapresoft_LibUtil_LuaEvaluator
+    LuaEvaluator = {},
+    --- @type Kapresoft_LibUtil_LibFactoryMixin
+    LibFactoryMixin = {},
+    --- @type Kapresoft_LibUtil_LibStubMixin
+    LibStubMixin = {},
     --- @type Kapresoft_LibUtil_CoreNamespaceMixin
     CoreNamespaceMixin = {},
     --- @type Kapresoft_LibUtil_NamespaceAceLibraryMixin
     NamespaceAceLibraryMixin = {},
     --- @type Kapresoft_LibUtil_NamespaceKapresoftLibMixin
-    --- @deprecated Deprecated. Use CoreNamespaceMixin
     NamespaceKapresoftLibMixin = {},
-}
-
---- Note: Also add library to Kapresoft_LibUtil_Objects
---- @class Kapresoft_LibUtil_Modules
-local M = {
-    Constants = '',
-    AceLibrary = '',
-    Assert = '',
-    ColorUtil = '',
-    AddonUtil = '',
-    Incrementer = '',
-    Mixin = '',
-    String = '',
-    Table = '',
-    TimeUtil = '',
-    LoggerMixin = '',
-    CategoryMixin = '',
-    Safecall = '',
-    SequenceMixin = '',
-    PrettyPrint = '',
-    AceLibrary = '',
-    LuaEvaluator = '',
-    LibFactoryMixin = '',
-    LibStubMixin = '',
-    CoreNamespaceMixin = '',
-    NamespaceAceLibraryMixin = '',
-    NamespaceKapresoftLibMixin = '',
-}; for module, _ in pairs(M) do M[module] = module end
+};
+for name in pairs(M) do
+    --- @type Kapresoft_LibUtil_Module
+    local module = M[name]
+    module._name = name
+    module._libName = LibUtil:Lib(name)
+    module.mt = {
+        __tostring = function() return "Module: " .. name .. ' (' .. module._libName .. ')' end,
+        __call = function() return name end
+    }
+    setmetatable(module, module.mt)
+end
 
 LibUtil.M = M
 local function Lib(moduleName) return LibUtil:Lib(moduleName) end
@@ -99,16 +85,18 @@ New Library
 -------------------------------------------------------------------------------]]
 --- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 10); if not L then return end
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 11); if not L then return end
 
 L.Names = {}
-for _, module in pairs(M) do L.Names[module] = Lib(module) end
+--- @param module Kapresoft_LibUtil_Module
+for _, module in pairs(M) do L.Names[module._name] = module._libName end
 
 --[[-----------------------------------------------------------------------------
 Namespace Objects
 -------------------------------------------------------------------------------]]
 ---@type Kapresoft_LibUtil_LibFactoryMixin
-local LibFactoryMixin = LibStub(Lib(M.LibFactoryMixin))
+local LibFactoryMixin = LibStub(Lib(M.LibFactoryMixin()))
 local libFactory = LibFactoryMixin:New(L.Names)
---- @type Kapresoft_LibUtil_Objects
+--- @type Kapresoft_LibUtil_Modules
 L.Objects = libFactory:GetObjects()
+
