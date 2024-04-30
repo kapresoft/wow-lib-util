@@ -22,7 +22,7 @@ if select(2, ...) then
 end
 
 --- @class Kapresoft_LibStubMixin
-local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
+local L = LibStub:NewLibrary(MAJOR_VERSION, 3); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
 
@@ -123,9 +123,11 @@ local function PropsAndMethods(o)
         local obj = LibStub:NewLibrary(major, minor)
         if not obj then return end
 
-        obj.name = libName
-        obj.major = major
-        obj.minor = minor
+        obj._name = libName
+        obj._major = major
+        obj._minor = minor
+        -- clear the .name field, this conflicts with modules
+        obj.name = nil
 
         if type(obj.mt) ~= 'table' then obj.mt = {} end
         setmetatable(obj, obj.mt)
