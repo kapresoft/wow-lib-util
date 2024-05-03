@@ -1,6 +1,10 @@
 --[[-----------------------------------------------------------------------------
 This file is not needed to function. It is solely for EmmyLua / IDE functionality
 -------------------------------------------------------------------------------]]
+
+--[[-----------------------------------------------------------------------------
+Type: Kapresoft_LibUtil_AceLibraryObjects
+-------------------------------------------------------------------------------]]
 --- @alias PostConstructHandler fun(libName:string, newLibInstance:any) : void
 
 --- @class Kapresoft_LibUtil_AceLibraryObjects

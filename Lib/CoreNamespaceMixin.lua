@@ -3,12 +3,7 @@ Type: CoreNamespace
 -------------------------------------------------------------------------------]]
 --- @class CoreNamespace : Kapresoft_Base_Namespace
 --- @field gameVersion GameVersion
---- @field pformat fun(fmt:string, ...)|fun(val:string)
---- @field sformat fun(fmt:string, ...)|fun(val:string)
---- @field log fun(...:any)
---- @field print fun(...:any)
---- @field logp fun(module:Name, ...:any)
---- @field chatFrame ChatLogFrameInterface
+--- @field chatFrame ChatLogFrame
 
 --[[-----------------------------------------------------------------------------
 Namespace
@@ -32,7 +27,27 @@ local ModuleName = M.CoreNamespaceMixin()
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_CoreNamespaceMixin
-local L = LibStub:NewLibrary(ModuleName, 1); if not L then return end
+local L = LibStub:NewLibrary(ModuleName, 2); if not L then return end
+
+--[[-----------------------------------------------------------------------------
+Type: ChatLogFrameMixin
+-------------------------------------------------------------------------------]]
+local ChatLogFrameMixin = {}; do
+    local m = ChatLogFrameMixin
+    --- @param o CoreNamespace
+    function m:Mixin(o)
+        ------ @return ChatLogFrame
+        function o:ChatFrame() return self.chatFrame end
+
+        --- @return boolean
+        function o:HasChatFrame() return self:ChatFrame() ~= nil end
+
+        --- @return boolean
+        function o:IsChatFrameTabShown()
+            return self:HasChatFrame() and self:ChatFrame():IsShown()
+        end
+    end
+end;
 
 --[[-----------------------------------------------------------------------------
 CoreNamespaceMixin
@@ -44,6 +59,31 @@ local function PropsAndMethods(o)
 
     o.sformat      = string.format
     o.pformat      = K.pformat
+
+    local function ts() return o.sformat('[%s]', ns:TimeUtil():NowInHoursMinSeconds()) end
+
+    -- global print/logger ('c')
+    local function _LogFn(...)
+        if ns:IsChatFrameTabShown() then
+            return ns:ChatFrame():log(ts(), ...)
+        end
+        print(ts(), ...)
+    end
+
+    --- @param module Name
+    local function _LogpFn(module, ...)
+        if ns:IsChatFrameTabShown() then return ns:ChatFrame():log(ts(), module, ...) end
+        print(ts(), module, ...)
+    end
+
+    local function _PrintFn(...)
+        print(ts(), ...)
+    end
+
+    --- @param module Name
+    local function _PrintpFn(module, ...)
+        print(ts(), module, ...)
+    end
 
     --- @return Kapresoft_LibUtil
     function o:K() return K end
@@ -62,7 +102,10 @@ local function PropsAndMethods(o)
     --- @return Kapresoft_LibUtil_AceLibraryObjects
     function o:AceLibrary() return KO.AceLibrary.O end
 
+    --- @return AceConfigDialog
     function o:AceConfigDialog() return self:AceLibrary().AceConfigDialog end
+
+    --- @return AceDB
     function o:AceDB() return self:AceLibrary().AceDB end
 
     --- @return Kapresoft_LibUtil_Assert
@@ -94,19 +137,22 @@ local function PropsAndMethods(o)
     --- @return GameVersion
     function o:IsRetail() return self.gameVersion == 'retail' end
 
-    ---@param namesp CoreNamespace
-    function o:RegisterChatFrame(namesp, chatFrame)
-        namesp.chatFrame = chatFrame
-        namesp.log     = function(...) namesp.chatFrame:log(...) end
-        namesp.logp    = function(module, ...) namesp.chatFrame:logp(module, ...) end
-        namesp.print   = namesp.log
-    end
+    --- @param moduleName Name | "libName"
+    --- @return fun(...:any) : void
+    function o:logfn(moduleName) return function(...) self.logp(moduleName, ...)  end end
+
+    ---@param chatFrame ChatLogFrame
+    function o:RegisterChatFrame(chatFrame) self.chatFrame = chatFrame end
 
     ---------------------------------------------------------------
     -- Print Functions --
     ---------------------------------------------------------------
-    o.print = print
-    o.log   = o.print
-    o.logp  = function(module, ...) print(module, ...) end
+    o.log   = _LogFn
+    o.logp  = _LogpFn
+    o.print = _PrintFn
+    o.printp = _PrintpFn
+
+    ChatLogFrameMixin:Mixin(o)
 
 end; PropsAndMethods(L)
+

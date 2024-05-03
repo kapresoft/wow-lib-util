@@ -12,6 +12,7 @@
 
 	<Script file="Lib\Library.lua"/>
 
+	<Include file="Lib\LibModule\_LibModule.xml"/>
 	<Include file="Lib\Mixin\_Mixin.xml"/>
 	<Include file="Lib\Assert\_Assert.xml"/>
 	<Include file="Lib\Table\_Table.xml"/>

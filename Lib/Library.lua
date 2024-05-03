@@ -15,9 +15,6 @@ local LibUtil = ns.Kapresoft_LibUtil
 --- @type Kapresoft_LibUtil_LibStub
 Kapresoft_LibStub = LibUtil.LibStub
 
---- @class Kapresoft_LibUtil_Module
---- @field _name string The module name
-
 --- @class Kapresoft_LibUtil_Modules
 local M = {
     --- @type Kapresoft_LibUtil_Constants
@@ -56,6 +53,8 @@ local M = {
     LuaEvaluator = {},
     --- @type Kapresoft_LibUtil_LibFactoryMixin
     LibFactoryMixin = {},
+    --- @type Kapresoft_LibUtil_LibModule
+    LibModule = {},
     --- @type Kapresoft_LibUtil_LibStubMixin
     LibStubMixin = {},
     --- @type Kapresoft_LibUtil_CoreNamespaceMixin
@@ -64,15 +63,17 @@ local M = {
     NamespaceAceLibraryMixin = {},
     --- @type Kapresoft_LibUtil_NamespaceKapresoftLibMixin
     NamespaceKapresoftLibMixin = {},
-};
+}
 for name in pairs(M) do
     --- @type Kapresoft_LibUtil_Module
     local module = M[name]
     module._name = name
     module._libName = LibUtil:Lib(name)
     module.mt = {
-        __tostring = function() return "Module: " .. name .. ' (' .. module._libName .. ')' end,
-        __call = function() return name end
+        --- @param m Kapresoft_LibUtil_Module
+        __tostring = function(m) return "Module: " .. m._name .. ' (' .. m._libName .. ')' end,
+        --- @param m Kapresoft_LibUtil_Module
+        __call = function(m) return m._name end
     }
     setmetatable(module, module.mt)
 end
@@ -85,7 +86,7 @@ New Library
 -------------------------------------------------------------------------------]]
 --- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 11); if not L then return end
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 12); if not L then return end
 
 L.Names = {}
 --- @param module Kapresoft_LibUtil_Module

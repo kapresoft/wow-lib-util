@@ -16,7 +16,7 @@ New Instance
 -------------------------------------------------------------------------------]]
 local MAJOR_VERSION = 'Kapresoft-TimeUtil-1.0'
 --- @class Kapresoft_TimeUtil
-local L = LibStub:NewLibrary(MAJOR_VERSION, 1); if not L then return end
+local L = LibStub:NewLibrary(MAJOR_VERSION, 2); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
 
@@ -31,12 +31,26 @@ Methods
 -------------------------------------------------------------------------------]]
 
 --- Converts the given Unix timestamp to an ISO 8601 date format string.
---- @param timestamp number|nil The Unix timestamp to convert. If nil, the current time is used.
+--- @param optionalTimestamp number|nil The Unix timestamp to convert. If nil, the current time is used.
 --- @return string The date and time in ISO 8601 format.
-function L:TimeToISODate(timestamp)
+function L:TimeToISODate(optionalTimestamp)
     -- Use '!' to ensure the date is formatted as UTC.
-    local isoDate = date("!%Y-%m-%dT%H:%M:%SZ", timestamp or time())
+    local isoDate = date("!%Y-%m-%dT%H:%M:%SZ", optionalTimestamp or time())
     return isoDate
+end
+
+--- The current time
+--- @param optionalTimestamp number|nil The Unix timestamp to convert. If nil, the current time is used.
+--- @return string The date and time in ISO 8601 format.
+function L:TimeToDate(optionalTimestamp)
+    return date("%Y-%m-%dT%H:%M:%S", optionalTimestamp or time())
+end
+
+--- The current timestamp hours:minute:seconds only
+--- @param optionalTimestamp number|nil The Unix timestamp to convert. If nil, the current server time is used.
+--- @return string The date and time in ISO 8601 format.
+function L:NowInHoursMinSeconds(optionalTimestamp)
+    return date("%H:%M:%S", optionalTimestamp or time())
 end
 
 --- Convert to unix timestamp
