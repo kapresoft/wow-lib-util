@@ -13,6 +13,9 @@ Kapresoft_LibUtil Initialization
 --- @class Kapresoft_LibUtil
 --- @field LibStub Kapresoft_LibUtil_LibStub Lazy loaded
 --- @field Objects Kapresoft_LibUtil_Modules Lazy loaded
+--- @field pformat fun(fmt:string, ...)|fun(val:string)
+--- @field dump fun(val:string)
+--- @field dumpv fun(val:any)
 local LibUtil = {
     LibPrefix = LibPrefix,
     --- @type Kapresoft_LibUtil_Modules
@@ -32,9 +35,6 @@ local LibUtil = {
 
     --- @type Kapresoft_LibUtil_LibStubMixin
     LibStubMixin = {},
-
-    --- @type fun(fmt:string, ...)|fun(val:string)
-    pformat = {},
 }
 
 local LibStubMixin = LibUtil:Lib('LibStubMixin')
@@ -73,6 +73,9 @@ end
 local function cf(color)
     return function(arg) return color:WrapTextInColorCode(tostring(arg)) end
 end
+
+--- @return Kapresoft_LibUtil_Mixin
+local function Mx() return LibStub(Mixin) end
 
 --[[-----------------------------------------------------------------------------
 Methods
@@ -116,22 +119,40 @@ function LibUtil:CreateLibWrapper(moduleName, moduleRevision, targetLibraryMajor
 end
 
 --- @see Similar Interface/SharedXML/Mixin.lua#Mixin(object, ...)
-function LibUtil:Mixin(object, ...) return LibStub(Mixin):Mixin(object, ...) end
+--- @return any The new Mixin instance
+function LibUtil:Mixin(object, ...) return Mx():Mixin(object, ...) end
 
---- @see Similar Interface/SharedXML/Mixin.lua#CreateFromMixins(...)
-function LibUtil:CreateFromMixins(...) return LibStub(Mixin):Mixin({}, ...) end
+--- @see Kapresoft_LibUtil_Mixin#MixinWithDefExc
+--- @param object any The target object
+--- @vararg any The objects to mixin
+--- @return any The new Mixin instance
+function LibUtil:MixinWithDefExc(object, ...) return Mx():MixinWithDefExc(object, ...) end
+
+--- @see Kapresoft_LibUtil_Mixin#CreateFromMixins
+--- @return any The new Mixin instance
+function LibUtil:CreateFromMixins(...) return Mx():CreateFromMixins(...) end
+
+--- @see Kapresoft_LibUtil_Mixin#CreateFromMixinsWithDefExc
+--- @vararg any The mixins
+--- @return any The new Mixin instance
+function LibUtil:CreateFromMixinsWithDefExc(...) return Mx():CreateFromMixinsWithDefExc(...) end
 
 --- @see Similar Interface/SharedXML/Mixin.lua#CreateAndInitFromMixin(...)
-function LibUtil:CreateAndInitFromMixin(mixin, ...)
-    local object = self:CreateFromMixins(mixin);
-    object:Init(...);
-    return object;
+--- @return any The new Mixin instance
+function LibUtil:CreateAndInitFromMixin(mixin, ...) return Mx():CreateAndInitFromMixin(mixin, ...) end
+
+--- @see Kapresoft_LibUtil_Mixin#CreateAndInitFromMixinWithDefExc
+--- @return any The new Mixin instance
+function LibUtil:CreateAndInitFromMixinWithDefExc(mixin, ...)
+    return Mx():CreateAndInitFromMixinWithDefExc(mixin, ...)
 end
 
 --- @param start number
 --- @param increment number
 --- @return Kapresoft_LibUtil_IncrementerBuilder
-function LibUtil:CreateIncrementer(start, increment) return LibStub(IncrementerBuilder):New(start, increment) end
+function LibUtil:CreateIncrementer(start, increment)
+    return LibStub(IncrementerBuilder):New(start, increment)
+end
 
 --- ```
 --- @type Kapresoft_Base_Namespace

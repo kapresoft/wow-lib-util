@@ -9,8 +9,8 @@ local P = LibStub('Kapresoft-LibUtil-PrettyPrint-1.0')
 local pformatWrapper = { pprint = P }
 LibUtil.pformat = pformatWrapper
 
---- @param o WrappedPrettyPrint
-local function PrettyPrintMethods(o)
+do
+    local o = pformatWrapper
     local pprint = o.pprint
 
     --- No new lines
@@ -54,4 +54,13 @@ local function PrettyPrintMethods(o)
     o:Default()
 end
 
-PrettyPrintMethods(pformatWrapper)
+do
+    local o = LibUtil
+    function o.dump(msg) DevTools_DumpCommand(msg) end
+    function o.dumpv(any)
+        local tmp = {}
+        print('Dump Value:')
+        table.insert(tmp, any)
+        DevTools_Dump(tmp)
+    end
+end

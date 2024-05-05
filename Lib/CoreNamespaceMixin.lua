@@ -27,11 +27,12 @@ local ModuleName = M.CoreNamespaceMixin()
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_CoreNamespaceMixin
-local L = LibStub:NewLibrary(ModuleName, 2); if not L then return end
+local L = LibStub:NewLibrary(ModuleName, 3); if not L then return end
 
 --[[-----------------------------------------------------------------------------
 Type: ChatLogFrameMixin
 -------------------------------------------------------------------------------]]
+--- @class ChatLogFrameMixin
 local ChatLogFrameMixin = {}; do
     local m = ChatLogFrameMixin
     --- @param o CoreNamespace
@@ -47,32 +48,34 @@ local ChatLogFrameMixin = {}; do
             return self:HasChatFrame() and self:ChatFrame():IsShown()
         end
     end
-end;
+end
 
 --[[-----------------------------------------------------------------------------
 CoreNamespaceMixin
 Usage: K:Mixin(any, KO.NamespaceAceLibraryMixin, ...)
 -------------------------------------------------------------------------------]]
 --- @see AceLibraryMixin.lua
---- @param o CoreNamespace
-local function PropsAndMethods(o)
+--- @type CoreNamespace
+local o = L; ChatLogFrameMixin:Mixin(o); do
+
+    local TimeUtil = KO.TimeUtil
 
     o.sformat      = string.format
     o.pformat      = K.pformat
 
-    local function ts() return o.sformat('[%s]', ns:TimeUtil():NowInHoursMinSeconds()) end
+    local function ts() return o.sformat('[%s]', TimeUtil:NowInHoursMinSeconds()) end
 
     -- global print/logger ('c')
     local function _LogFn(...)
-        if ns:IsChatFrameTabShown() then
-            return ns:ChatFrame():log(ts(), ...)
+        if o:IsChatFrameTabShown() then
+            return o:ChatFrame():log(ts(), ...)
         end
         print(ts(), ...)
     end
 
     --- @param module Name
     local function _LogpFn(module, ...)
-        if ns:IsChatFrameTabShown() then return ns:ChatFrame():log(ts(), module, ...) end
+        if o:IsChatFrameTabShown() then return o:ChatFrame():log(ts(), module, ...) end
         print(ts(), module, ...)
     end
 
@@ -152,7 +155,4 @@ local function PropsAndMethods(o)
     o.print = _PrintFn
     o.printp = _PrintpFn
 
-    ChatLogFrameMixin:Mixin(o)
-
-end; PropsAndMethods(L)
-
+end
