@@ -140,12 +140,34 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
     --- @return GameVersion
     function o:IsRetail() return self.gameVersion == 'retail' end
 
-    --- @param moduleName Name | "libName"
-    --- @return fun(...:any) : void
-    function o:logfn(moduleName) return function(...) self.logp(moduleName, ...)  end end
-
     ---@param chatFrame ChatLogFrame
     function o:RegisterChatFrame(chatFrame) self.chatFrame = chatFrame end
+
+
+    o.LogFunctions = {}; do
+        local f = o.LogFunctions
+        --- ### Usage
+        --- ```
+        --- local logp = ns.f.logp('MyController')
+        --- logp('Hello', 'World!')
+        --- ```
+        --- @param module Name
+        --- @return fun(...:any) : void
+        function f.logp(module)
+            return function(...) _LogpFn(module, ...)  end
+        end
+
+        --- ### Usage
+        --- ```
+        --- local printp = ns.f.printp('MyController')
+        --- printp('Hello', 'World!')
+        --- ```
+        --- @param module Name
+        --- @return fun(...:any) : void
+        function f.printp(module)
+            return function(...) _PrintpFn(module, ...)  end
+        end
+    end
 
     ---------------------------------------------------------------
     -- Print Functions --
