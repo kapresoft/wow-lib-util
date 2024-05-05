@@ -6,7 +6,7 @@ Local Vars
 --- @type LibStub
 local LibStub = LibStub
 local MIXIN_OBJ_REQUIRED_MSG = "Can't mixin to a nil object in Mixin(object, ...)"
-local DEFAULT_EXCLUDES       = { '_name', '_major', '_minor', 'mt', 'New', 'Init' }
+local DEFAULT_EXCLUDES       = { '_name', '_major', '_minor', 'mt' }
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -102,6 +102,9 @@ end
 --- @return any The new Mixin instance
 function L:CreateAndInitFromMixinWithDefExc(mixin, ...)
     local o = self:CreateFromMixinsWithDefExc(mixin)
-    if o.Init then o:Init(...) end
+    if o.Init then
+        o:Init(...)
+        o.Init = nil; if o.New then o.New = nil end
+    end
     return o
 end
