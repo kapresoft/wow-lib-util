@@ -9,7 +9,7 @@ local ModuleName = M.NamespaceAceLibraryMixin()
 Type: LibPackMixin
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_NamespaceAceLibraryMixin
-local L = LibStub:NewLibrary(ModuleName, 2)
+local L = LibStub:NewLibrary(ModuleName, 3)
 
 -- return if already loaded (this object can exist in other addons)
 if not L then return end
@@ -27,13 +27,11 @@ local function MethodsAndProps(o)
     --- @param obj|nil The object to embed or nil
     function o:AceBucket(obj) return Ace.AceBucket:Embed(obj or {}) end
 
-    --- @return AceLocale
-    function o:AceLocale() return Ace.AceLocale:GetLocale(self.addon, true) end
-
+    --- @param obj|nil The object to embed or nil
     --- @return AceHook
     function o:AceHook(obj) return Ace.AceHook:Embed(obj or {}) end
 
-    --- @return AceBucket
-    function o:AceBucket(obj) return Ace.AceBucket:Embed(obj or {}) end
+    --- @return AceLocale
+    function o:AceLocale() return Ace.AceLocale:GetLocale(self.addon, true) end
 
 end; MethodsAndProps(L)
