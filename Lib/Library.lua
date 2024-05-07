@@ -15,6 +15,8 @@ local LibUtil = ns.Kapresoft_LibUtil
 --- @type Kapresoft_LibUtil_LibStub
 Kapresoft_LibStub = LibUtil.LibStub
 
+local function Lib(moduleName) return LibUtil:Lib(moduleName) end
+
 --- @class Kapresoft_LibUtil_Modules
 local M = {
     --- @type Kapresoft_LibUtil_Constants
@@ -68,7 +70,7 @@ for name in pairs(M) do
     --- @type Kapresoft_LibUtil_Module
     local module = M[name]
     module._name = name
-    module._libName = LibUtil:Lib(name)
+    module._libName = Lib(name)
     module.mt = {
         --- @param m Kapresoft_LibUtil_Module
         __tostring = function(m) return "Module: " .. m._name .. ' (' .. m._libName .. ')' end,
@@ -79,18 +81,18 @@ for name in pairs(M) do
 end
 
 LibUtil.M = M
-local function Lib(moduleName) return LibUtil:Lib(moduleName) end
 
 --[[-----------------------------------------------------------------------------
 New Library
 -------------------------------------------------------------------------------]]
 --- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 12); if not L then return end
+local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 13); if not L then return end
 
+L.Modules = M
 L.Names = {}
 --- @param module Kapresoft_LibUtil_Module
-for _, module in pairs(M) do L.Names[module._name] = module._libName end
+for _, module in pairs(L.Modules) do L.Names[module._name] = module._libName end
 
 --[[-----------------------------------------------------------------------------
 Namespace Objects

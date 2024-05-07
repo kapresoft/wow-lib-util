@@ -41,10 +41,12 @@ setmetatable(L, L.mt)
 --[[-----------------------------------------------------------------------------
 Support Functions
 -------------------------------------------------------------------------------]]
+local assertMsgFmt = 'The library name [%s] is invalid. Is it registered in Kapresoft Library.lua? [%s]'
 local function fmtRed(val) return sformat("|cFFFF0000 %s |r", val or '') end
 local function assertLibName(prefix, libName, varToAssert)
-    assert(varToAssert, prefix .. fmtRed(' ERROR ') .. sformat('The library name [%s] is invalid.Is it registered in Kapresoft Library.lua?', libName))
+    assert(varToAssert, prefix .. fmtRed(' ERROR ') .. sformat(assertMsgFmt, libName, tostring(L) ))
 end
+
 local function handleIfLibFailed(success, prefix, libName, libNameMajor)
     if success then return end
     print(sformat('%s %s LibFactoryMixin:: Failed to load library MajorVersion=%s ModuleName=%s', prefix, fmtRed('ERROR'), tostring(libNameMajor), tostring(libName)))
