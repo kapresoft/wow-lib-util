@@ -37,7 +37,7 @@ local ChatLogFrameMixin = {}; do
     local m = ChatLogFrameMixin
     --- @param o CoreNamespace
     function m:Mixin(o)
-        ------ @return ChatLogFrame
+        --- @return ChatLogFrame
         function o:ChatFrame() return self.chatFrame end
 
         --- @return boolean
