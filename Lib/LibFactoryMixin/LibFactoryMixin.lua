@@ -11,12 +11,17 @@ local LibStub = LibStub
 local MAJOR_VERSION = 'Kapresoft-LibFactoryMixin-1.0'
 local logPrefix = '{{Kapresoft-LibFactoryMixin}}:'
 
-if select(2, ...) then
-    --- @type Kapresoft_LibUtil
-    local LibUtil = select(2, ...).Kapresoft_LibUtil
-    logPrefix = LibUtil.CH:CreateLogPrefix('LibFactoryMixin')
-end
+--- @type Kapresoft_Base_Namespace
+local ns = select(2, ...); assert(ns, sformat('%s: Namespace not available.', logPrefix))
 
+--- @type Kapresoft_LibUtil
+local K = ns.Kapresoft_LibUtil
+logPrefix = K.CH:CreateLogPrefix('LibFactoryMixin')
+local c1 = K:cf(ORANGE_THREAT_COLOR)
+local c2 = K:cf(HIGHLIGHT_LIGHT_BLUE)
+
+local WARN_TEXT = c1('WARN')
+local printp = function(...) print(logPrefix, ...)  end
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -34,7 +39,7 @@ New Instance
 --- local aceAddon = aceLib.AceAddon
 --- ```
 ---@class Kapresoft_LibFactoryMixin
-local L = LibStub:NewLibrary(MAJOR_VERSION, 2); if not L then return end
+local L = LibStub:NewLibrary(MAJOR_VERSION, 4); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
 
@@ -42,14 +47,17 @@ setmetatable(L, L.mt)
 Support Functions
 -------------------------------------------------------------------------------]]
 local assertMsgFmt = 'The library name [%s] is invalid. Is it registered in Kapresoft Library.lua? [%s]'
-local function fmtRed(val) return sformat("|cFFFF0000 %s |r", val or '') end
-local function assertLibName(prefix, libName, varToAssert)
-    assert(varToAssert, prefix .. fmtRed(' ERROR ') .. sformat(assertMsgFmt, libName, tostring(L) ))
+local libFailedMsgFmt = 'Failed to load library MajorVersion=%s ModuleName=%s. [%s]'
+
+local function assertLibName(libName, varToAssert)
+    if varToAssert then return true end
+    printp(WARN_TEXT, sformat(assertMsgFmt, libName, c2(tostring(L))))
+    return false
 end
 
 local function handleIfLibFailed(success, prefix, libName, libNameMajor)
     if success then return end
-    print(sformat('%s %s LibFactoryMixin:: Failed to load library MajorVersion=%s ModuleName=%s', prefix, fmtRed('ERROR'), tostring(libNameMajor), tostring(libName)))
+    printp(WARN_TEXT, sformat(libFailedMsgFmt, tostring(libNameMajor), tostring(libName), c2(tostring(L))))
 end
 
 ---@param anyTable Kapresoft_LibUtil_LibFactoryMixin
@@ -58,7 +66,10 @@ local function LibStubLazyLoad(anyTable, libName)
     --- @class _AnyInstance : Kapresoft_LibUtil_LibFactoryMixin
     local mixinInstance = anyTable.mixinInstance
     local libNameMajor = mixinInstance.libNames[libName]
-    assertLibName(logPrefix, libName, libNameMajor)
+    -- In case of a new Kapresoft Lib Module, try again using K:Lib()
+    if not libNameMajor then libNameMajor = K:Lib(libName) ..'x' end
+    local validLibName = assertLibName(libName, libNameMajor)
+    if not validLibName then return end
 
     local success, libInstanceOrErrorMsg = pcall(LibStub, libNameMajor)
     handleIfLibFailed(success, logPrefix, libName, libNameMajor)
@@ -122,7 +133,7 @@ local function Methods(o)
     --- @return Kapresoft_LibUtil_LibFactoryMixin
     function o:New(...)
         ---Calls Init(...)
-        return K_Constants:CreateAndInitFromMixin(L, ...)
+        return K_Constants:CreateAndInitFromMixin(o, ...)
     end
     --- @return Kapresoft_LibUtil_AceLibraryObjects
     function o:GetObjects() return self.objects end
