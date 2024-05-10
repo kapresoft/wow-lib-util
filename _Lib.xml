@@ -17,6 +17,8 @@
 	<Include file="Lib\Assert\_Assert.xml"/>
 	<Include file="Lib\Table\_Table.xml"/>
 	<Include file="Lib\String\_String.xml"/>
+	<Include file="Lib\Ace3\_Ace3.xml"/>
+
 	<Include file="Lib\TimeUtil\_TimeUtil.xml"/>
 	<Include file="Lib\ColorUtil\_ColorUtil.xml"/>
 	<Include file="Lib\AddonUtil\_AddonUtil.xml"/>
@@ -24,11 +26,11 @@
 	<Include file="Lib\SequenceMixin\_SequenceMixin.xml" />
 	<Include file="Lib\LuaEvaluator\_LuaEvaluator.xml"/>
 	<Include file="Lib\Safecall\_Safecall.xml"/>
-	<Include file="Lib\Ace3\_Ace3.xml"/>
 	<Include file="Lib\LoggerMixin\_LoggerMixin.xml"/>
 
 	<Script file="Lib\NamespaceKapresoftLibMixin.lua"/>
 	<Script file="Lib\NamespaceAceLibraryMixin.lua"/>
 	<Script file="Lib\CoreNamespaceMixin.lua"/>
+	<Script file="Lib\AceConfigUtil.lua"/>
 
 </Ui>

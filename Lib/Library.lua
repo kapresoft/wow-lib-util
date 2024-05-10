@@ -21,8 +21,12 @@ local function Lib(moduleName) return LibUtil:Lib(moduleName) end
 local M = {
     --- @type Kapresoft_LibUtil_Constants
     Constants = {},
+    --- @type Kapresoft_LibUtil_AceConfigUtil
+    AceConfigUtil = {},
     --- @type Kapresoft_LibUtil_AceLibrary
     AceLibrary = {},
+    --- @type Kapresoft_LibUtil_AceLocaleUtil
+    AceLocaleUtil = {},
     --- @type Kapresoft_LibUtil_Assert
     Assert = {},
     --- @type Kapresoft_LibUtil_ColorUtil
@@ -87,7 +91,7 @@ New Library
 -------------------------------------------------------------------------------]]
 --- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(LibUtil:Lib('Library'), 13); if not L then return end
+local L = LibStub:NewLibrary(Lib('Library'), 14); if not L then return end
 
 L.Modules = M
 L.Names = {}

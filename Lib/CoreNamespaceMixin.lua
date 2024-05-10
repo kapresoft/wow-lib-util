@@ -27,7 +27,7 @@ local ModuleName = M.CoreNamespaceMixin()
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_CoreNamespaceMixin
-local L = LibStub:NewLibrary(ModuleName, 3); if not L then return end
+local L = LibStub:NewLibrary(ModuleName, 4); if not L then return end
 
 --[[-----------------------------------------------------------------------------
 Type: ChatLogFrameMixin
@@ -129,6 +129,16 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
     --- @return Kapresoft_LibUtil_TimeUtil
     function o:TimeUtil() return KO.TimeUtil end
 
+    --- @type Kapresoft_LibUtil_AceLocaleUtil
+    function o:AceLocaleUtil() return KO.AceLocaleUtil end
+
+    --- @param addonName Name
+    --- @param silent boolean|nil Defaults to false
+    function o:GetLocale(addonName, silent) return self:AceLocaleUtil():GetLocale(addonName, silent) end
+
+    --- @type Kapresoft_LibUtil_AddonUtil
+    function o:AddonUtil() return KO.AddonUtil end
+
     --- @return GameVersion
     function o:IsVanilla() return self.gameVersion == 'classic' end
     --- @return GameVersion
@@ -143,7 +153,6 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
     ---@param chatFrame ChatLogFrame
     function o:RegisterChatFrame(chatFrame) self.chatFrame = chatFrame end
 
-
     o.LogFunctions = {}; do
         local f = o.LogFunctions
         --- ### Usage
@@ -153,9 +162,7 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
         --- ```
         --- @param module Name
         --- @return fun(...:any) : void
-        function f.logp(module)
-            return function(...) _LogpFn(module, ...)  end
-        end
+        function f.logp(module) return function(...) _LogpFn(module, ...)  end end
 
         --- ### Usage
         --- ```
@@ -164,9 +171,7 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
         --- ```
         --- @param module Name
         --- @return fun(...:any) : void
-        function f.printp(module)
-            return function(...) _PrintpFn(module, ...)  end
-        end
+        function f.printp(module) return function(...) _PrintpFn(module, ...)  end end
     end
 
     ---------------------------------------------------------------
