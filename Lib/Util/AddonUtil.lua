@@ -9,23 +9,19 @@ local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
 Local Vars
 -------------------------------------------------------------------------------]]
 --- @type Kapresoft_Base_Namespace
-local ns = select(2, ...); local K = ns.Kapresoft_LibUtil
-local KO = K.Objects
-local C = K_Constants
+local ns = select(2, ...)
+local K = ns.Kapresoft_LibUtil
+local LibStub = K.LibStub
+local C = K.Objects.Constants
 local sformat = string.format
 local pformat       = K.pformat
-
---- @type LibStub
-local LibStub = LibStub
+local ModuleName = K.M.AddonUtil()
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
-local MAJOR_VERSION = 'Kapresoft-AddonUtil-1.0'
---- @class Kapresoft_AddonUtil
-local S = LibStub:NewLibrary(MAJOR_VERSION, 1); if not S then return end
-S.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
-setmetatable(S, S.mt)
+--- @class Kapresoft_LibUtil_AddonUtil
+local S = LibStub:NewLibrary(ModuleName, 2); if not S then return end
 
 --[[-----------------------------------------------------------------------------
 Support Functions
@@ -96,21 +92,22 @@ function S:GetAddOnInfo(indexOrName)
     return info
 end
 
----@param name Name
----@param callbackFn fun(loadSuccess:boolean) | "function(loadSuccess) print('success:', loadSuccess) end"
+--- @param name Name
+--- @param callbackFn fun(loadSuccess:boolean, info:AddOnInfo, errorMsg:string) | "function(loadSuccess, info, errorMsg) print('success:', loadSuccess) end"
 function S:LoadOnDemand(name, callbackFn)
     C:AssertType(name, 'string', 'AddonUtil:LoadOnDemand(name)')
 
+    local info = self:GetAddOnInfo(name)
     if not self:IsAddOnEnabled(name) then
         self:EnableAddOnForCharacter(name)
         if not self:IsAddOnEnabled(name) then
-            local info = pformat(self:GetAddOnInfo(name))
-            return error(sformat('Failed to Enable Addon: %s info=%s', name, info), 2)
+            local infoText = pformat(info)
+            return callbackFn(false, info, sformat('Failed to Enable Addon: %s info=%s', name, infoText))
         end
     end
     if not IsAddOnLoaded(name) then LoadAddOn(name); end
     local loaded = select(2, IsAddOnLoaded(name))
-    callbackFn(loaded)
+    callbackFn(loaded, info)
 end
 
 

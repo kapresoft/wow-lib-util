@@ -5,27 +5,24 @@ Local Vars
 -------------------------------------------------------------------------------]]
 --- @type Kapresoft_Base_Namespace
 local ns = select(2, ...)
+local K = ns.Kapresoft_LibUtil
+local LibStub = K.LibStub
 local sformat = string.format
 local time = time or os.time
 local date = date or os.date
---- @type LibStub
-local LibStub = LibStub
+local ModuleName = K.M.TimeUtil()
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
-local MAJOR_VERSION = 'Kapresoft-TimeUtil-1.0'
---- @class Kapresoft_TimeUtil
-local L = LibStub:NewLibrary(MAJOR_VERSION, 2); if not L then return end
-L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
-setmetatable(L, L.mt)
+--- @class Kapresoft_LibUtil_TimeUtil
+local L = LibStub:NewLibrary(ModuleName, 3); if not L then return end
 
 --[[-----------------------------------------------------------------------------
 Support Functions
 -------------------------------------------------------------------------------]]
-function namespaceName()
-    return (ns and ns.name) or ''
-end
+function namespaceName() return (ns and ns.name) or '' end
+
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
