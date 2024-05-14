@@ -67,13 +67,6 @@ local function InitLazyLoaders()
     setmetatable(LibUtil, LibUtil.mt)
 end
 
---- Create a color formatter
---- @param color Color
---- @return fun(arg:any) : string The string wrapped in color code
-local function cf(color)
-    return function(arg) return color:WrapTextInColorCode(tostring(arg)) end
-end
-
 --- @return Kapresoft_LibUtil_Mixin
 local function Mx() return LibStub(Mixin) end
 
@@ -84,7 +77,14 @@ Methods
 --- Create a new color formatter function
 --- @param color Color
 --- @return fun(val:any) : string The color formatter function
-function LibUtil:cf(color) return cf(color) end
+function LibUtil:cf(color)
+    return function(arg) return color:WrapTextInColorCode(tostring(arg)) end
+end
+
+--- Create a new color formatter function
+--- @param RRGGBBAA HexColor | "'fc565656'"
+--- @return fun(val:any) : string The color formatter function
+function LibUtil:cfHex(RRGGBBAA) return self.Objects.ColorUtil:NewFormatterFromHex(RRGGBBAA) end
 
 --- @param callbackFn fun()
 function LibUtil.After100ms(callbackFn) C_Timer.After(0.1, callbackFn) end
@@ -138,10 +138,14 @@ function LibUtil:CreateFromMixins(...) return Mx():CreateFromMixins(...) end
 function LibUtil:CreateFromMixinsWithDefExc(...) return Mx():CreateFromMixinsWithDefExc(...) end
 
 --- @see Similar Interface/SharedXML/Mixin.lua#CreateAndInitFromMixin(...)
+--- @param mixin table The mixin
+--- @param ... any The arguments to the Init(...) call
 --- @return any The new Mixin instance
 function LibUtil:CreateAndInitFromMixin(mixin, ...) return Mx():CreateAndInitFromMixin(mixin, ...) end
 
 --- @see Kapresoft_LibUtil_Mixin#CreateAndInitFromMixinWithDefExc
+--- @param mixin table The mixin
+--- @param ... any The arguments to the Init(...) call
 --- @return any The new Mixin instance
 function LibUtil:CreateAndInitFromMixinWithDefExc(mixin, ...)
     return Mx():CreateAndInitFromMixinWithDefExc(mixin, ...)

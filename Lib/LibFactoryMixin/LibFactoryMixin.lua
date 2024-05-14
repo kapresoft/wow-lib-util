@@ -135,7 +135,7 @@ local function Methods(o)
         ---Calls Init(...)
         return K_Constants:CreateAndInitFromMixin(o, ...)
     end
-    --- @return Kapresoft_LibUtil_AceLibraryObjects
+
     function o:GetObjects() return self.objects end
 end
 

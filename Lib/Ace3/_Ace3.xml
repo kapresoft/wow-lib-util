@@ -3,6 +3,5 @@
 ..\FrameXML\UI.xsd">
 
 	<Script file="AceLibrary.lua"/>
-	<Script file="AceLocaleUtil.lua"/>
 
 </Ui>

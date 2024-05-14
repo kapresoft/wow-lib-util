@@ -13,6 +13,7 @@ local K = ns.Kapresoft_LibUtil
 local AceLocale = K.Objects.AceLibrary.O.AceLocale
 local LibStub = K.LibStub
 local ModuleName = K.M.AceConfigUtil()
+local sformat = string.format
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -30,17 +31,27 @@ Library Methods
 --- local util = Kapresoft_LibUtil_AceConfigUtil:New()
 --- ```
 --- @return Kapresoft_AceConfigUtil
+--- @param addonName Name
 --- @param silent boolean|nil Setting this to false will silence non-existing Locale Keys. [default: true]
-function S:New(silent)
-    return K:CreateAndInitFromMixinWithDefExc(S, silent)
+function S:New(addonName, silent)
+    return K:CreateAndInitFromMixinWithDefExc(S, addonName, silent)
 end
 
 --- @private
+--- @param addonName Name
 --- @param silent boolean Setting this to true will silence non-existing Locale Keys.
-function S:Init(silent)
-    assert('Namespace ns.addon is missing.', ns.addon)
-    self.L = AceLocale:GetLocale(ns.addon)
-    assert(self.L, 'Failed to create Locale for: ' .. tostring(ns.addon))
+function S:Init(addonName, silent)
+    assert(type(addonName) == 'string', 'Addon name is missing.')
+    self.addonName = addonName
+
+    local c1, c2 = K:cf(HEIRLOOM_BLUE_COLOR), K:cf(YELLOW_FONT_COLOR)
+    self.printp = function(...) print(sformat('{{%s::%s}}', c1(addonName), c2(ModuleName)), ...)  end
+
+    local success, result = pcall(function() return AceLocale:GetLocale(addonName) end)
+    if not success then
+        return self.printp(sformat('GetLocale(%s) failed with: %s', self.addonName, result))
+    end; self.L = result
+    assert(self.L, 'Failed to create Locale for: ' .. tostring(self.addonName))
     if silent ~= false then
         -- Override index so we don't get an error for non-existing keys
         local meta = getmetatable(self.L)
@@ -50,7 +61,6 @@ function S:Init(silent)
         end
     end
 
-    local c1           = ns:K():cf(HEIRLOOM_BLUE_COLOR)
     self.globalSetting = c1(self.L['Global Setting'])
     self.charSetting   = c1(self.L['Character Setting'])
 end
@@ -61,7 +71,6 @@ Instance Methods
 do
     --- @type Kapresoft_AceConfigUtil
     local o = S
-    local sformat = string.format
 
     --- @param localeKey string
     function o:G(localeKey)
@@ -86,15 +95,27 @@ do
     --- @param opt AceConfigOption
     --- @param localeKey string
     function o:NameDescGlobal(opt, localeKey)
+        local descKey = localeKey .. '::Desc'
+        if not self.L then
+            opt.name, opt.desc = localeKey, descKey
+            return
+        end
+
         opt.name = self.L[localeKey]
-        opt.desc = self:G(localeKey .. '::Desc')
+        opt.desc = self:G(descKey)
     end
 
     --- @param opt AceConfigOption
     --- @param localeKey string
     function o:NameDescCharacter(opt, localeKey)
+        local descKey = localeKey .. '::Desc'
+        if not self.L then
+            opt.name, opt.desc = localeKey, descKey
+            return
+        end
+
         opt.name = self.L[localeKey]
-        opt.desc = self.L.C(localeKey .. '::Desc')
+        opt.desc = self.L.C(descKey)
     end
 
     --- Create a Global Option

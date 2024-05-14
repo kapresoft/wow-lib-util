@@ -13,6 +13,8 @@
 --- @field windowAlpha number
 --- @field maxLines number
 --- @field makeDefaultChatFrame boolean|nil
+--- @field GetChatFrameTab fun(self:DebugChatFrameOptionsInterface, chatFrame:ChatFrame) : ChatFrameTab
+--- @field GetChatFrameTabText fun(self:DebugChatFrameOptionsInterface, chatFrame:ChatFrame) : string
 
 --- @class ChatLogFrameInterface
 --- @field options DebugChatFrameOptionsInterface
@@ -29,6 +31,12 @@
 --- @field SelectDefaultChatFrame fun(self:ChatLogFrameInterface): void
 --- @field CloseTab fun(self:ChatLogFrameInterface): void
 --- @field RestoreChatFrame fun(self:ChatLogFrameInterface, selectInDock:boolean): void
+--- @field RestoreDefaultChatFrame fun(self:ChatLogFrameInterface): void
+--- @field SetAsDefaultChatFrame fun(self:ChatLogFrameInterface, state:boolean) Setting to true will set the DebugChatFrame as the default chat frame
+--- @field GetTabName fun(self:ChatLogFrameInterface) : string
+--- @field GetChatFrameTabText fun(self:ChatLogFrameInterface) : string
+--- @field SetAsDefaultChatFrame fun(self:ChatLogFrameInterface, state:boolean)
+--- @field SetAsDefaultChatFrameIfConfigured fun(self:ChatLogFrameInterface)
 
 --- @class DebugChatFrameInterface
 --- @field New fun(self:DebugChatFrameInterface, ...:any) : ChatLogFrameInterface

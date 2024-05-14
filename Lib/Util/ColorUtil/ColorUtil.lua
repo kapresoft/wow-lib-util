@@ -92,10 +92,10 @@ local function PropsAndMethods(o)
     --- @param RRGGBBAA HexColor | "'fc565656'"
     --- @return fun(arg:any) : string The string wrapped in color code
     function o:NewFormatterFromHex(RRGGBBAA)
-        local color = self:NewColorFromHex(RRGGBBAA)
+        local colorUtil = self:NewColorFromHex(RRGGBBAA)
         --- @param arg any
         --- @return fun(arg:any) : string The string wrapped in color code
-        return function(arg) return color:WrapTextInColorCode(tostring(arg)) end
+        return function(arg) return colorUtil.color:WrapTextInColorCode(tostring(arg)) end
     end
 
     --- @param color Color

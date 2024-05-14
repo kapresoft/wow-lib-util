@@ -27,7 +27,7 @@ local ModuleName = M.CoreNamespaceMixin()
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_CoreNamespaceMixin
-local L = LibStub:NewLibrary(ModuleName, 4); if not L then return end
+local L = LibStub:NewLibrary(ModuleName, 5); if not L then return end
 
 --[[-----------------------------------------------------------------------------
 Type: ChatLogFrameMixin
@@ -75,7 +75,8 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
 
     --- @param module Name
     local function _LogpFn(module, ...)
-        if o:IsChatFrameTabShown() then return o:ChatFrame():log(ts(), module, ...) end
+        local cf = ns.chatFrame
+        if cf then return cf:log(ts(), module, ...) end
         print(ts(), module, ...)
     end
 
@@ -129,15 +130,18 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
     --- @return Kapresoft_LibUtil_TimeUtil
     function o:TimeUtil() return KO.TimeUtil end
 
-    --- @type Kapresoft_LibUtil_AceLocaleUtil
+    --- @return Kapresoft_LibUtil_AceLocaleUtil
     function o:AceLocaleUtil() return KO.AceLocaleUtil end
 
     --- @param addonName Name
     --- @param silent boolean|nil Defaults to false
     function o:GetLocale(addonName, silent) return self:AceLocaleUtil():GetLocale(addonName, silent) end
 
-    --- @type Kapresoft_LibUtil_AddonUtil
+    --- @return Kapresoft_LibUtil_AddonUtil
     function o:AddonUtil() return KO.AddonUtil end
+
+    --- @return Kapresoft_LibUtil_AddonInfoUtil
+    function o:AddonInfoUtil() return KO.AddonInfoUtil end
 
     --- @return GameVersion
     function o:IsVanilla() return self.gameVersion == 'classic' end

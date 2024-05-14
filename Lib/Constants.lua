@@ -36,7 +36,7 @@ local failSafeColor = CreateColorFromHexString('ff' .. failSafeColorHex6)
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_Constants
-local L = LibStub:NewLibrary('Kapresoft-LibUtil-Constants-1.0', 2); if not L then return end
+local L = LibStub:NewLibrary('Kapresoft-LibUtil-Constants-1.0', 3); if not L then return end
 
 ---@param color string
 ---@param text string

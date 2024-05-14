@@ -7,64 +7,46 @@ Type: Kapresoft_LibUtil_AceLibraryObjects
 -------------------------------------------------------------------------------]]
 --- @alias PostConstructHandler fun(libName:string, newLibInstance:any) : void
 
---- @class Kapresoft_LibUtil_AceLibraryObjects
-local Objects = {
-    --- @type AceAddon
-    AceAddon = nil,
-    --- @type AceBucket
-    AceBucket = nil,
-    --- @type AceConsole
-    AceConsole = nil,
-    --- @type AceConfig
-    AceConfig = nil,
-    --- @type AceConfigDialog
-    AceConfigDialog = nil,
-    --- @type AceDB
-    AceDB = nil,
-    --- @type AceDBOptions
-    AceDBOptions = nil,
-    --- @type AceEvent
-    AceEvent = nil,
-    --- @type AceHook
-    AceHook = nil,
-    --- @type AceGUI
-    AceGUI = nil,
-    --- @type AceLibSharedMedia
-    AceLibSharedMedia = nil,
-    --- @type AceLocale
-    AceLocale = nil,
-}
-
+--[[-----------------------------------------------------------------------------
+Type: Kapresoft_LibUtil_LibStub
+-------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_LibStub : Kapresoft_LibUtil_LibStubMixin
-local Kapresoft_LibUtil_LibStub = {
 
-}
-
+--[[-----------------------------------------------------------------------------
+Type: Kapresoft_Base_Namespace
+-------------------------------------------------------------------------------]]
 --- @class Kapresoft_Base_Namespace
 --- @field Kapresoft_LibUtil Kapresoft_LibUtil
 
+--[[-----------------------------------------------------------------------------
+Type: Kapresoft_LibUtil_BaseLibrary
+-------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_BaseLibrary
-local Kapresoft_LibUtil_BaseLibrary = {}
+--- @field _name Name
+--- @field _major string
+--- @field _minor number
 
+--[[-----------------------------------------------------------------------------
+Type: Kapresoft_LibUtil_ColorDefinition
+-------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_ColorDefinition
-local Kapresoft_LibUtil_ColorDefinition = {
-    --- @type string
-    primary   = 'e3caaf',
-    --- @type string
-    secondary = 'fbeb2d',
-    --- @type string
-    tertiary = 'ffffff'
-}
+--- @field primary HexColor6Digit
+--- @field secondary HexColor6Digit
+--- @field tertiary HexColor6Digit
+--- @field util1 HexColor6Digit
+--- @field util2 HexColor6Digit
 
+--[[-----------------------------------------------------------------------------
+Type: Kapresoft_LibUtil_ColorDefinition2
+-------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_ColorDefinition2
-local Kapresoft_LibUtil_ColorDefinition2 = {
-    --- @type Color
-    primary   = CreateColorFromHexString('ffaabbcc'),
-    --- @type Color
-    secondary = CreateColorFromHexString('ffbbbbcc'),
-    --- @type Color
-    tertiary = CreateColorFromHexString('ffccbbcc'),
-}
+--- @field primary Color
+--- @field secondary Color
+--- @field tertiary Color
+--- @field util1 Color
+--- @field util2 Color
 
+--[[-----------------------------------------------------------------------------
+Type: Kapresoft_LibUtil_ConsoleHelper
+-------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_ConsoleHelper : Kapresoft_LibUtil_ConsoleHelperMixin
-local ConsoleColor = {}

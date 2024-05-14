@@ -33,6 +33,8 @@ local M = {
     ColorUtil = {},
     --- @type Kapresoft_LibUtil_AddonUtil
     AddonUtil = {},
+    --- @type Kapresoft_LibUtil_AddonInfoUtil
+    AddonInfoUtil = {},
     --- @type Kapresoft_LibUtil_IncrementerBuilder
     Incrementer = {},
     --- @type Kapresoft_LibUtil_Mixin
@@ -91,7 +93,7 @@ New Library
 -------------------------------------------------------------------------------]]
 --- README: Increment the minor version whenever a library is added
 --- @class Kapresoft_LibUtil_Library
-local L = LibStub:NewLibrary(Lib('Library'), 14); if not L then return end
+local L = LibStub:NewLibrary(Lib('Library'), 15); if not L then return end
 
 L.Modules = M
 L.Names = {}
