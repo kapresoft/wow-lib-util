@@ -16,12 +16,13 @@ local C = K.Objects.Constants
 local sformat = string.format
 local pformat       = K.pformat
 local ModuleName = K.M.AddonUtil()
+local EqualsIgnoreCase = K.Objects.String.EqualsIgnoreCase
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_AddonUtil
-local S = LibStub:NewLibrary(ModuleName, 2); if not S then return end
+local S = LibStub:NewLibrary(ModuleName, 3); if not S then return end
 
 --[[-----------------------------------------------------------------------------
 Support Functions
@@ -89,6 +90,10 @@ function S:GetAddOnInfo(indexOrName)
         reason = reason, security = security,
         index = index
     }
+    function info:IsMissing()
+        return EqualsIgnoreCase(self.reason, 'MISSING')
+    end
+
     return info
 end
 
