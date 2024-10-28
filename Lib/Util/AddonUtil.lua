@@ -4,6 +4,7 @@ Blizzard Vars
 local EnableAddOn, DisableAddOn = EnableAddOn or C_AddOns.EnableAddOn, DisableAddOn or C_AddOns.DisableAddOn
 local C_AddOns_GetAddOnEnableState = C_AddOns.GetAddOnEnableState
 local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
+local GetAddOnInfo = GetAddOnInfo or C_AddOns.GetAddOnInfo
 
 --[[-----------------------------------------------------------------------------
 Local Vars
@@ -115,5 +116,29 @@ function S:LoadOnDemand(name, callbackFn)
     callbackFn(loaded, info)
 end
 
+--- Retrieves the dependencies for a specified addon, compatible with both Retail and Classic WoW.
+--- @param addon AddOnName The name or index of the addon to check.
+--- @return table dependencies A table of dependency names for the addon, or an empty table if none are found.
+function S:GetAddOnDependencies(addon)
+    local dependencies = {}
 
+    if C_AddOns and C_AddOns.GetAddOnDependencies then
+        -- Retail version: returns dependencies as multiple return values
+        for _, dependency in ipairs({C_AddOns.GetAddOnDependencies(addon)}) do
+            table.insert(dependencies, dependency)
+        end
+        return dependencies
+    elseif GetAddOnDependencies then
+        -- Classic version: requires index-based fetching
+        local depIndex = 1
+        while true do
+            local dependency = GetAddOnDependencies(addon, depIndex)
+            if not dependency then break end
+            table.insert(dependencies, dependency)
+            depIndex = depIndex + 1
+        end
+    end
+
+    return dependencies
+end
 
