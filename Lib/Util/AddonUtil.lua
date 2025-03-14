@@ -5,6 +5,8 @@ local EnableAddOn, DisableAddOn = EnableAddOn or C_AddOns.EnableAddOn, DisableAd
 local C_AddOns_GetAddOnEnableState = C_AddOns.GetAddOnEnableState
 local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
 local GetAddOnInfo = GetAddOnInfo or C_AddOns.GetAddOnInfo
+local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
+local IsAddOnLoaded = IsAddOnLoaded or C_AddOns.IsAddOnLoaded
 
 --[[-----------------------------------------------------------------------------
 Local Vars
