@@ -27,13 +27,15 @@ local ModuleName = M.CoreNamespaceMixin()
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_CoreNamespaceMixin
-local L = LibStub:NewLibrary(ModuleName, 5); if not L then return end
+local L = LibStub:NewLibrary(ModuleName, 6); if not L then return end
 
 --[[-----------------------------------------------------------------------------
 Type: ChatLogFrameMixin
 -------------------------------------------------------------------------------]]
 --- @class ChatLogFrameMixin
 local ChatLogFrameMixin = {}; do
+    local FONT_SIZE_ERR_MSG = 'Invalid:: Font size must be 10, 12, 14, 16, and 18'
+
     local m = ChatLogFrameMixin
     --- @param o CoreNamespace
     function m:Mixin(o)
@@ -46,6 +48,18 @@ local ChatLogFrameMixin = {}; do
         --- @return boolean
         function o:IsChatFrameTabShown()
             return self:HasChatFrame() and self:ChatFrame():IsShown()
+        end
+
+        --- Set the Font Size of the ChatFrame Console
+        --- @param fontSize number Font Size between 12 and 18
+        function o:SetChatFrameFontSize(fontSize)
+            if not self.chatFrame then return end
+
+            fontSize = fontSize or 14
+            assert((fontSize % 2) == 0, FONT_SIZE_ERR_MSG)
+            assert(fontSize >= 10 and fontSize <= 18, FONT_SIZE_ERR_MSG)
+            local font, _, outline = self.chatFrame:GetFont()
+            return font and self.chatFrame:SetFont(font, fontSize, outline)
         end
     end
 end
