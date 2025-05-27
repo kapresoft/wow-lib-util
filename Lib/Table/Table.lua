@@ -14,7 +14,7 @@ local MAJOR_VERSION = 'Kapresoft-Table-1.0'
 New Instance
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_Table
-local L = LibStub:NewLibrary(MAJOR_VERSION, 2); if not L then return end
+local L = LibStub:NewLibrary(MAJOR_VERSION, 3); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
 
@@ -93,6 +93,21 @@ function L.shallow_copy(t)
         t2[k] = v
     end
     return t2
+end
+
+--- Deep copy a Lua table without retaining references
+--- @param orig table
+--- @return table
+function L.deep_copy(orig)
+    local copy = {}
+    for k, v in pairs(orig) do
+        if type(v) == "table" then
+            copy[k] = L.deep_copy(v)
+        else
+            copy[k] = v
+        end
+    end
+    return copy
 end
 
 function L.mergeArray(t1, t2)
