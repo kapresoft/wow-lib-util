@@ -166,6 +166,8 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
     --- @return GameVersion
     function o:IsCataclysm() return self.gameVersion == 'cataclysm_classic' end
     --- @return GameVersion
+    function o:IsMoP() return self.gameVersion == 'mop_classic' end
+    --- @return GameVersion
     function o:IsRetail() return self.gameVersion == 'retail' end
 
     ---@param chatFrame ChatLogFrame
