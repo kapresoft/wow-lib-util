@@ -27,7 +27,7 @@ local ModuleName = M.CoreNamespaceMixin()
 New Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_LibUtil_CoreNamespaceMixin
-local L = LibStub:NewLibrary(ModuleName, 6); if not L then return end
+local L = LibStub:NewLibrary(ModuleName, 7); if not L then return end
 
 --[[-----------------------------------------------------------------------------
 Type: ChatLogFrameMixin
