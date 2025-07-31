@@ -15,23 +15,47 @@ New Instance
 -------------------------------------------------------------------------------]]
 local MAJOR_VERSION = 'Kapresoft-String-1.0'
 --- @class Kapresoft_String
-local L = LibStub:NewLibrary(MAJOR_VERSION, 2); if not L then return end
+local L = LibStub:NewLibrary(MAJOR_VERSION, 3); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
 
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
+--- Checks for a literal nothing.
+--- ```
+--- IsEmpty(nil)       -- true
+--- IsEmpty("")        -- true
+--- IsEmpty(" ")       -- false (space is still something!)
+--- IsEmpty("hello")   -- false
+--- ```
+--- @param str any
+--- @return boolean
 function L.IsEmpty(str) return (str or '') == '' end
+--- Checks for an
+--- @param str any
+--- @return boolean
 function L.IsNotEmpty(str)
     if str == nil then return true end
     return not L.IsEmpty(str)
 end
+--- ```
+--- IsBlank(nil)        -- true
+--- IsBlank("")         -- true
+--- IsBlank("    ")     -- true
+--- IsBlank("\n\t  ")   -- true
+--- IsBlank("hello")    -- false
+--- IsBlank(" h ")      -- false
+--- ```
+--- @param str any
+--- @return boolean
 function L.IsBlank(str)
     if str == nil then return true end
-    if type(str) ~= 'string' then return false end
-    return str_len(L.TrimAll(str)) <= 0
+    if type(str) ~= "string" then return false end
+    return not str:find("%S")
 end
+--- @param str any
+--- @return boolean
 function L.IsNotBlank(str) return not L.IsBlank(str) end
 function L.TrimAll(str)
     if str == nil then return str end

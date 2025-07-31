@@ -14,7 +14,7 @@ local MAJOR_VERSION = 'Kapresoft-Table-1.0'
 New Instance
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft_Table
-local L = LibStub:NewLibrary(MAJOR_VERSION, 3); if not L then return end
+local L = LibStub:NewLibrary(MAJOR_VERSION, 4); if not L then return end
 L.mt = { __tostring = function() return MAJOR_VERSION .. '.' .. LibStub.minors[MAJOR_VERSION]  end }
 setmetatable(L, L.mt)
 
@@ -50,9 +50,9 @@ end
 
 --- @param t table
 function L.Size(t)
-    if type(t) ~= 'table' then error(string.format("Expected arg to be of type table, but got: %s", type(t))) end
     local count = 0
-    for _ in pairs(t) do count = count + 1 end
+    if type(t) ~= "table" then return 0 end
+    for _ in next, t do count = count + 1 end
     return count
 end
 --- @deprecated Use #Size
@@ -60,10 +60,7 @@ end
 function L.size(t) return L.Size(t)  end
 
 --- @param t table
-function L.IsEmpty(t)
-    if t == nil then return true end
-    return L.Size(t) <= 0
-end
+function L.IsEmpty(t) return t == nil or next(t) == nil end
 
 --- @deprecated Use #IsEmpty
 --- @param t table
