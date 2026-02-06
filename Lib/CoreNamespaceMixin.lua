@@ -159,8 +159,14 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
 
     --- @return GameVersion
     function o:IsVanilla() return self.gameVersion == 'classic' end
+    
     --- @return GameVersion
-    function o:IsTBC() return self.gameVersion == 'tbc_classic' end
+    function o:IsTBC()
+        return self.gameVersion == 'tbc'
+                or self.gameVersion == 'tbc_classic'
+                or self.gameVersion == 'tbc_anniversary'
+    end
+    
     --- @return GameVersion
     function o:IsWOTLK() return self.gameVersion == 'wotlk_classic' end
     --- @return GameVersion
