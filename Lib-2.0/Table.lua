@@ -4,8 +4,7 @@ Lua Vars
 local table, unpack = table, unpack
 
 --[[-----------------------------------------------------------------------------
-Local Vars
-- Bump MINOR_VERSION whenever a change occurs
+VERSION:: Bump MINOR_VERSION whenever a change occurs
 -------------------------------------------------------------------------------]]
 local MAJOR, MINOR = 'Kapresoft-Table-2.0', 1
 

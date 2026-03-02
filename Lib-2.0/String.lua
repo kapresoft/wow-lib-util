@@ -5,7 +5,7 @@ local pairs, type, tostring = pairs, type, tostring
 local str_gsub, str_len, str_lower, tbl_insert = string.gsub, string.len, string.lower, table.insert
 
 --[[-----------------------------------------------------------------------------
-New Instance
+VERSION:: Bump MINOR_VERSION whenever a change occurs
 -------------------------------------------------------------------------------]]
 local MAJOR, MINOR = 'Kapresoft-String-2.0', 1
 
