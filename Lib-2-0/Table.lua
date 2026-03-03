@@ -6,7 +6,7 @@ local table, unpack = table, unpack
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-Table-2.0', 1
+local MAJOR, MINOR = 'Kapresoft-Table-2-0', 1
 
 --[[-----------------------------------------------------------------------------
 New Instance

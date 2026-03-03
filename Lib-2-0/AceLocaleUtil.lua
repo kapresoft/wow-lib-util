@@ -7,7 +7,7 @@ local AceLocale = LibStub('AceLocale-3.0')
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-AceLocaleUtil-2.0', 1
+local MAJOR, MINOR = 'Kapresoft-AceLocaleUtil-2-0', 1
 
 --[[-----------------------------------------------------------------------------
 Library
@@ -25,7 +25,7 @@ local o = S
 
 --- ### Example
 --- ```
----  local L = LibStub('Kapresoft-AceLocaleUtil-2.0'):GetLocale(addon, not IsDev())
+---  local L = LibStub('Kapresoft-AceLocaleUtil-2-0'):GetLocale(addon, not IsDev())
 --- ```
 --- @param addonName Name
 --- @param silent boolean|nil Defaults to false

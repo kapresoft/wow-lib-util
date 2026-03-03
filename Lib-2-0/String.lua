@@ -7,7 +7,7 @@ local str_gsub, str_len, str_lower, tbl_insert = string.gsub, string.len, string
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-String-2.0', 1
+local MAJOR, MINOR = 'Kapresoft-String-2-0', 1
 
 --- @class Kapresoft_String_2_0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
