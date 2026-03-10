@@ -6,8 +6,11 @@ local str_gsub, str_len, str_lower, tbl_insert = string.gsub, string.len, string
 
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
+-- 1: initial version
+-- 2: Revised String.IsAnyOf() for improved efficiency, type safety,
+      and case-insensitive matching; Removed String.ToString()--not needed
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-String-2-0', 1
+local MAJOR, MINOR = 'Kapresoft-String-2-0', 2
 
 --- @class Kapresoft_String_2_0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
@@ -67,19 +70,6 @@ function o.ToTable(args)
     for a in args:gmatch("%S+") do tbl_insert(rt, a) end
     -- table.foreach(rt, print)
     return rt
-end
-
-function o.ToString(o)
-    if type(o) == 'table' then
-        local s = '{ '
-        for k,v in pairs(o) do
-            if type(k) ~= 'number' then k = '"'..k..'"' end
-            s = s .. '['..k..'] = ' .. o.ToString(v) .. ','
-        end
-        return s .. '} '
-    else
-        return tostring(o)
-    end
 end
 
 function o.EqualsIgnoreCase(str1, str2)
@@ -176,13 +166,19 @@ end
 --- @param valueToMatch string A case insensitive match against the variable argument #2.
 --- @return boolean
 function o.IsAnyOf(valueToMatch, ...)
-    if not valueToMatch then return false end
-    local args = {...}
-    for i=1, #args do
-        local val = args[i]
-        if val and str_lower(val) == str_lower(valueToMatch) then return true end
+  if type(valueToMatch) ~= "string" then return false end
+  
+  local target = str_lower(valueToMatch)
+  local args = { ... }
+  
+  for i = 1, #args do
+    local val = args[i]
+    if type(val) == "string" and str_lower(val) == target then
+      return true
     end
-    return false
+  end
+  
+  return false
 end
 
 ---http://lua-users.org/wiki/StringRecipes
