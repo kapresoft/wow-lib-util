@@ -19,12 +19,12 @@ local libName = MyObj1()
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-ModuleUtil-2-0', 1
+local MAJOR, MINOR = 'Kapresoft-ModuleUtil-2-0', 2
 
 --[[-----------------------------------------------------------------------------
 New Instance
 -------------------------------------------------------------------------------]]
---- @class Kapresoft_ModuleUtil_2_0
+--- @class Kapresoft-ModuleUtil-2-0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
 S.mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
 setmetatable(S, S.mt)
@@ -42,7 +42,6 @@ local function assertType(val, valType, methodLabel)
   assert(t == valType, msg)
 end
 
---- @type Kapresoft_ModuleUtil_2_0
 local o = S
 
 --- @param moduleName Name

@@ -1,8 +1,9 @@
 --[[-----------------------------------------------------------------------------
 Lua Vars
 -------------------------------------------------------------------------------]]
-local pairs, type, tostring = pairs, type, tostring
+local type = type
 local str_gsub, str_len, str_lower, tbl_insert = string.gsub, string.len, string.lower, table.insert
+local str_sub = string.sub
 
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
@@ -10,14 +11,13 @@ VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 2: Revised String.IsAnyOf() for improved efficiency, type safety,
       and case-insensitive matching; Removed String.ToString()--not needed
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-String-2-0', 2
+local MAJOR, MINOR = 'Kapresoft-String-2-0', 3
 
---- @class Kapresoft_String_2_0
+--- @class Kapresoft-String-2-0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
 S.mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR]  end }
 setmetatable(S, S.mt)
 
---- @type Kapresoft_String_2_0
 local o = S
 
 --[[-----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ function o.ToTable(args)
 end
 
 function o.EqualsIgnoreCase(str1, str2)
-    return string.lower(str1) == string.lower(str2)
+    return str_lower(str1) == str_lower(str2)
 end
 
 --- @param formatstring string The string format
@@ -115,7 +115,7 @@ function o.replace(str, match, replacement) return o.Replace(str, match, replace
 --- @param str string The string to search
 --- @param pattern string The pattern to count
 function o.Count(str, pattern)
-    return select(2, string.gsub(str, pattern, ""))
+    return select(2, str_gsub(str, pattern, ""))
 end
 
 --- @param index number The index to replace
@@ -142,10 +142,12 @@ function o.ReplaceAllCharButLast(str, r)
 end
 
 --- @class BindingDetails
-local BindingDetailsTemplate = { action="<CLICK>", buttonName="<buttonName>", buttonPressed="<LeftButton>" }
+--- @field action string
+--- @field buttonName string
+--- @field buttonPressed string
 
 --- @param bindingName string The keybind name (see Bindings.xml) Example: ```'CLICK ActionbarPlusF1Button1:LeftButton'```
---- @return BindingDetails
+--- @return BindingDetails|nil
 function o.ParseBindingDetails(bindingName)
     local startIndexMatch, _, a,b,c = string.find(bindingName, "(.+%s)(%w+):(%a+)")
     if not (startIndexMatch or b) then return nil end
@@ -213,8 +215,8 @@ function o.Truncate(str, len, suffix)
     assert(type(str) == "string", "String.Truncate(str, len): str must be a string", 2)
     assert(type(len) == 'number' and len > 0, "Truncate(str, len): len must be a number greater than zero")
     suffix = suffix or '...'
-    if string.len(str) > len then
-        return o.Trim(string.sub(str, 1, len)) .. suffix
+    if str_len(str) > len then
+        return o.Trim(str_sub(str, 1, len)) .. suffix
     end
     return str
 end
@@ -228,7 +230,7 @@ function o.TruncateReversed(str, len, prefix)
     assert(type(len) == 'number' and len > 0, 'String.TruncateReversed(str, len): len must be a number greater than zero.')
     prefix = prefix or '...'; if str == nil then return prefix end
     str = o.Trim(str)
-    local prefixLen = string.len(prefix)
-    if (len <= prefixLen) or (string.len(str) < len) then return prefix end
-    return prefix .. o.Trim(string.sub(str, -len + prefixLen))
+    local prefixLen = str_len(prefix)
+    if (len <= prefixLen) or (str_len(str) < len) then return prefix end
+    return prefix .. o.Trim(str_sub(str, -len + prefixLen))
 end
