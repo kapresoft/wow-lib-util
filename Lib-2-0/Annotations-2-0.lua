@@ -1,0 +1,1 @@
+--- @alias cfFn fun(val:any) : string @A color formatter function
