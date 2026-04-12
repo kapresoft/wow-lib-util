@@ -8,8 +8,8 @@
       "param-type-mismatch",
       "missing-fields",
       "need-check-nil",
-      "call-non-callable"
-
+      "call-non-callable",
+      "unused"
     ],
     "globals": [
       "LibStub",
