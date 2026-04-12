@@ -67,7 +67,8 @@
       "legacy",
       "_SV",
       "Lib/",
-      ".release"
+      ".release",
+      ".checkout"
     ]
   }
 }
