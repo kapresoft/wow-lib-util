@@ -60,16 +60,20 @@
       "/Users/tony/sandbox/github/kapresoft/wow/wow-api-interface-cppcxy/Lib"
     ],
     "ignoreDir": [
-      "**/.*", 
       "build",
       "dist",
       "doc",
       "dev",
       "legacy",
       "_SV",
-      "Lib/",
+      "Lib",
+      ".claude",
       ".release",
       ".checkout"
+    ],
+    "ignoreGlobs": [
+      "**/.*/**",
+      ".claude/**"
     ]
   }
 }

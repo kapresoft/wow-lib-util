@@ -28,6 +28,21 @@ function o:AceGUI() return LibStub('AceGUI-3.0') end
 function o:AceHook() return LibStub('AceHook-3.0') end
 function o:AceLocale() return LibStub('AceLocale-3.0') end
 
+--- @param obj? any The target object
+--- @param ... string The Ace3 Library names, i.e. 'AceEvent-3.0', 'AceBucket-3.0'
+function o:Embed(obj, ...)
+  assert(type(obj) == 'table', 'Expected {obj} to be of type table.')
+  local inst = obj or {}
+  for i = 1, select("#", ...) do
+    local aceLibName = select(i, ...)
+    assert(type(aceLibName) == 'string', 'Expected {Ace3 Library Name} to be of type string.')
+    local aceLib = LibStub:GetLibrary(aceLibName)
+    print('aceLib=', aceLib, 'aceLibName=', aceLibName)
+    if aceLib and aceLib.Embed then aceLib:Embed(inst) end
+  end
+  return inst
+end
+
 --- Create a new instance of AceEvent or embed to an obj if passed
 --- @param obj table? The object to embed or nil
 --- @return AceEvent-3.0
@@ -36,7 +51,7 @@ function o:NewAceEvent(obj) return self:AceEvent():Embed(obj or {}) end
 --- Create a new instance of AceBucket or embed to an obj if passed
 --- @param obj table? The object to embed or nil
 --- @return AceBucket-3.0
-function o:NewAceBucket(obj) return Ace.AceBucket:Embed(obj or {}) end
+function o:NewAceBucket(obj) return self:AceBucket():Embed(obj or {}) end
 
 --- @param obj table? The object to embed or nil
 --- @return 'AceHook-3.0'

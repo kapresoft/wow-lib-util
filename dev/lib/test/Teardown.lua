@@ -2,7 +2,7 @@
 strmatch = nil
 sformat = nil
 --- @type LibStub
-LibStub = nil
+xLibStub = nil
 
 
 if (Kapresoft_LibUtil_LogLevel or 0) > 10 then print('Teardown called...') end
