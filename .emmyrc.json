@@ -9,6 +9,7 @@
       "missing-fields",
       "need-check-nil",
       "call-non-callable"
+
     ],
     "globals": [
       "LibStub",
