@@ -57,10 +57,10 @@
         "path": "/Users/tony/sandbox/github/kapresoft/wow/tools/vscode-wow-api-cppcxy/Annotations",
         "ignoreDir": [ "FrameXML" ]
       },
-      "/Users/tony/sandbox/github/kapresoft/wow/wow-api-interface/Lib"
+      "/Users/tony/sandbox/github/kapresoft/wow/wow-api-interface-cppcxy/Lib"
     ],
     "ignoreDir": [
-      "**/.*",
+      "**/.*", 
       "build",
       "dist",
       "doc",
