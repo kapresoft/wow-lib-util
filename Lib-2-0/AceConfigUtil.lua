@@ -25,7 +25,7 @@ local sformat = string.format
 --- @return Kapresoft-AceConfigUtil-2-0
 --- @param addonName Name
 --- @param silent boolean|nil Setting this to false will silence non-existing Locale Keys. [default: true]
-function o.New(addonName, silent)
+function o:New(addonName, silent)
   return CreateAndInitFromMixin(o, addonName, silent)
 end
 
@@ -162,12 +162,12 @@ end
 --- @param localeKey Name
 --- @return AceConfigOption
 function o:CreateLabel(localeKey, options)
-  return o.CreateLabelByName(self.L[localeKey], options)
+  return o:CreateLabelByName(self.L[localeKey], options)
 end
 
 --- @param name Name
 --- @return AceConfigOption
-function o.CreateLabelByName(name, options)
+function o:CreateLabelByName(name, options)
   --- @type AceConfigOption
   local option = { type = "description", width = 'full', fontSize = 'medium', name = name, }
   if options == nil or type(options) ~= 'table' then return option end
@@ -186,7 +186,7 @@ end
 --- @param spacerTextOrOrderOrOptions string|number|AceConfigOption|nil
 --- @param options AceConfigOption|nil
 --- @return AceConfigOption
-function o.CreateSpacer(spacerTextOrOrderOrOptions, options)
+function o:CreateSpacer(spacerTextOrOrderOrOptions, options)
   local spacerText = ' '
   --- @type AceConfigOption
   local option = { type = "description", width = 'full', fontSize = 'medium', name = spacerText, }
