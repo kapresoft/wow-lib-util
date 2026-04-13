@@ -113,7 +113,12 @@ function o:GetLastUpdate()
 end
 
 --- @return string @The ActionbarPlus version string. Example: 2024.3.1
-function o:GetVersion() return GetAddOnMetadata(self.addon, VERSION) end
+function o:GetVersion()
+  --@do-not-package@
+  if true then return '1.0.0-dev' end
+  --@end-do-not-package@
+  return GetAddOnMetadata(self.addon, VERSION)
+end
 
 --- @param command string @The long version of the slash command, i.e. actionbarplus
 --- @param commandShort string @The short version of the slash command, i.e. abp
