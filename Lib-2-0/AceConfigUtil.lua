@@ -15,8 +15,8 @@ Library Methods
 local o = S
 
 local AceLocale = LibStub('AceLocale-3.0')
-local ColorFormatter = LibStub('Kapresoft-ColorFormatter-2-0')
 local sformat = string.format
+local function ColorFormatter() return LibStub('Kapresoft-ColorFormatter-2-0') end
 
 --- ### Usage:
 --- ```
@@ -36,7 +36,8 @@ function o:Init(addonName, silent)
   assert(type(addonName) == 'string', 'Addon name is missing.')
   self.addonName = addonName
 
-  local c1, c2 = ColorFormatter.cf(HEIRLOOM_BLUE_COLOR), ColorFormatter.cf(YELLOW_FONT_COLOR)
+  local cformat = ColorFormatter()
+  local c1, c2 = cformat.cf(HEIRLOOM_BLUE_COLOR), cformat.cf(YELLOW_FONT_COLOR)
   self.printp = function(...) print(sformat('{{%s::%s}}', c1(addonName), c2(MAJOR)), ...) end
 
   local success, result = pcall(function() return AceLocale:GetLocale(addonName) end)

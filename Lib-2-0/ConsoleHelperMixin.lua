@@ -10,6 +10,9 @@ local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
 local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
 setmetatable(S, mt)
 
+local failSafeColorRGB = 'FFFFFF'
+local failSafeColor = CreateColorFromRGBHexString(failSafeColorRGB)
+
 --[[-----------------------------------------------------------------------------
 Support Functions
 -------------------------------------------------------------------------------]]
@@ -18,7 +21,7 @@ local sformat = string.format
 --- @param color string
 --- @param text string
 local function StringHexFormatter(color, text)
-  return sformat('|cfd%s%s|r', color or failSafeColorHex6, text)
+  return sformat('|cfd%s%s|r', color or failSafeColorRGB, text)
 end
 
 --- @param color colorRGBA

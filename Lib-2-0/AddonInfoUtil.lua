@@ -50,6 +50,12 @@ local function GetAceLocale(addonName)
   return LibStub('AceLocale-3.0'):GetLocale(addonName)
 end
 
+--- @param colorDef Kapresoft-ColorDefinition-2-0
+--- @return Kapresoft-ConsoleHelperMixin-2-0
+local function NewConsoleHelper(colorDef)
+  local ConsoleHelperMixin = LibStub('Kapresoft-ConsoleHelperMixin-2-0')
+  return CreateAndInitFromMixin(ConsoleHelperMixin, colorDef)
+end
 
 --[[-----------------------------------------------------------------------------
 Methods
@@ -70,8 +76,8 @@ function o:Init(addonName, consoleColors)
   self.addon         = addonName
   self.L             = GetAceLocale(addonName)
   self.consoleColors = consoleColors or DefaultConsoleColors
-  self.ch            = KO.Constants:NewConsoleHelper(self.consoleColors)
-  self.vf            = cformat.cf('FFD299ff')   --- Value Formatter; Light Brown
+  self.ch            = NewConsoleHelper(self.consoleColors)
+  self.vf            = cformat.cf('FFD299ff') --- Value Formatter; Light Brown
 end
 
 ---#### Example:
@@ -103,18 +109,13 @@ end
 
 --- @return string|osdate @The time in ISO Date Format. Example: 2024-03-22T17:34:00Z
 function o:GetLastUpdate()
-  --@do-not-package@
-  if true then return TimeUtil:TimeToISODate() end
-  --@end-do-not-package@
-  return GetAddOnMetadata(self.addonName, GITHUB_LAST_CHANGED_DATE)
+  return GetAddOnMetadata(self.addon, GITHUB_LAST_CHANGED_DATE)
 end
 
 --- @return string @The ActionbarPlus version string. Example: 2024.3.1
 function o:GetVersion()
-  --@do-not-package@
-  if true then return '1.0.0.dev' end
-  --@end-do-not-package@
-  return GetAddOnMetadata(self.addonName, VERSION)
+  EventTrace:LogEvent('DEVSUITE::AddonInfoUtil.lua', 'addon=', self.addon)
+  return GetAddOnMetadata(self.addon, VERSION)
 end
 
 --- @param command string @The long version of the slash command, i.e. actionbarplus
@@ -136,9 +137,6 @@ function o:GetDebugChatFrameVersion()
   if not _G[DEBUG_CHAT_FRAME_ADDON] then return nil end
 
   local dcfVersion = GetAddOnMetadata(DEBUG_CHAT_FRAME_ADDON, VERSION)
-  --@do-not-package@
-  dcfVersion = '1.0.0.dev'
-  --@end-do-not-package@
   return dcfVersion
 end
 
