@@ -113,10 +113,7 @@ function o:GetLastUpdate()
 end
 
 --- @return string @The ActionbarPlus version string. Example: 2024.3.1
-function o:GetVersion()
-  EventTrace:LogEvent('DEVSUITE::AddonInfoUtil.lua', 'addon=', self.addon)
-  return GetAddOnMetadata(self.addon, VERSION)
-end
+function o:GetVersion() return GetAddOnMetadata(self.addon, VERSION) end
 
 --- @param command string @The long version of the slash command, i.e. actionbarplus
 --- @param commandShort string @The short version of the slash command, i.e. abp
