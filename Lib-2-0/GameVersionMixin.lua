@@ -19,8 +19,8 @@ local MAJOR, MINOR = 'Kapresoft-GameVersionMixin-2-0', 1
 --- @class Kapresoft-GameVersionMixin-2-0 A mixin for WoW versions
 --- @field gameVersion string
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
-S.mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
-setmetatable(S, S.mt)
+local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
+setmetatable(S, mt)
 
 --[[-----------------------------------------------------------------------------
 Methods

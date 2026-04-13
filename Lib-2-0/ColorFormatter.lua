@@ -6,8 +6,8 @@ local MAJOR, MINOR = 'Kapresoft-ColorFormatter-2-0', 1
 
 --- @class Kapresoft-ColorFormatter-2-0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
-S.mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR]  end }
-setmetatable(S, S.mt)
+local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR]  end }
+setmetatable(S, mt)
 
 --[[-----------------------------------------------------------------------------
 Methods
@@ -23,9 +23,10 @@ function o.ColorFromHex(hexColorRRGGBBAA)
 end
 
 --- Create a new color formatter function
---- @param color colorRGBA
---- @return cfFn
+--- @param color colorRGBA|HexColor
+--- @return cfFn, colorRGBA?
 function o.cf(color)
+  if type(color) == 'string' then return o.cfhex(color) end
   return function(arg) return color:WrapTextInColorCode(tostring(arg)) end
 end
 

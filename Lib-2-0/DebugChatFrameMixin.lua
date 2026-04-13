@@ -2,13 +2,13 @@
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 1: initial version
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-ChatLogFrameMixin-2-0', 1
+local MAJOR, MINOR = 'Kapresoft-DebugChatFrameMixin-2-0', 1
 
---- @class Kapresoft-ChatLogFrameMixin-2-0
+--- @class Kapresoft-DebugChatFrameMixin-2-0
 --- @field chatFrame ChatLogFrame
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
-S.mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
-setmetatable(S, S.mt)
+local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
+setmetatable(S, mt)
 
 --[[-----------------------------------------------------------------------------
 Type: ChatLogFrameMixin
@@ -39,3 +39,6 @@ function o:SetChatFrameFontSize(fontSize)
   local font, _, outline = self.chatFrame:GetFont()
   return font and self.chatFrame:SetFont(font, fontSize, outline)
 end
+
+---@param chatFrame ChatLogFrame
+function o:RegisterChatFrame(chatFrame) self.chatFrame = chatFrame end

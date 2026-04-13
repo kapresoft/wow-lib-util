@@ -2,13 +2,17 @@
   "$schema": "https://raw.githubusercontent.com/EmmyLuaLs/emmylua-analyzer-rust/refs/heads/main/crates/emmylua_code_analysis/resources/schema.json",
   "diagnostics": {
     "disable": [
+      "access-invisible",
+      "access-invisible",
       "assign-type-mismatch",
-      "undefined-global",
-      "undefined-field",
-      "param-type-mismatch",
+      "call-non-callable",
+      "iter-variable-reassign",
       "missing-fields",
       "need-check-nil",
-      "call-non-callable",
+      "param-type-mismatch",
+      "undefined-field",
+      "undefined-global",
+      "unnecessary-if",
       "unused"
     ],
     "globals": [

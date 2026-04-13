@@ -7,8 +7,8 @@ local MAJOR, MINOR = 'Kapresoft-AceLib-2-0', 2
 
 --- @class Kapresoft-AceLib-2-0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
-S.mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
-setmetatable(S, S.mt)
+local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
+setmetatable(S, mt)
 
 --[[-----------------------------------------------------------------------------
 Methods
@@ -30,15 +30,21 @@ function o:AceLocale() return LibStub('AceLocale-3.0') end
 
 --- @param obj? any The target object
 --- @param ... string The Ace3 Library names, i.e. 'AceEvent-3.0', 'AceBucket-3.0'
-function o:Embed(obj, ...)
+function o:AceEmbed(obj, ...)
   assert(type(obj) == 'table', 'Expected {obj} to be of type table.')
   local inst = obj or {}
+  local aceLib
   for i = 1, select("#", ...) do
-    local aceLibName = select(i, ...)
-    assert(type(aceLibName) == 'string', 'Expected {Ace3 Library Name} to be of type string.')
-    local aceLib = LibStub:GetLibrary(aceLibName)
-    print('aceLib=', aceLib, 'aceLibName=', aceLibName)
-    if aceLib and aceLib.Embed then aceLib:Embed(inst) end
+    aceLib = select(i, ...)
+    if type(aceLib) == 'string' then
+      print('aceLib=', aceLib)
+      local name = aceLib
+      aceLib = LibStub(name)
+      assert(type(aceLib) == 'table', 'Ace3 lib not found: ' .. name)
+    end
+    if type(aceLib) == 'table' and aceLib.Embed then
+      aceLib:Embed(inst)
+    end
   end
   return inst
 end

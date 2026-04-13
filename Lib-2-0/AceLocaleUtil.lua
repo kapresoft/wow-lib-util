@@ -13,8 +13,8 @@ Library
 -------------------------------------------------------------------------------]]
 --- @class Kapresoft-AceLocaleUtil-2-0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
-S.mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR]  end }
-setmetatable(S, S.mt)
+local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
+setmetatable(S, mt)
 
 --[[-----------------------------------------------------------------------------
 Methods
