@@ -18,8 +18,10 @@ local libName = MyObj1()
 -------------------------------------------------------------------------------]]
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
+  - 1: Initial version
+  - 2: Init() method update
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-ModuleUtil-2-0', 2
+local MAJOR, MINOR = 'Kapresoft-ModuleUtil-2-0', 3
 
 --[[-----------------------------------------------------------------------------
 New Instance
@@ -50,34 +52,35 @@ function o:Init(moduleName)
   assert(t == 'string', 'Init(moduleName): The moduleName should be a string but was:' .. t)
   
   self._name = moduleName
+  local me = self
   self.mt = {
     --- @param m Kapresoft_LibUtil_Module
-    __tostring = function(m) return 'Module: ' .. m._name end,
+    __tostring = function() return 'Module: ' .. me._name end,
     --- @param m Kapresoft_LibUtil_Module
-    __call     = function(m, ...) return m._name end
+    __call     = function(m, ...) return me._name end
   }
   setmetatable(self, self.mt)
 end
 
---- @class Kapresoft_ModuleUtil_EnrichedModuleMixin_2_0
+--- @class Kapresoft-ModuleUtil-EnrichedModuleMixin-2-0
 --- @field name string The module name
 local EnrichedModuleMixin = {}
 --
---- @class Kapresoft_ModuleUtil_EnrichedModule_2_0 : Kapresoft_ModuleUtil_EnrichedModule_2_0
+--- @class Kapresoft-ModuleUtil-EnrichedModule-2-0 : Kapresoft-ModuleUtil-EnrichedModuleMixin-2-0
 --
 --
 function EnrichedModuleMixin:GetName() return self.name end
 
 local EnrichedModuleMT = {
   __index = EnrichedModuleMixin,
-  --- @param m Kapresoft_ModuleUtil_EnrichedModule_2_0
+  --- @param m Kapresoft-ModuleUtil-EnrichedModule-2-0
   __tostring = function(m) return 'Module: ' .. m.name end,
-  --- @param m Kapresoft_ModuleUtil_EnrichedModule_2_0
+  --- @param m Kapresoft-ModuleUtil-EnrichedModule-2-0
   __call     = function(m, ...) return m.name end
 }
 
 --- @param moduleName Name The module name
---- @return Kapresoft_ModuleUtil_EnrichedModule_2_0
+--- @return Kapresoft-ModuleUtil-EnrichedModule-2-0
 function o:New(moduleName)
   assertType(moduleName, 'string', 'Init(moduleName)')
   local module = { name = moduleName }

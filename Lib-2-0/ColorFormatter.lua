@@ -27,7 +27,16 @@ o.COLOR_FORMAT_RGB = "RRGGBB";
 o.COLOR_FORMAT_ARGB = "AARRGGBB";
 
 --- Create a new color formatter function.
---- @param color colorRGBA|HexRGBA|HexRGB|HexRGBA | 'RED_THREAT_COLOR' | '565656fc' | '565656' | 'fc565656'
+--- ```
+--- Examples:
+--- cfn = ColorFormatter:ColorFn(RED_THREAT_COLOR)
+--- cfn = ColorFormatter:ColorFn('565656fc')
+--- cfn = ColorFormatter:ColorFn('565656')
+--- cfn = ColorFormatter:ColorFn('fc565656')
+---
+--- print('Say:', cfn('Hello'))  -- prints in color
+--- ```
+--- @param color colorRGBA|HexRGBA|HexRGB|HexRGBA @ RED_THREAT_COLOR | '565656fc' | '565656' | 'fc565656'
 --- @return cfFn, colorRGBA?
 function o:ColorFn(color)
   assertsafe(color, "ColorFormatter:ColorFn(color): The function arg color is a required field, but was [%s]", tostring(color))
@@ -37,16 +46,22 @@ function o:ColorFn(color)
   return function(arg) return c:WrapTextInColorCode(tostring(arg)) end
 end
 
+--- ```
+--- Examples:
+--- color = ColorFormatter:ColorFromHex('565656fc')
+--- color = ColorFormatter:ColorFromHex('565656')
+--- color = ColorFormatter:ColorFromHex('fc565656')
+---
+--- print('Say:', color:WrapTextInColorCode('Hello'))  -- prints in color
+--- ```
 --- @param hexColorRBA HexRGBA|HexRGB|HexARGB | '565656fc' | '565656' | 'fc565656'
 --- @return colorRGBA
 function o:ColorFromHex(hexColorRBA)
   assertsafe(hexColorRBA, "ColorFromHex:hexColor): {hexColor} should be a string, but was [%s]",
     type(hexColorRBA))
   local color = self:_ColorFromHexARGB(hexColorRBA)
-  tr('ColorFromHex', 'str=', hexColorRBA, 'color=color')
   if not color then
     color = self:_ColorFromHexRGB(hexColorRBA)
-    tr('ColorFromHex(ARGB|', 'str=', hexColorRBA, 'color=color')
   end
   assert(type(color) == 'table', 'ColorFromHex:hexColor): {hexColor} is invalid: ' .. tostring(hexColorRBA))
   return color
