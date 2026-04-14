@@ -1,8 +1,9 @@
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 1: initial version
+
 DEPENDS ON:
-- AceLocale-3.0, Kapresoft-ColorFormatter-2-0, Kapresoft-TimeUtil-2-0
+- LibStub, AceLocale-3.0, Kapresoft-ConsoleHelperMixin-2-0
 -------------------------------------------------------------------------------]]
 local MAJOR, MINOR = 'Kapresoft-AddonInfoUtil-2-0', 1
 
@@ -16,9 +17,7 @@ Blizzard Vars
 -------------------------------------------------------------------------------]]
 local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
 local sformat = string.format
-local TimeUtil = LibStub:GetLibrary('Kapresoft-TimeUtil-2-0')
-local cformat = LibStub('Kapresoft-ColorFormatter-2-0')
-local c1 = cformat.cf(FACTION_GREEN_COLOR)
+local Locale__, ConsoleHelperMixin__
 
 --[[-----------------------------------------------------------------------------
 Local Vars
@@ -35,8 +34,6 @@ local GITHUB_REPO              = 'X-Github-Repo'
 local GITHUB_ISSUES            = 'X-Github-Issues'
 local CURSE_FORGE              = 'X-CurseForge'
 
-
-
 --- @type Kapresoft-ColorDefinition-2-0
 local DefaultConsoleColors = {
   primary   = BRIGHTBLUE_FONT_COLOR,
@@ -44,17 +41,25 @@ local DefaultConsoleColors = {
   tertiary  = WHITE_FONT_COLOR,
 }
 
+--[[-----------------------------------------------------------------------------
+Support Functions
+-------------------------------------------------------------------------------]]
 --- @param addonName string
 --- @return table<string, string>
 local function GetAceLocale(addonName)
-  return LibStub('AceLocale-3.0'):GetLocale(addonName)
+  if not Locale__ then
+    Locale__ = LibStub('AceLocale-3.0'):GetLocale(addonName)
+  end
+  return Locale__
 end
 
 --- @param colorDef Kapresoft-ColorDefinition-2-0
 --- @return Kapresoft-ConsoleHelperMixin-2-0
 local function NewConsoleHelper(colorDef)
-  local ConsoleHelperMixin = LibStub('Kapresoft-ConsoleHelperMixin-2-0')
-  return CreateAndInitFromMixin(ConsoleHelperMixin, colorDef)
+  if not ConsoleHelperMixin__ then
+    ConsoleHelperMixin__ = LibStub('Kapresoft-ConsoleHelperMixin-2-0')
+  end
+  return CreateAndInitFromMixin(ConsoleHelperMixin__, colorDef)
 end
 
 --[[-----------------------------------------------------------------------------
@@ -77,7 +82,6 @@ function o:Init(addonName, consoleColors)
   self.L             = GetAceLocale(addonName)
   self.consoleColors = consoleColors or DefaultConsoleColors
   self.ch            = NewConsoleHelper(self.consoleColors)
-  self.vf            = cformat.cf('FFD299ff') --- Value Formatter; Light Brown
 end
 
 ---#### Example:
@@ -155,7 +159,7 @@ function o:GetInfoSlashCommandText()
   local dcfVersion = self:GetDebugChatFrameVersion()
 
   s = s .. kvFormat(LL['Version'], meta.version)
-  if ns.gameVersion then s = s .. kvFormat(LL['Game-Version'], c1(ns.gameVersion)) end
+  if ns.gameVersion then s = s .. kvFormat(LL['Game-Version'], ns.gameVersion) end
   s = s .. kvFormat(LL['Curse-Forge'], meta.curseForge)
   s = s .. kvFormat(LL['Bugs'], meta.issues)
   s = s .. kvFormat(LL['Repo'], meta.repo)

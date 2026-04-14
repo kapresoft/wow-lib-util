@@ -1,22 +1,35 @@
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 1: initial version
+
+DEPENDS ON:
+- LibStub, AceLocale-3.0, Kapresoft-ColorFormatter-2-0
 -------------------------------------------------------------------------------]]
 local MAJOR, MINOR = 'Kapresoft-AceConfigUtil-2-0', 1
 
 --- @class Kapresoft-AceConfigUtil-2-0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
-S.mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
-setmetatable(S, S.mt)
+local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
+setmetatable(S, mt)
 
 --[[-----------------------------------------------------------------------------
 Library Methods
 -------------------------------------------------------------------------------]]
 local o = S
 
-local AceLocale = LibStub('AceLocale-3.0')
 local sformat = string.format
-local function ColorFormatter() return LibStub('Kapresoft-ColorFormatter-2-0') end
+local AceLocale__, ColorFormatter__
+
+--- @return AceLocale-3.0
+local function AceLocale()
+    if not AceLocale__ then AceLocale__ = LibStub('AceLocale-3.0') end
+    return AceLocale__
+end
+--- @return Kapresoft-ColorFormatter-2-0
+local function ColorFormatter()
+    if not ColorFormatter__ then ColorFormatter__ = LibStub('Kapresoft-ColorFormatter-2-0') end
+    return ColorFormatter__
+end
 
 --- ### Usage:
 --- ```
@@ -33,18 +46,18 @@ end
 --- @param addonName Name
 --- @param silent boolean Setting this to true will silence non-existing Locale Keys.
 function o:Init(addonName, silent)
-  assert(type(addonName) == 'string', 'Addon name is missing.')
+  assertsafe(addonName, 'AceConfigUtil:Init(addonName:string, silent): {addonName} is missing.')
   self.addonName = addonName
 
   local cformat = ColorFormatter()
-  local c1, c2 = cformat.cf(HEIRLOOM_BLUE_COLOR), cformat.cf(YELLOW_FONT_COLOR)
+  local c1, c2 = cformat:ColorFn(HEIRLOOM_BLUE_COLOR), cformat:ColorFn(YELLOW_FONT_COLOR)
   self.printp = function(...) print(sformat('{{%s::%s}}', c1(addonName), c2(MAJOR)), ...) end
 
-  local success, result = pcall(function() return AceLocale:GetLocale(addonName) end)
+  local success, result = pcall(function() return AceLocale():GetLocale(addonName) end)
   if not success then
     return self.printp(sformat('GetLocale(%s) failed with: %s', self.addonName, result))
   end; self.L = result
-  assert(self.L, 'Failed to create Locale for: ' .. tostring(self.addonName))
+  assertsafe(self.L, 'Failed to create Locale for: %s', tostring(self.addonName))
   if silent ~= false then
     -- Override index so we don't get an error for non-existing keys
     local meta = getmetatable(self.L)
