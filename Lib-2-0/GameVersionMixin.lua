@@ -10,6 +10,8 @@ Notes:
 -- WOW_PROJECT_MISTS_CLASSIC = 19;
 -- WOW_PROJECT_ID = WOW_PROJECT_CATACLYSM_CLASSIC;
 
+--- @alias GameVersion-2-0 string | "classic-era" | "tbc" | "wotlk" | "cataclysm" | "mists" | "mainline"
+
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 1: initial version
