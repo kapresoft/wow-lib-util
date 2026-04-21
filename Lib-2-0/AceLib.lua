@@ -37,7 +37,6 @@ function o:AceEmbed(obj, ...)
   for i = 1, select("#", ...) do
     aceLib = select(i, ...)
     if type(aceLib) == 'string' then
-      print('aceLib=', aceLib)
       local name = aceLib
       aceLib = LibStub(name)
       assert(type(aceLib) == 'table', 'Ace3 lib not found: ' .. name)
