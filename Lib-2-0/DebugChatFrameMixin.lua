@@ -11,7 +11,7 @@ local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR
 setmetatable(S, mt)
 
 --[[-----------------------------------------------------------------------------
-Type: ChatLogFrameMixin
+Type: DebugChatFrameMixin
 -------------------------------------------------------------------------------]]
 local o = S
 

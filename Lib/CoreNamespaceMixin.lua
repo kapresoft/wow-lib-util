@@ -30,9 +30,9 @@ New Library
 local L = LibStub:NewLibrary(ModuleName, 8); if not L then return end
 
 --[[-----------------------------------------------------------------------------
-Type: ChatLogFrameMixin
+Type: Kapresoft_ChatLogFrameMixin
 -------------------------------------------------------------------------------]]
---- @class ChatLogFrameMixin
+--- @class Kapresoft_ChatLogFrameMixin
 local ChatLogFrameMixin = {}; do
     local FONT_SIZE_ERR_MSG = 'Invalid:: Font size must be 10, 12, 14, 16, and 18'
 
