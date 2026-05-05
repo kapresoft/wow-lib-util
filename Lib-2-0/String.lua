@@ -10,15 +10,15 @@ VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 1: initial version
 -- 2: Revised String.IsAnyOf() for improved efficiency, type safety,
       and case-insensitive matching; Removed String.ToString()--not needed
+-- 3: Refactor of IsAnyOf
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-String-2-0', 3
+local MAJOR, MINOR = 'Kapresoft-String-2-0', 4
 
 --- @class Kapresoft-String-2-0
-local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
-S.mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR]  end }
-setmetatable(S, S.mt)
+local o = LibStub:NewLibrary(MAJOR, MINOR); if not o then return end
 
-local o = S
+local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR]  end }
+setmetatable(o, mt)
 
 --[[-----------------------------------------------------------------------------
 Methods
@@ -165,22 +165,18 @@ end
 ---local isValidType = String.IsAnyOf('macrotext', 'SPELL', 'Item', 'Macro')
 ---assertThat(isValidType).IsFalse()
 ---```
---- @param valueToMatch string A case insensitive match against the variable argument #2.
+--- @param valueToMatch string @Case-insensitive match against remaining args
 --- @return boolean
 function o.IsAnyOf(valueToMatch, ...)
-  if type(valueToMatch) ~= "string" then return false end
-  
-  local target = str_lower(valueToMatch)
-  local args = { ... }
-  
-  for i = 1, #args do
-    local val = args[i]
-    if type(val) == "string" and str_lower(val) == target then
-      return true
+    if type(valueToMatch) ~= "string" then return false end
+    local target = str_lower(valueToMatch)
+    for i = 1, select('#', ...) do
+        local val = select(i, ...)
+        if type(val) == "string" and str_lower(val) == target then
+            return true
+        end
     end
-  end
-  
-  return false
+    return false
 end
 
 ---http://lua-users.org/wiki/StringRecipes
