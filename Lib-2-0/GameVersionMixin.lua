@@ -16,7 +16,7 @@ Notes:
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 1: initial version
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-GameVersionMixin-2-0', 1
+local MAJOR, MINOR = 'Kapresoft-GameVersionMixin-2-0', 2
 
 --- @class Kapresoft-GameVersionMixin-2-0 A mixin for WoW versions
 --- @field gameVersion string
@@ -36,23 +36,81 @@ o.GAME_VERSION_CATACLYSM   = "cataclysm"
 o.GAME_VERSION_MISTS       = "mists"
 o.GAME_VERSION_MAINLINE    = "mainline"
 
+--- See Also: [ExpansionLevel](https://warcraft.wiki.gg/wiki/ExpansionLevel)
 --- @return boolean
-function o:IsClassicEra() return self.gameVersion == o.GAME_VERSION_CLASSIC_ERA end
+function o:IsClassicEra() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_CLASSIC end
 
 --- @return boolean
-function o:IsTBC() return self.gameVersion == o.GAME_VERSION_TBC end
+function o:IsTBC() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_BURNING_CRUSADE end
+--- @return boolean
+function o:IsTBCOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_BURNING_CRUSADE end
+--- @return boolean
+function o:IsTBCOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_BURNING_CRUSADE end
 
 --- @return boolean
-function o:IsWOTLK() return self.gameVersion == o.GAME_VERSION_WOTLK end
+function o:IsWOTLK() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_WRATH_OF_THE_LICH_KING end
+--- @return boolean
+function o:IsWOTLKOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_WRATH_OF_THE_LICH_KING end
+--- @return boolean
+function o:IsWOTLKOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_WRATH_OF_THE_LICH_KING end
 
 --- @return boolean
-function o:IsCata() return self.gameVersion == o.GAME_VERSION_CATACLYSM end
+function o:IsCata() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_CATACLYSM end
+--- @return boolean
+function o:IsCataOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_CATACLYSM end
+--- @return boolean
+function o:IsCataOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_CATACLYSM end
 
 --- @return boolean
-function o:IsMists() return self.gameVersion == o.GAME_VERSION_MISTS end
+function o:IsMists() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_MISTS_OF_PANDARIA end
+--- @return boolean
+function o:IsMistsOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_MISTS_OF_PANDARIA end
+--- @return boolean
+function o:IsMistsOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_MISTS_OF_PANDARIA end
+
+--- @return boolean
+function o:IsDraenor() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_WARLORDS_OF_DRAENOR end
+--- @return boolean
+function o:IsDraenorOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_WARLORDS_OF_DRAENOR end
+--- @return boolean
+function o:IsDraenorOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_WARLORDS_OF_DRAENOR end
+
+--- @return boolean
+function o:IsLegion() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_LEGION end
+--- @return boolean
+function o:IsLegionOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_LEGION end
+--- @return boolean
+function o:IsLegionOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_LEGION end
+
+--- @return boolean
+function o:IsBFA() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_BATTLE_FOR_AZEROTH end
+--- @return boolean
+function o:IsBFAOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_BATTLE_FOR_AZEROTH end
+--- @return boolean
+function o:IsBFAOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_BATTLE_FOR_AZEROTH end
+
+--- @return boolean
+function o:IsShadowlands() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_SHADOWLANDS end
+--- @return boolean
+function o:IsShadowlandsOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_SHADOWLANDS end
+--- @return boolean
+function o:IsShadowlandsOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_SHADOWLANDS end
+
+--- @return boolean
+function o:IsDragonflight() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_DRAGONFLIGHT end
+--- @return boolean
+function o:IsDragonflightOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_DRAGONFLIGHT end
+--- @return boolean
+function o:IsDragonflightOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_DRAGONFLIGHT end
+
+--- @return boolean
+function o:IsWarWithin() return LE_EXPANSION_LEVEL_CURRENT == LE_EXPANSION_WAR_WITHIN end
+--- @return boolean
+function o:IsWarWithinOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANSION_WAR_WITHIN end
+--- @return boolean
+function o:IsWarWithinOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_WAR_WITHIN end
 
 --- @return boolean
 function o:IsMainline() return self.gameVersion == o.GAME_VERSION_MAINLINE end
-
 --- @return boolean
 function o:IsRetail() return self:IsMainline() end
