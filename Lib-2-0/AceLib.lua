@@ -59,7 +59,7 @@ function o:NewAceEvent(obj) return self:AceEvent():Embed(obj or {}) end
 function o:NewAceBucket(obj) return self:AceBucket():Embed(obj or {}) end
 
 --- @param obj table? The object to embed or nil
---- @return 'AceHook-3.0'
+--- @return AceHook-3.0
 function o:NewAceHook(obj) return self:AceHook():Embed(obj or {}) end
 
 --- @param addon string
