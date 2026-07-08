@@ -19,7 +19,7 @@ VERSION:: Bump MINOR_VERSION whenever a change occurs
 local MAJOR, MINOR = 'Kapresoft-GameVersionMixin-2-0', 2
 
 --- @class Kapresoft-GameVersionMixin-2-0 A mixin for WoW versions
---- @field gameVersion string
+--- @field gameVersion string @deprecated Use methods that does not use self.gameVersion
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
 local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
 setmetatable(S, mt)
@@ -110,7 +110,10 @@ function o:IsWarWithinOrEarlier() return LE_EXPANSION_LEVEL_CURRENT <= LE_EXPANS
 --- @return boolean
 function o:IsWarWithinOrLater() return LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_WAR_WITHIN end
 
+--- @deprecated Use methods that does not use self.gameVersion
 --- @return boolean
 function o:IsMainline() return self.gameVersion == o.GAME_VERSION_MAINLINE end
+
+--- @deprecated Use methods that does not use self.gameVersion
 --- @return boolean
 function o:IsRetail() return self:IsMainline() end
