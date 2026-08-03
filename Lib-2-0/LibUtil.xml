@@ -1,0 +1,21 @@
+<!--suppress ALL -->
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+    <Script file="Modules\AceConfigUtil.lua"/>
+    <Script file="Modules\AceLib.lua"/>
+    <Script file="Modules\AceLocaleUtil.lua"/>
+    <Script file="Modules\AddonInfoUtil.lua"/>
+    <Script file="Modules\AddonUtil.lua"/>
+    <Script file="Modules\ColorFormatter.lua"/>
+    <Script file="Modules\ConsoleHelperMixin.lua"/>
+    <Script file="Modules\DebugChatFrameMixin.lua"/>
+    <Script file="Modules\GameVersionMixin.lua"/>
+    <Script file="Modules\LuaEvaluator.lua"/>
+    <Script file="Modules\ModuleUtil.lua"/>
+    <Script file="Modules\SequenceMixin.lua"/>
+    <Script file="Modules\String.lua"/>
+    <Script file="Modules\Table.lua"/>
+    <Script file="Modules\TimeUtil.lua"/>
+
+</Ui>

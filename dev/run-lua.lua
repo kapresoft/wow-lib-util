@@ -11,4 +11,4 @@ local require, format = require, string.format
 Setup
 -------------------------------------------------------------------------------]]
 require('LibStub.LibStub')
-require('Mixin')
+require('Lib-2-0.Modules.SequenceMixin')

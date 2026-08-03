@@ -1,0 +1,38 @@
+## Interface: 11509, 20506, 30403, 40402, 50504, 120007
+## Version: @project-version@
+## Title: Lib|cff12E600Util|r
+## Notes: LibUtil by Kapresoft.|n|cff1784d1This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.|r
+## Author: Antonio W. Lagnada (kapresoft@gmail.com)
+## Version: @project-version@
+## IconTexture: Interface/AddOns/LibUtil/Assets/libutil-icon-tex
+## DefaultState: enabled
+
+## Category-enUS: Libraries
+## Category-deDE: Bibliotheken
+## Category-esES: Bibliotecas
+## Category-esMX: Bibliotecas
+## Category-frFR: Bibliothèques
+## Category-itIT: Librerie
+## Category-koKR: 라이브러리
+## Category-ptBR: Bibliotecas
+## Category-ruRU: Библиотеки
+## Category-zhCN: 库
+## Category-zhTW: 程式庫
+
+## X-Category: Libraries
+## X-eMail: kapresoft@gmail.com
+## X-License: MIT License
+## X-Github-Repo: https://github.com/kapresoft/wow-lib-util
+## X-Github-Issues: https://github.com/kapresoft/wow-lib-util/issues
+## X-Github-Project-Author: @project-author@
+## X-Github-Project-Hash: @project-hash@
+## X-Github-Project-Last-Changed-Date: @project-date-iso@
+## X-Github-Project-Version: @project-version@
+## X-CurseForge: https://www.curseforge.com/wow/addons/libutil
+## X-Curse-Project-ID: 1638413
+## X-PayPal-Donation-ID: AX58YP3GSGXVU
+## X-PayPal-Donation-URL: https://www.paypal.com/donate/?hosted_button_id=AX58YP3GSGXVU
+
+ThirdParty\ThirdParty.xml
+LibUtil.xml
+LibUtil.lua

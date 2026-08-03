@@ -5,12 +5,12 @@ VERSION:: Bump MINOR_VERSION whenever a change occurs
 DEPENDS ON:
 - LibStub, AceLocale-3.0, Kapresoft-ConsoleHelperMixin-2-0
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-AddonInfoUtil-2-0', 1
+local MAJOR, MINOR = 'Kapresoft-AddonInfoUtil-2-0', 2
 
 --- @class Kapresoft-AddonInfoUtil-2-0
-local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
+local o = LibStub:NewLibrary(MAJOR, MINOR); if not o then return end
 local mt = { __tostring = function() return MAJOR .. '.' .. LibStub.minors[MAJOR] end }
-setmetatable(S, mt)
+setmetatable(o, mt)
 
 --[[-----------------------------------------------------------------------------
 Blizzard Vars
@@ -27,6 +27,7 @@ Local Vars
 --
 --local KO, LibStub, ModuleName = K.Objects, K.LibStub, K.M.AddonInfoUtil()
 
+local AUTHOR                   = 'Author'
 local DEBUG_CHAT_FRAME_ADDON   = 'DebugChatFrame'
 local VERSION                  = 'Version'
 local GITHUB_LAST_CHANGED_DATE = 'X-Github-Project-Last-Changed-Date'
@@ -65,14 +66,13 @@ end
 --[[-----------------------------------------------------------------------------
 Methods
 -------------------------------------------------------------------------------]]
-local o = S
 
 --- @param addonName Name
 --- @param consoleColors Kapresoft-ColorDefinition-2-0
 --- @return Kapresoft-AddonInfoUtil-2-0
 function o:New(addonName, consoleColors)
-  return CreateAndInitFromMixin(S, addonName, consoleColors)
-end
+  return CreateAndInitFromMixin(o, addonName, consoleColors)
+end    
 
 --- @private
 --- @param addonName Name
@@ -94,12 +94,14 @@ function o:GetAddOnMetaInfo()
   local lastUpdate          = self:GetLastUpdate()
   local versionText         = self:GetVersion()
   local wowInterfaceVersion = select(4, GetBuildInfo())
+  local author              = GetAddOnMetadata(self.addon, AUTHOR) or AUTHOR
   local cf                  = GetAddOnMetadata(self.addon, CURSE_FORGE) or CURSE_FORGE
   local issues              = GetAddOnMetadata(self.addon, GITHUB_ISSUES) or GITHUB_ISSUES
   local repo                = GetAddOnMetadata(self.addon, GITHUB_REPO) or GITHUB_REPO
 
   --- @type AddOnMetaInfo
   local meta                = {
+    author           = author,
     version          = versionText,
     curseForge       = cf,
     issues           = issues,
@@ -111,12 +113,12 @@ function o:GetAddOnMetaInfo()
   return meta
 end
 
---- @return string|osdate @The time in ISO Date Format. Example: 2024-03-22T17:34:00Z
+--- @return (string|osdate)? @The time in ISO Date Format. Example: 2024-03-22T17:34:00Z
 function o:GetLastUpdate()
   return GetAddOnMetadata(self.addon, GITHUB_LAST_CHANGED_DATE)
 end
 
---- @return string @The ActionbarPlus version string. Example: 2024.3.1
+--- @return string? @The ActionbarPlus version string. Example: 2024.3.1
 function o:GetVersion()
   --@do-not-package@
   if true then return '1.0.0-dev' end
@@ -157,17 +159,15 @@ function o:GetInfoSlashCommandText()
 
   local meta = self:GetAddOnMetaInfo()
   local dcfVersion = self:GetDebugChatFrameVersion()
+  local version, build, date, tocVersion = GetBuildInfo()
 
+  s = s .. kvFormat(LL['Author'], meta.author)
   s = s .. kvFormat(LL['Version'], meta.version)
-  if ns.gameVersion then s = s .. kvFormat(LL['Game-Version'], ns.gameVersion) end
   s = s .. kvFormat(LL['Curse-Forge'], meta.curseForge)
   s = s .. kvFormat(LL['Bugs'], meta.issues)
   s = s .. kvFormat(LL['Repo'], meta.repo)
   s = s .. kvFormat(LL['Last-Update'], meta.lastUpdate)
   s = s .. kvFormat(LL['Locale'], meta.locale)
-  if dcfVersion and ns.name ~= DEBUG_CHAT_FRAME_ADDON then
-    s = s .. kvFormat(LL['DebugChatFrame'], dcfVersion)
-  end
   s = s .. kvFormat(LL['Interface-Version'], meta.interfaceVersion)
 
   return s
@@ -186,3 +186,4 @@ function o:infoKvSubFn()
     return sformat('\n  • %s: %s', self.ch:S(k), self.ch:T(v))
   end
 end
+

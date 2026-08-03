@@ -1,0 +1,39 @@
+# This is used for development to pull external libraries.
+# @see also: ./dev/pull-extlib.sh
+# --------------------------
+# cmd: ./dev/release.sh -duz -r ./.release -m _setup.yml
+# Note: This will build in ./.release/_setup directory
+package-as: _setup
+# --------------------------
+manual-changelog: CHANGELOG.txt
+
+# Use GitHub because svn repos are slower
+# basepath is ${package-as}
+# Ace3:
+#  - This is faster: https://github.com/WoWUIDev/Ace3
+#  - But this is the official: https://repos.wowace.com/wow/ace3/trunk
+externals:
+  ThirdParty-Libs/Ace3: https://github.com/WoWUIDev/Ace3
+
+ignore:
+  - "*.sh"
+  - "*.md"
+  - "*.yaml"
+  - "*.yml"
+  - "*.toc"
+  - "*.txt"
+  - dev
+  - doc
+  - ActionbarPlus
+  - ActionbarPlus-2-0
+  - ThirdParty-Libs/Ace3/LibStub/tests
+  - ThirdParty-Libs/Ace3/CallbackHandler-1.0/CallbackHandler-1.0.xml
+  - ThirdParty-Libs/Ace3/Ace3.lua
+  - ThirdParty-Libs/Ace3/Bindings.xml
+  - ThirdParty-Libs/Ace3/changelog.txt
+  - ThirdParty-Libs/Ace3/LICENSE.txt
+
+# Base path is .release/; Moves Libs to the folder above .release and into
+# the project folders
+move-folders:
+  _setup/ThirdParty-Libs: ../Lib-2-0/ThirdParty/Libs

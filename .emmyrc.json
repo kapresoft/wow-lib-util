@@ -64,17 +64,21 @@
         "path": "/Users/tony/sandbox/github/kapresoft/wow/tools/vscode-wow-api-cppcxy/Annotations",
         "ignoreDir": [ "FrameXML" ]
       },
-      "/Users/tony/sandbox/github/kapresoft/wow/wow-api-interface-cppcxy/Lib"
+      "/Users/tony/sandbox/github/kapresoft/wow/wow-api-interface-cppcxy/Lib",
+      "/Users/tony/sandbox/github/kapresoft/deployer"
     ],
     "ignoreDir": [
-      "Lib", "legacy",
-      "build", "dist", "doc", "dev"
+      "Lib-1-0",
+      "/usr/local/Applications/wow"
     ],
     "ignoreGlobs": [
-      "**/_*",
-      "**/_*/**",
       "**/.*",
-      "**/.*/**"
+      "**/.*/**",
+      "dev/*.md",
+      "dev/*.xml",
+      "dev/*.json",
+      "dev/*.sh",
+      "dev/*.yml"
     ]
   }
 }

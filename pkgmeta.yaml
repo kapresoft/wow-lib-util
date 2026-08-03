@@ -1,4 +1,4 @@
-package-as: Kapresoft-LibUtil
+package-as: LibUtil
 # --------------------------
 enable-nolib-creation: no
 enable-toc-creation: yes
@@ -6,16 +6,33 @@ enable-toc-creation: yes
 license-output: LICENSE.txt
 
 externals:
-  External/LibStub:
-    url: https://repos.wowace.com/wow/libstub/trunk
-    tag: latest
-  External/Ace3:
-    url: https://repos.wowace.com/wow/ace3/trunk
-    tag: latest
+  Lib-2-0/ThirdParty/Libs/LibStub: https://repos.wowace.com/wow/libstub/trunk
+  Lib-2-0/ThirdParty/Libs/Ace3: https://github.com/WoWUIDev/Ace3
+
 
 ignore:
-  - README.md
-  - sync-extlibs.sh
+  - "*.sh"
+  - "*.md"
+  - "*.yaml"
+  - "*.yml"
+  - "*.toml"
+  - dev
   - doc
-  - External/LibStub/tests
+  - Lib-1-0
+  - CHANGELOG.md
 
+# REQUIRED for CurseForge packager (non-obvious):
+# The LEFT side MUST be <repo-folder>/<addon-folder>
+#   - <addon-folder> MUST be the folder that contains the .toc files
+# The RIGHT side MUST be the addon name:
+#   - Must match the .toc filename (AddonName.toc)
+#   - Must match `package-as`
+#
+# NOTE:
+# CurseForge release.sh (poorly) relies on `move-folders` for *addon discovery*,
+# not just post-processing. If this does not exactly match
+# <repo>/<addon>, `toc_root_paths` will be empty and packaging WILL fail.
+#
+# ⚠️ Do not change unless you also change the repo/addon layout.
+move-folders:
+  LibUtil/Lib-2-0: LibUtil
