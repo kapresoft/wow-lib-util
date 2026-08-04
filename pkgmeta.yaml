@@ -6,9 +6,9 @@ enable-toc-creation: yes
 license-output: LICENSE.txt
 
 externals:
-  Lib-2-0/ThirdParty/Libs/LibStub: https://repos.wowace.com/wow/libstub/trunk
-  Lib-2-0/ThirdParty/Libs/Ace3: https://github.com/WoWUIDev/Ace3
-
+  Lib-2-0/ThirdParty/Libs/Ace3:
+    url: https://github.com/WoWUIDev/Ace3
+    tag: latest
 
 ignore:
   - "*.sh"

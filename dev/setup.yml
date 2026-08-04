@@ -13,7 +13,9 @@ manual-changelog: CHANGELOG.txt
 #  - This is faster: https://github.com/WoWUIDev/Ace3
 #  - But this is the official: https://repos.wowace.com/wow/ace3/trunk
 externals:
-  ThirdParty-Libs/Ace3: https://github.com/WoWUIDev/Ace3
+  ThirdParty-Libs/Ace3:
+    url: https://github.com/WoWUIDev/Ace3
+    tag: latest
 
 ignore:
   - "*.sh"
