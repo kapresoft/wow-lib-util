@@ -9,7 +9,7 @@ on:
     inputs:
       uploadCurseForge:
         description: 'Upload to CurseForge'
-        default: true
+        default: false
         type: boolean
 
 env:
@@ -162,7 +162,7 @@ jobs:
       ## https://github.com/actions/upload-artifact
       - name: Upload Build Artifact File
         if: ${{ env.uploadBuildArtifacts == 'true' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.buildArtifactFilename }}
           path: ${{ env.buildArtifact }}
