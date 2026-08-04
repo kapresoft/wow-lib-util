@@ -62,7 +62,7 @@ _Main() {
     echo "  $_ls_out"
     return 1
   fi
-  cmd=(./dev/release.sh -dz)
+  cmd=(~/bin/release.sh -dz)
   p "Executing: ${cmd[*]}"
   if "${cmd[@]}"; then
     p "Done: ${cmd[*]}"
