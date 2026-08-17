@@ -10,7 +10,7 @@ VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 1: initial version
 
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-ColorFormatter-2-0', 2
+local MAJOR, MINOR = 'Kapresoft-ColorFormatter-2-0', 3
 
 --- @class Kapresoft-ColorFormatter-2-0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
@@ -64,6 +64,21 @@ function o:ColorFromHex(hexColor)
   end
   assert(type(color) == 'table', 'ColorFromHex(hexColor): {hexColor} is invalid: ' .. tostring(hexColor))
   return color
+end
+
+--- Converts a colorRGBA object to a 6-digit RRGGBB hex string. The alpha channel, if any, is dropped.
+--- ## Usage
+--- ```
+--- hex = ColorFormatter:ToHexRGB(RED_THREAT_COLOR)
+--- hex = ColorFormatter:ToHexRGB(CreateColor(0.48, 0.81, 0.98))
+---
+--- print('Say:', hex)  -- '7acffb'
+--- ```
+--- @param color colorRGBA
+--- @return HexRGB
+function o:ToHexRGB(color)
+  local floor = math.floor
+  return ('%02x%02x%02x'):format(floor(color.r * 255 + 0.5), floor(color.g * 255 + 0.5), floor(color.b * 255 + 0.5))
 end
 
 --- @private
