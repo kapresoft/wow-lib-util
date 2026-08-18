@@ -1,4 +1,4 @@
-## Interface: 11509, 20506, 30403, 40402, 50504, 120007
+## Interface: 11509, 20506, 30403, 40402, 50504, 120100
 ## Version: @project-version@
 ## Title: Lib|cff12E600Util|r
 ## Notes: LibUtil by Kapresoft.|n|cff1784d1This addon is provided 'as is' without any warranties. All rights reserved. Redistribution or modification is not permitted.|r

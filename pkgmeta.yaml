@@ -3,7 +3,9 @@ package-as: LibUtil
 enable-nolib-creation: no
 enable-toc-creation: yes
 # --------------------------
-license-output: LICENSE.txt
+manual-changelog:
+  filename: dev/changelog-release.md
+  markup-type: markdown
 
 externals:
   Lib-2-0/ThirdParty/Libs/Ace3:
@@ -13,13 +15,17 @@ externals:
 ignore:
   - "*.sh"
   - "*.md"
+  - "*.txt"
   - "*.yaml"
   - "*.yml"
   - "*.toml"
   - dev
   - doc
   - Lib-1-0
-  - CHANGELOG.md
+  - Lib-2-0/ThirdParty/Libs/Ace3/Ace3.lua
+  - Lib-2-0/ThirdParty/Libs/Ace3/Ace3.toc
+  - Lib-2-0/ThirdParty/Libs/Ace3/tests
+  - Lib-2-0/ThirdParty/Libs/Ace3/Bindings.xml
 
 # REQUIRED for CurseForge packager (non-obvious):
 # The LEFT side MUST be <repo-folder>/<addon-folder>
