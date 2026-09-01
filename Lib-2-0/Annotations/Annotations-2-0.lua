@@ -6,6 +6,9 @@
 --- @field tertiary colorRGBA
 --- @field util1 colorRGBA
 --- @field util2 colorRGBA
+--- @field info colorRGBA
+--- @field warn colorRGBA
+--- @field error colorRGBA
 --- @field formatter fun(Color, string) : string
 
 --- @alias Author string
