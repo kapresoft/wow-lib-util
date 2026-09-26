@@ -3,7 +3,7 @@ Type: CoreNamespace
 -------------------------------------------------------------------------------]]
 --- @class CoreNamespace : Kapresoft_Base_Namespace
 --- @field gameVersion GameVersion
---- @field chatFrame ChatLogFrame
+--- @field chatFrame ChatLogFrame-1-0
 
 --[[-----------------------------------------------------------------------------
 Namespace
@@ -39,7 +39,7 @@ local ChatLogFrameMixin = {}; do
     local m = ChatLogFrameMixin
     --- @param o CoreNamespace
     function m:Mixin(o)
-        --- @return ChatLogFrame
+        --- @return ChatLogFrame-1-0
         function o:ChatFrame() return self.chatFrame end
 
         --- @return boolean
@@ -176,7 +176,7 @@ local o = L; ChatLogFrameMixin:Mixin(o); do
     --- @return GameVersion
     function o:IsRetail() return self.gameVersion == 'retail' end
 
-    ---@param chatFrame ChatLogFrame
+    ---@param chatFrame ChatLogFrame-1-0
     function o:RegisterChatFrame(chatFrame) self.chatFrame = chatFrame end
 
     o.LogFunctions = {}; do

@@ -1,0 +1,42 @@
+-- Interface Definitions
+-- This file is not needed to run the addon.
+-- Copy and paste this anywhere in your IDE for Emmy Lua to detect
+
+--- @alias ChatLogFrame-1-0 ChatLogFrameInterface-1-0 | ChatFrame
+--- @alias ChatFrameTab-1-0 Button
+
+--- @class DebugChatFrameOptionsInterface-1-0
+--- @field addon string The addon name
+--- @field chatFrameTabName string The name of the chat frame tab
+--- @field font Font The blizzard font instance name
+--- @field fontSize number
+--- @field windowAlpha number
+--- @field maxLines number
+--- @field makeDefaultChatFrame boolean|nil
+--- @field GetChatFrameTab fun(self:DebugChatFrameOptionsInterface-1-0, chatFrame:ChatFrame) : ChatFrameTab-1-0
+--- @field GetChatFrameTabText fun(self:DebugChatFrameOptionsInterface-1-0, chatFrame:ChatFrame) : string
+
+--- @class ChatLogFrameInterface-1-0
+--- @field options DebugChatFrameOptionsInterface-1-0
+--- @field prefix fun(self:ChatLogFrameInterface-1-0, module: string): string
+--- @field log fun(self:ChatLogFrameInterface-1-0, ...: any)
+--- @field logp fun(self:ChatLogFrameInterface-1-0, module: string, ...: any)
+--- @field InitialTabSelection fun(self:ChatLogFrameInterface-1-0, selectDebugFrameInDock:boolean): void
+--- @field IsSelected fun(self:ChatLogFrameInterface-1-0): boolean
+--- @field IsTabShown fun(self:ChatLogFrameInterface-1-0): boolean
+--- @field StartFlash fun(self:ChatLogFrameInterface-1-0, ...) : void
+--- @field GetTab fun(self:ChatLogFrameInterface-1-0): ChatFrameTab-1-0
+--- @field GetTabName fun(self:ChatLogFrameInterface-1-0): string
+--- @field SelectInDock fun(self:ChatLogFrameInterface-1-0): void
+--- @field SelectDefaultChatFrame fun(self:ChatLogFrameInterface-1-0): void
+--- @field CloseTab fun(self:ChatLogFrameInterface-1-0): void
+--- @field RestoreChatFrame fun(self:ChatLogFrameInterface-1-0, selectInDock:boolean): void
+--- @field RestoreDefaultChatFrame fun(self:ChatLogFrameInterface-1-0): void
+--- @field SetAsDefaultChatFrame fun(self:ChatLogFrameInterface-1-0, state:boolean) Setting to true will set the DebugChatFrame as the default chat frame
+--- @field GetTabName fun(self:ChatLogFrameInterface-1-0) : string
+--- @field GetChatFrameTabText fun(self:ChatLogFrameInterface-1-0) : string
+--- @field SetAsDefaultChatFrame fun(self:ChatLogFrameInterface-1-0, state:boolean)
+--- @field SetAsDefaultChatFrameIfConfigured fun(self:ChatLogFrameInterface-1-0)
+
+--- @class DebugChatFrameInterface-1-0
+--- @field New fun(self:DebugChatFrameInterface-1-0, ...:any) : ChatLogFrameInterface-1-0
