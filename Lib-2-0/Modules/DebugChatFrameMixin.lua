@@ -1,8 +1,9 @@
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 1: initial version
+-- 2: SetChatFrameFontSize accepts Blizzard's chat font sizes
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-DebugChatFrameMixin-2-0', 1
+local MAJOR, MINOR = 'Kapresoft-DebugChatFrameMixin-2-0', 2
 
 --- @class Kapresoft-DebugChatFrameMixin-2-0
 --- @field chatFrame ChatLogFrame
@@ -15,7 +16,8 @@ Type: DebugChatFrameMixin
 -------------------------------------------------------------------------------]]
 local o = S
 
-local FONT_SIZE_ERR_MSG = 'Invalid:: Font size must be 10, 12, 14, 16, and 18'
+local MIN_FONT_SIZE, MAX_FONT_SIZE = 10, 32
+local FONT_SIZE_ERR_MSG = ('Invalid:: Font size must be from %s to %s'):format(MIN_FONT_SIZE, MAX_FONT_SIZE)
 
 --- @return ChatLogFrame
 function o:ChatFrame() return self.chatFrame end
@@ -29,15 +31,14 @@ function o:IsChatFrameTabShown()
 end
 
 --- Set the Font Size of the ChatFrame Console
---- @param fontSize number Font Size between 12 and 18
+--- @param fontSize number? @Covers Blizzard's CHAT_FONT_HEIGHTS; nil uses the default
 function o:SetChatFrameFontSize(fontSize)
   if not self.chatFrame then return end
 
-  fontSize = fontSize or 14
-  assert((fontSize % 2) == 0, FONT_SIZE_ERR_MSG)
-  assert(fontSize >= 10 and fontSize <= 18, FONT_SIZE_ERR_MSG)
+  local size = fontSize or 14
+  assert(size >= MIN_FONT_SIZE and size <= MAX_FONT_SIZE, FONT_SIZE_ERR_MSG)
   local font, _, outline = self.chatFrame:GetFont()
-  return font and self.chatFrame:SetFont(font, fontSize, outline)
+  return font and self.chatFrame:SetFont(font, size, outline)
 end
 
 ---@param chatFrame ChatLogFrame
