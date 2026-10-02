@@ -1,11 +1,10 @@
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
--- 1: initial version
 
 DEPENDS ON:
 - LibStub, AceLocale-3.0, Kapresoft-ConsoleHelperMixin-2-0
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-AddonInfoUtil-2-0', 2
+local MAJOR, MINOR = 'Kapresoft-AddonInfoUtil-2-0', 3
 
 --- @class Kapresoft-AddonInfoUtil-2-0
 local o = LibStub:NewLibrary(MAJOR, MINOR); if not o then return end
@@ -17,7 +16,7 @@ Blizzard Vars
 -------------------------------------------------------------------------------]]
 local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
 local sformat = string.format
-local Locale__, ConsoleHelperMixin__
+local ConsoleHelperMixin__
 
 --[[-----------------------------------------------------------------------------
 Local Vars
@@ -48,10 +47,7 @@ Support Functions
 --- @param addonName string
 --- @return table<string, string>
 local function GetAceLocale(addonName)
-  if not Locale__ then
-    Locale__ = LibStub('AceLocale-3.0'):GetLocale(addonName)
-  end
-  return Locale__
+  return LibStub('AceLocale-3.0'):GetLocale(addonName)
 end
 
 --- @param colorDef Kapresoft-ColorDefinition-2-0
@@ -72,7 +68,7 @@ Methods
 --- @return Kapresoft-AddonInfoUtil-2-0
 function o:New(addonName, consoleColors)
   return CreateAndInitFromMixin(o, addonName, consoleColors)
-end    
+end
 
 --- @private
 --- @param addonName Name
@@ -129,7 +125,7 @@ end
 --- @param command string @The long version of the slash command, i.e. actionbarplus
 --- @param commandShort string @The short version of the slash command, i.e. abp
 function o:GetMessageLoadedText(command, commandShort)
-  local ch, LL  = self.ch, GetAceLocale(self.addon)
+  local ch, LL  = self.ch, self.L
 
   local msg1Fmt = LL['%s version %s by %s is loaded.']
   local msg2Fmt = LL['Type %s or %s for available commands.']
@@ -150,7 +146,7 @@ end
 
 --- @return string
 function o:GetInfoSlashCommandText()
-  local LL = GetAceLocale(self.addon)
+  local LL = self.L
   local s = sformat('%s: ', LL['Addon Info'])
 
   local function kvFormat(k, v)
