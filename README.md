@@ -1,4 +1,9 @@
-# LibUtil by Kapresoft
+[![Release Build](https://github.com/kapresoft/wow-lib-util/actions/workflows/release-build.yml/badge.svg)](https://github.com/kapresoft/wow-lib-util/actions/workflows/release-build.yml)
+
+# LibUtil by Kapresoft :: The boring code your addon needs, written once.
+> ▶ A [World of Warcraft](https://worldofwarcraft.com/) AddOn
+
+![download-count](https://cf.way2muchnoise.eu/full_1638413_downloads.svg?badge_style=for_the_badge) ![supported-wow-versions](https://cf.way2muchnoise.eu/versions/World%20of%20Warcraft%20Versions_1638413_all.svg?badge_style=for_the_badge)
 
 A shared **LibStub-based utility library** for WoW addons. This is a library addon, not a standalone player-facing addon — it provides no UI of its own and does nothing on its own once installed. Other addons (such as ActionbarPlus, DevSuite, AddonSuite, and DebugChatFrame) depend on it via CurseForge or embed/vendor its code directly.
 
@@ -17,7 +22,7 @@ A shared **LibStub-based utility library** for WoW addons. This is a library add
 Addon developers who want to reuse common Lua/WoW-API helpers instead of reimplementing them per-addon. If you're a player who installed this directly, you likely don't need to interact with it — check which addon listed it as a dependency.
 
 ## License
-[MIT](LICENSE.md)
+[MIT](LICENSE)
 
 ### Donations
 
