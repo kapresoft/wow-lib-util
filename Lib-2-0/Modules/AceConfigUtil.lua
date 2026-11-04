@@ -95,7 +95,7 @@ function o:Cn(localeKey)
   return sformat('%s\n(%s)', self.L[localeKey], self.charSetting)
 end
 
---- @param opt AceConfigOption
+--- @param opt AceConfig.OptionsTable
 --- @param localeKey string
 function o:NameDesc(opt, localeKey)
   local descKey = localeKey .. '::Desc'
@@ -108,7 +108,7 @@ function o:NameDesc(opt, localeKey)
   opt.desc = self.L[descKey]
 end
 
---- @param opt AceConfigOption
+--- @param opt AceConfig.OptionsTable
 --- @param localeKey string
 function o:NameDescGlobal(opt, localeKey)
   local descKey = localeKey .. '::Desc'
@@ -121,7 +121,7 @@ function o:NameDescGlobal(opt, localeKey)
   opt.desc = self:G(descKey)
 end
 
---- @param opt AceConfigOption
+--- @param opt AceConfig.OptionsTable
 --- @param localeKey string
 function o:NameDescCharacter(opt, localeKey)
   local descKey = localeKey .. '::Desc'
@@ -136,10 +136,10 @@ end
 
 --- Create a Global Option
 --- @param localeKey string The locale key
---- @param options AceConfigOption
---- @return AceConfigOption
+--- @param options AceConfig.OptionsTable
+--- @return AceConfig.OptionsTable
 function o:CreateOption(localeKey, options)
-  --- @type AceConfigOption
+  --- @type AceConfig.OptionsTable
   local option = {};
   self:NameDesc(option, localeKey)
   if options == nil or type(options) ~= 'table' then return option end
@@ -149,10 +149,10 @@ end
 
 --- Create a Global Option
 --- @param localeKey string The locale key
---- @param options AceConfigOption
---- @return AceConfigOption
+--- @param options AceConfig.OptionsTable
+--- @return AceConfig.OptionsTable
 function o:CreateGlobalOption(localeKey, options)
-  --- @type AceConfigOption
+  --- @type AceConfig.OptionsTable
   local option = {}
   self:NameDescGlobal(option, localeKey)
   if options == nil or type(options) ~= 'table' then return option end
@@ -162,10 +162,10 @@ end
 
 --- Create a Character-Specific Option
 --- @param localeKey string The locale key
---- @param options AceConfigOption
---- @return AceConfigOption
+--- @param options AceConfig.OptionsTable
+--- @return AceConfig.OptionsTable
 function o:CreateCharOption(localeKey, options)
-  --- @type AceConfigOption
+  --- @type AceConfig.OptionsTable
   local option = {}
   self:NameDescCharacter(option, localeKey)
   if options == nil or type(options) ~= 'table' then return option end
@@ -174,15 +174,15 @@ function o:CreateCharOption(localeKey, options)
 end
 
 --- @param localeKey Name
---- @return AceConfigOption
+--- @return AceConfig.OptionsTable
 function o:CreateLabel(localeKey, options)
   return o:CreateLabelByName(self.L[localeKey], options)
 end
 
 --- @param name Name
---- @return AceConfigOption
+--- @return AceConfig.OptionsTable
 function o:CreateLabelByName(name, options)
-  --- @type AceConfigOption
+  --- @type AceConfig.OptionsTable
   local option = { type = "description", width = 'full', fontSize = 'medium', name = name, }
   if options == nil or type(options) ~= 'table' then return option end
   for k in pairs(option) do if not options[k] then options[k] = option[k] end end
@@ -197,12 +197,12 @@ end
 --- local sp = self.CreateSpacer('__', { order = 2, width=1.0 })
 --- local sp = self.CreateSpacer({ order = 2, width=1.0 })
 --- ```
---- @param spacerTextOrOrderOrOptions string|number|AceConfigOption|nil
---- @param options AceConfigOption|nil
---- @return AceConfigOption
+--- @param spacerTextOrOrderOrOptions string|number|AceConfig.OptionsTable|nil
+--- @param options AceConfig.OptionsTable|nil
+--- @return AceConfig.OptionsTable
 function o:CreateSpacer(spacerTextOrOrderOrOptions, options)
   local spacerText = ' '
-  --- @type AceConfigOption
+  --- @type AceConfig.OptionsTable
   local option = { type = "description", width = 'full', fontSize = 'medium', name = spacerText, }
   if type(spacerTextOrOrderOrOptions) == 'string' then
     option.name = spacerTextOrOrderOrOptions
