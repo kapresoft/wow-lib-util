@@ -3,7 +3,6 @@ local addon, cns = ...
 cns.addon = addon
 
 --- @class Kapresoft_LibUtil_2_0_Namespace : AddonNamespace
---- @field gameVersion any
 local ns = cns
 
 local L = LibStub('AceLocale-3.0'):NewLocale(addon, "enUS", true);
