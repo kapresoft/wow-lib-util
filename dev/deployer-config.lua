@@ -30,6 +30,10 @@ local c = {
       deploy = true,
       dir=env.wow.retail.addOnDir,
     },
+    ["forever"] = {
+      deploy = true,
+      dir=env.wow.forever.addOnDir,
+    },
   }
 }
 return c
