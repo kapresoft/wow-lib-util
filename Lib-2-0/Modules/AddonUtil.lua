@@ -1,11 +1,12 @@
 --[[-----------------------------------------------------------------------------
 VERSION:: Bump MINOR_VERSION whenever a change occurs
 -- 1: initial version
+-- 2: character defaults to UnitGUID, not UnitName (Forever surnames)
 
 DEPENDENCIES:
   - LibStub, Kapresoft-String-2-0
 -------------------------------------------------------------------------------]]
-local MAJOR, MINOR = 'Kapresoft-AddonUtil-2-0', 1
+local MAJOR, MINOR = 'Kapresoft-AddonUtil-2-0', 2
 
 --- @class Kapresoft-AddonUtil-2-0
 local S = LibStub:NewLibrary(MAJOR, MINOR); if not S then return end
@@ -53,23 +54,23 @@ Methods
 function S:IsAddOnEnabled(indexOrName)
   assert(type(indexOrName) ~= 'nil', 'IsAddOnEnabled(indexOrName): Addon Index or Name is required.')
 
-  local charName = UnitName("player")
+  local character = UnitGUID("player")
   local intVal = -1
   if C_AddOns_GetAddOnEnableState then
-    intVal = C_AddOns_GetAddOnEnableState(indexOrName, charName)
+    intVal = C_AddOns_GetAddOnEnableState(indexOrName, character)
   elseif GetAddOnEnableState then
-    intVal = GetAddOnEnableState(charName, indexOrName)
+    intVal = GetAddOnEnableState(character, indexOrName)
   end
   return intVal == 2
 end
 
---- @param name Name The addOn name
---- @param charName Name|nil The character name. Defaults to current
+--- @param name Name
+--- @param charName string? @Character name or GUID; defaults to this character's GUID
 function S:EnableAddOnForCharacter(name, charName)
   assert(type(name) == 'string', 'EnableAddOnForCharacter(name,charName):: name should be a string')
 
-  charName = charName or UnitName("player")
-  EnableAddOn(name, charName)
+  local character = charName or UnitGUID("player")
+  EnableAddOn(name, character)
 end
 
 --- @param indexOrName IndexOrName The index from 1 to GetNumAddOns() or The name of the addon (as in TOC/folder filename), case insensitive.
